@@ -34,7 +34,7 @@ public class Chess
     private Location location;
     private int homeDistance;
 
-    Chess(Color color, Location location, String image)
+    public Chess(Color color, Location location, String image)
     {
         this.color = color;
         this.location = location;

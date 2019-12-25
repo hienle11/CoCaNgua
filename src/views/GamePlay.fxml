@@ -1,279 +1,281 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="675.0" style="-fx-border-color: blue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="675.0" style="-fx-border-color: blue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
     <children>
-        <StackPane id="homeYellow" layoutX="421.0" layoutY="-3.0" prefHeight="259.0" prefWidth="262.0">
-            <children>
-                <Circle fill="WHITE" radius="86.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="5.0" />
-                <Rectangle id="yellowHome" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="259.0" stroke="BLACK" strokeType="INSIDE" width="242.0" />
-            </children>
+        <StackPane layoutX="421.0" layoutY="-3.0" prefHeight="259.0" prefWidth="262.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="254.0" stroke="BLACK" strokeType="INSIDE" width="243.0" />
+                <Circle fill="WHITE" radius="86.0" stroke="yellow" strokeType="INSIDE" strokeWidth="5.0" />
+         </children>
         </StackPane>
-        <StackPane id="homeBlue" prefHeight="258.0" prefWidth="243.0">
-            <children>
+        <StackPane fx:id="blueNest" prefHeight="196.0" prefWidth="172.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="259.0" stroke="BLACK" strokeType="INSIDE" width="243.0" />
                 <Circle fill="#fafbf5" radius="86.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="5.0" />
-                <Rectangle id="blueHome" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="258.0" stroke="BLACK" strokeType="INSIDE" width="245.0" />
-            </children>
+         </children>
         </StackPane>
-        <StackPane id="homeRed" layoutY="441.0" prefHeight="258.0" prefWidth="243.0">
+        <StackPane layoutY="441.0" prefHeight="258.0" prefWidth="243.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="257.0" stroke="BLACK" strokeType="INSIDE" width="244.0" StackPane.alignment="CENTER" />
-                <Circle id="redHome" fill="WHITE" radius="86.0" stroke="RED" strokeType="INSIDE" strokeWidth="5.0" />
+                <Circle fill="WHITE" radius="86.0" stroke="RED" strokeType="INSIDE" strokeWidth="5.0" />
             </children>
         </StackPane>
-        <StackPane id="homeGreen" layoutX="421.0" layoutY="441.0" prefHeight="259.0" prefWidth="262.0">
+        <StackPane layoutX="421.0" layoutY="441.0" prefHeight="259.0" prefWidth="262.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="259.0" stroke="BLACK" strokeType="INSIDE" width="243.0" />
-                <Circle id="greenHome" fill="WHITE" radius="86.0" stroke="#00ff11" strokeType="INSIDE" strokeWidth="5.0" />
+                <Circle fill="WHITE" radius="86.0" stroke="#00ff11" strokeType="INSIDE" strokeWidth="5.0" />
             </children>
         </StackPane>
-        <StackPane id="blueStartPosition" layoutX="248.0" layoutY="17.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blueSpawn" layoutX="248.0" layoutY="17.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle id="blueStartPosition" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="6.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="6.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun2" layoutX="248.0" layoutY="70.0" prefHeight="33.0" prefWidth="35.0">
-            <children>
-                <Circle fill="WHITE" radius="20.0" stroke="#2e00ff" strokeType="INSIDE" strokeWidth="2.0" />
-            </children>
-        </StackPane>
-        <StackPane id="blueRun3" layoutX="248.0" layoutY="124.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue1" layoutX="248.0" layoutY="70.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="#2e00ff" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun4" layoutX="248.0" layoutY="172.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue2" layoutX="248.0" layoutY="124.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle fill="WHITE" radius="20.0" stroke="#2e00ff" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </StackPane>
+        <StackPane fx:id="blue3" layoutX="248.0" layoutY="172.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun5" layoutX="248.0" layoutY="218.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue4" layoutX="248.0" layoutY="218.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun6" layoutX="248.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue5" layoutX="248.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun7" layoutX="200.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue6" layoutX="200.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun8" layoutX="152.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue7" layoutX="152.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun9" layoutX="106.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue8" layoutX="106.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun10" layoutX="60.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue9" layoutX="60.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueRun11" layoutX="14.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="blue10" layoutX="14.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redHomeArrival" layoutX="14.0" layoutY="326.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="redHome0" layoutX="14.0" layoutY="326.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redStartPosition" layoutX="14.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="redSpawn" layoutX="14.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle id="redStartPosition" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="7.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun2" layoutX="60.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red1" layoutX="60.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun3" layoutX="102.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red2" layoutX="102.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun4" layoutX="152.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red3" layoutX="152.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun5" layoutX="200.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red4" layoutX="200.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun6" layoutX="248.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red5" layoutX="248.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun7" layoutX="248.0" layoutY="441.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red6" layoutX="248.0" layoutY="441.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun8" layoutX="248.0" layoutY="491.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red7" layoutX="248.0" layoutY="491.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun9" layoutX="248.0" layoutY="546.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red8" layoutX="248.0" layoutY="546.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun10" layoutX="248.0" layoutY="594.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red9" layoutX="248.0" layoutY="594.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="redRun11" layoutX="248.0" layoutY="645.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="red10" layoutX="248.0" layoutY="645.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenHomeArrival" layoutX="318.0" layoutY="645.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="greenHome0" layoutX="318.0" layoutY="645.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenStartPosition" layoutX="383.0" layoutY="645.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="greenSpawn" layoutX="383.0" layoutY="645.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle id="greenStartPosition" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="7.0" />
+                <Circle  fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="7.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun2" layoutX="383.0" layoutY="594.0" prefHeight="33.0" prefWidth="35.0">
-            <children>
-                <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
-            </children>
-        </StackPane>
-        <StackPane id="greenRun3" layoutX="383.0" layoutY="546.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green1" layoutX="383.0" layoutY="594.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun4" layoutX="383.0" layoutY="491.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green2" layoutX="383.0" layoutY="546.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun5" layoutX="383.0" layoutY="441.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green3" layoutX="383.0" layoutY="491.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun6" layoutX="383.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green4" layoutX="383.0" layoutY="441.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun7" layoutX="429.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green5" layoutX="383.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun8" layoutX="478.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green6" layoutX="429.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun9" layoutX="528.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green7" layoutX="478.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="GreenRun10" layoutX="574.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green8" layoutX="528.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="greenRun11" layoutX="621.0" layoutY="387.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green9" layoutX="574.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowHomeArrival" layoutX="621.0" layoutY="326.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="green10" layoutX="621.0" layoutY="387.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowStartPosition" layoutX="621.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellowHome0" layoutX="621.0" layoutY="326.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle id="yellowStartPosition" fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="7.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun2" layoutX="574.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellowSpawn" layoutX="621.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="7.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun3" layoutX="528.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow1" layoutX="574.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun4" layoutX="478.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow2" layoutX="528.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun5" layoutX="429.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow3" layoutX="478.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun6" layoutX="383.0" layoutY="264.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow4" layoutX="429.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun7" layoutX="383.0" layoutY="218.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow5" layoutX="383.0" layoutY="264.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun8" layoutX="383.0" layoutY="172.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow6" layoutX="383.0" layoutY="218.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun9" layoutX="383.0" layoutY="124.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow7" layoutX="383.0" layoutY="172.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun10" layoutX="383.0" layoutY="70.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow8" layoutX="383.0" layoutY="124.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="yellowRun11" layoutX="385.0" layoutY="16.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow9" layoutX="383.0" layoutY="70.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle fill="WHITE" radius="20.0" stroke="ORANGE" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueHomeArrival" layoutX="317.0" layoutY="14.0" prefHeight="33.0" prefWidth="35.0">
+        <StackPane fx:id="yellow10" layoutX="385.0" layoutY="16.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
-                <Circle id="blueHomeArrival" fill="WHITE" radius="20.0" stroke="#2e00ff" strokeType="INSIDE" strokeWidth="2.0" />
+                <Circle fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </StackPane>
-        <StackPane id="blueSixthPlace" layoutX="297.0" layoutY="56.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="blueHome0" layoutX="317.0" layoutY="14.0" onMouseClicked="#cellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle fill="WHITE" radius="20.0" stroke="#2e00ff" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </StackPane>
+        <StackPane fx:id="blueHome1" layoutX="297.0" layoutY="56.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label rotate="180.0" text="1" textFill="WHITE">
@@ -283,7 +285,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="blueFifthPlace" layoutX="297.0" layoutY="98.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="blueHome2" layoutX="297.0" layoutY="98.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label id="blueFifthPlace" rotate="180.0" text="2" textFill="WHITE">
@@ -293,7 +295,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="blueFourthPlace" layoutX="297.0" layoutY="143.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="blueHome3" layoutX="297.0" layoutY="143.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label rotate="180.0" text="3" textFill="WHITE">
@@ -303,7 +305,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="blueThirdPlace" layoutX="297.0" layoutY="188.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="blueHome4" layoutX="297.0" layoutY="188.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label rotate="180.0" text="4" textFill="WHITE">
@@ -313,7 +315,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="blueSecondPlace" layoutX="297.0" layoutY="232.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="blueHome5" layoutX="297.0" layoutY="232.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label rotate="180.0" text="5" textFill="WHITE">
@@ -323,7 +325,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="blueFirstPlace" layoutX="297.0" layoutY="277.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="blueHome6" layoutX="297.0" layoutY="277.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label rotate="180.0" text="6" textFill="WHITE">
@@ -333,7 +335,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="greenSixthPlace" layoutX="297.0" layoutY="603.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="greenHome1" layoutX="297.0" layoutY="603.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="36.0" stroke="GREEN" strokeType="INSIDE" width="73.0" />
                 <Label text="1" textAlignment="CENTER" textFill="WHITE">
@@ -343,7 +345,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="greenFifthPlace" layoutX="297.0" layoutY="558.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="greenHome2" layoutX="297.0" layoutY="558.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="36.0" stroke="GREEN" strokeType="INSIDE" width="73.0" />
                 <Label text="2" textFill="WHITE">
@@ -353,7 +355,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="greenFourthPlace" layoutX="297.0" layoutY="511.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="greenHome3" layoutX="297.0" layoutY="511.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label text="3" textFill="WHITE">
@@ -363,7 +365,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="greenThirdPlace" layoutX="297.0" layoutY="466.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="greenHome4" layoutX="297.0" layoutY="466.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label text="4" textFill="WHITE">
@@ -373,7 +375,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="greenSecondPlace" layoutX="297.0" layoutY="421.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="greenHome5" layoutX="297.0" layoutY="421.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label text="5" textFill="WHITE">
@@ -383,7 +385,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="greenFirstPlace" layoutX="297.0" layoutY="379.0" prefHeight="40.0" prefWidth="81.0">
+        <StackPane fx:id="greenHome6" layoutX="297.0" layoutY="379.0" prefHeight="40.0" prefWidth="81.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="36.0" stroke="BLACK" strokeType="INSIDE" width="73.0" />
                 <Label text="6" textFill="WHITE">
@@ -393,7 +395,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="redFirstPlace" layoutX="265.0" layoutY="309.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="redHome6" layoutX="265.0" layoutY="309.0" prefHeight="78.0" prefWidth="30.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="90.0" text="6" textFill="WHITE">
@@ -403,7 +405,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="redSecondPlace" layoutX="223.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="redHome5" layoutX="223.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="90.0" text="5" textFill="WHITE">
@@ -413,7 +415,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="redThirdPlace" layoutX="179.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="redHome4" layoutX="179.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="90.0" text="4" textFill="WHITE">
@@ -423,7 +425,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="redFourthPlace" layoutX="139.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="redHome3" layoutX="139.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="90.0" text="3" textFill="WHITE">
@@ -433,7 +435,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="redFifthPlace" layoutX="99.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="redHome2" layoutX="99.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="90.0" text="2" textFill="WHITE">
@@ -443,7 +445,7 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="redSixthPlace" layoutX="58.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="redHome1" layoutX="58.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="90.0" text="1" textFill="WHITE">
@@ -453,9 +455,9 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="yellowSecondPlace" layoutX="417.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="yellowHome5" layoutX="417.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="yellow" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="-90.0" text="5" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
@@ -463,9 +465,9 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="yellowThirdPlace" layoutX="458.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="yellowHome4" layoutX="458.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="yellow" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="-90.0" text="4" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
@@ -473,9 +475,9 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="yellowFourthPlace" layoutX="498.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="yellowHome3" layoutX="498.0" layoutY="307.0" prefHeight="78.0" prefWidth="30.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="yellow" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="-90.0" text="3" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
@@ -483,9 +485,9 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="yellowFifthPlace" layoutX="541.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="yellowHome2" layoutX="541.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="yellow" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="-90.0" text="2" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
@@ -493,9 +495,9 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="yellowSixthPlace" layoutX="583.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="yellowHome1" layoutX="583.0" layoutY="308.0" prefHeight="78.0" prefWidth="30.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="yellow" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="-90.0" text="1" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
@@ -503,9 +505,9 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="yellowFirstPlace" layoutX="375.0" layoutY="309.0" prefHeight="78.0" prefWidth="30.0">
+        <StackPane fx:id="yellowHome6" layoutX="375.0" layoutY="309.0" prefHeight="78.0" prefWidth="30.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="yellow" height="68.0" stroke="BLACK" strokeType="INSIDE" width="36.0" />
                 <Label rotate="-90.0" text="6" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
@@ -513,7 +515,16 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane id="dice1" layoutX="302.0" layoutY="331.0" prefHeight="30.0" prefWidth="30.0" />
-        <StackPane id="dice2" layoutX="342.0" layoutY="331.0" prefHeight="30.0" prefWidth="30.0" />
+        <StackPane id="dice1" layoutX="303.0" layoutY="316.0" prefHeight="30.0" prefWidth="30.0">
+         <children>
+            <ImageView fx:id="dice0" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+        <StackPane id="dice2" layoutX="342.0" layoutY="316.0" prefHeight="30.0" prefWidth="30.0">
+         <children>
+            <ImageView fx:id="dice1" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <Button layoutX="306.0" layoutY="354.0" mnemonicParsing="false" onAction="#rollDiceBt" text="Roll Dice" />
     </children>
 </Pane>
