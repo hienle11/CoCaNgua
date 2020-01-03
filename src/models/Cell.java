@@ -14,12 +14,14 @@ package models;
 
 public class Cell
 {
-    public enum Id
-    {
 
-    }
     private Chess chess;
-    private Id id;
+    private String id;
+
+    public Cell(String id)
+    {
+        this.id = id;
+    }
 
     public Chess getChess()
     {
@@ -31,12 +33,12 @@ public class Cell
         this.chess = chess;
     }
 
-    public Id getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(Id id)
+    public void setId(String id)
     {
         this.id = id;
     }

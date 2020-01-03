@@ -12,16 +12,139 @@
 
 package controllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import models.Cell;
+import models.Chess;
+import models.Player;
+import views.ChessView;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable
 {
+    @FXML
+    private ImageView dice0, dice1;
+    @FXML
+    private StackPane blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
+            redSpawn, red1, red2, red3, red4, red5, red6, red7, red8, red9, red10,
+            yellowSpawn, yellow1, yellow2, yellow3, yellow4, yellow5, yellow6, yellow7, yellow8, yellow9, yellow10,
+            greenSpawn, green1, green2, green3, green4, green5, green6, green7, green8, green9, green10,
+            greenHome0, greenHome1, greenHome2, greenHome3, greenHome4, greenHome5, greenHome6,
+            redHome0, redHome1, redHome2, redHome3, redHome4, redHome5, redHome6,
+            yellowHome0, yellowHome1, yellowHome2, yellowHome3, yellowHome4, yellowHome5, yellowHome6,
+            blueHome0, blueHome1, blueHome2, blueHome3, blueHome4, blueHome5, blueHome6,
+            blueNest1, blueNest2, blueNest3, blueNest4,
+            redNest1, redNest2, redNest3, redNest4,
+            yellowNest1, yellowNest2, yellowNest3, yellowNest4,
+            greenNest1, greenNest2, greenNest3, greenNest4;
+
+
+
+    private static int[] dice = new int[2];
+    private static Player.Color playerTurn = Player.Color.BLUE;
+
+    private StackPane selectedPane = null;
+    private ChessView selectedChessView = null;
+    private Chess selectedChess = null;
+    private Cell selectedCell = null;
+    private CellController cellController = null;
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        cellController = new CellController();
+        cellController.getCellViewList().addAll(
+                blueHome0, blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
+                redHome0, redSpawn, red1, red2, red3, red4, red5, red6, red7, red8, red9, red10,
+                greenHome0, greenSpawn, green1, green2, green3, green4, green5, green6, green7, green8, green9, green10,
+                yellowHome0, yellowSpawn, yellow1, yellow2, yellow3, yellow4, yellow5, yellow6, yellow7, yellow8, yellow9, yellow10,
+                blueHome1, blueHome2, blueHome3, blueHome4, blueHome5, blueHome6,
+                redHome1, redHome2, redHome3, redHome4, redHome5, redHome6,
+                yellowHome1, yellowHome2, yellowHome3, yellowHome4, yellowHome5, yellowHome6,
+                greenHome1, greenHome2, greenHome3, greenHome4, greenHome5, greenHome6,
+                blueNest1, blueNest2, blueNest3, blueNest4,
+                redNest1, redNest2, redNest3, redNest4,
+                greenNest1, greenNest2, greenNest3, greenNest4,
+                yellowNest1, yellowNest2, yellowNest3, yellowNest4);
+        cellController.initialize();
+    }
 
+
+
+    public void testBt()
+    {
+        System.out.println("hello");
+    }
+
+    public void cellOnMouseClicked(MouseEvent event)
+    {
+        if (selectedPane !=  event.getSource())
+        {
+            if (selectedChess == null)
+            {
+                selectedPane = (StackPane) event.getSource();
+                selectedCell = cellController.getCell(selectedPane.getId());
+                System.out.println("selectedCell = " + selectedCell.getId());
+                selectedChess = selectedCell.getChess();
+                if (selectedChess != null)
+                {
+                    System.out.println("Chess Color = " + selectedChess.getColor().toString());
+                    System.out.println("Player Color = " + playerTurn.toString());
+                    if (!selectedChess.getColor().toString().equals(playerTurn.toString()))
+                        selectedChess = null;
+                }
+            } else
+            {
+                ((StackPane) event.getSource()).getChildren().add(selectedPane.getChildren().get(1));
+                cellController.getCell(((StackPane) event.getSource()).getId()).setChess(selectedChess);
+                selectedCell.setChess(null);
+                selectedChess = null;
+                switchTurn();
+            }
+        }
+    }
+
+    public void switchTurn()
+    {
+        switch (playerTurn)
+        {
+            case BLUE:
+                playerTurn = Player.Color.RED;
+                break;
+            case RED:
+                playerTurn = Player.Color.GREEN;
+                break;
+            case GREEN:
+                playerTurn = Player.Color.YELLOW;
+                break;
+            case YELLOW:
+                playerTurn = Player.Color.BLUE;
+                break;
+        }
+    }
+
+    public void rollDiceBt()
+    {
+        dice = Player.rollDice();
+        dice0.setImage(new Image("File:src/resources/images/" + dice[0] + ".jpg"));
+        dice1.setImage(new Image("File:src/resources/images/" + dice[1] + ".jpg"));
+        //spawnChess(playerTurn);
+    }
+
+    public void spawnChess(Player.Color playerColor)
+    {
+        blueSpawn.getChildren().add(new ChessView(playerColor.toString()));
     }
 }
+

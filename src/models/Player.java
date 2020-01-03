@@ -68,9 +68,11 @@ public abstract class Player
         this.name = name;
     }
 
-    public int[] rollDice()
+    public static int[] rollDice()
     {
         int[] dice = new int[2];
+        dice[0] = (int) (Math.random() * 6 + 1);
+        dice[1] = (int) (Math.random() * 6 + 1);
         return dice;
     }
 

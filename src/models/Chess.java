@@ -28,27 +28,15 @@ public class Chess
         YELLOW
     }
 
-    private String image;
     private Color color;
     private int position;
     private Location location;
     private int homeDistance;
 
-    Chess(Color color, Location location, String image)
+    public Chess(Color color, Location location)
     {
         this.color = color;
         this.location = location;
-        this.image = image;
-    }
-
-    public String getImage()
-    {
-        return image;
-    }
-
-    public void setImage(String image)
-    {
-        this.image = image;
     }
 
     public Color getColor()
