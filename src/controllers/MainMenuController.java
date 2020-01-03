@@ -1,3 +1,4 @@
+
 package controllers;
 
 import javafx.application.Platform;
@@ -19,7 +20,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class Controller {
+public class MainMenuController
+{
     int current_lang = 0, current_color = 0;
     String[][] lang = new String[][]{{"vi", "en"}, {"VN", "US"}};
     TextField[] plName;
@@ -102,7 +104,7 @@ public class Controller {
     @FXML
     void back(javafx.scene.input.MouseEvent event) throws IOException {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("menu_sample.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../views/MainMenu.fxml"))));
     }
 
     @FXML

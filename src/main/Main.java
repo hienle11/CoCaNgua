@@ -17,7 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../views/menu_sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../views/GamePlay.fxml"));
         primaryStage.setTitle("Co Ca Ngua");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
