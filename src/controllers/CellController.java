@@ -71,6 +71,7 @@ public class CellController
                 cell[i].setChess(chessController.getYellowChess(i-84));
             }
         }
-
     }
+
+
 }

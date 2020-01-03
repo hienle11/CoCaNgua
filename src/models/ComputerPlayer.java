@@ -2,8 +2,12 @@ package models;
 
 public class ComputerPlayer extends Player
 {
-    @Override
     public Chess selectChess()
+    {
+        return null;
+    }
+    @Override
+    public Chess moveChess()
     {
         return null;
     }

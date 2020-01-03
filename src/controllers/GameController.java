@@ -15,6 +15,7 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +34,8 @@ import java.util.ResourceBundle;
 
 public class GameController implements Initializable
 {
+    @FXML
+    private Button rollDiceBt;
     @FXML
     private ImageView dice0, dice1;
     @FXML
@@ -54,8 +57,8 @@ public class GameController implements Initializable
     private static int[] dice = new int[2];
     private static Player.Color playerTurn = Player.Color.BLUE;
 
-    private StackPane selectedPane = null;
-    private ChessView selectedChessView = null;
+    private StackPane selectedPane1 = null;
+    private StackPane selectedPane2 = null;
     private Chess selectedChess = null;
     private Cell selectedCell = null;
     private CellController cellController = null;
@@ -80,33 +83,24 @@ public class GameController implements Initializable
         cellController.initialize();
     }
 
-
-
-    public void testBt()
+    public void normalCellOnMouseClicked(MouseEvent event)
     {
-        System.out.println("hello");
-    }
-
-    public void cellOnMouseClicked(MouseEvent event)
-    {
-        if (selectedPane !=  event.getSource())
+        if (selectedPane1 !=  event.getSource())
         {
             if (selectedChess == null)
             {
-                selectedPane = (StackPane) event.getSource();
-                selectedCell = cellController.getCell(selectedPane.getId());
-                System.out.println("selectedCell = " + selectedCell.getId());
+                selectedPane1 = (StackPane) event.getSource();
+                selectedCell = cellController.getCell(selectedPane1.getId());
                 selectedChess = selectedCell.getChess();
                 if (selectedChess != null)
                 {
-                    System.out.println("Chess Color = " + selectedChess.getColor().toString());
-                    System.out.println("Player Color = " + playerTurn.toString());
                     if (!selectedChess.getColor().toString().equals(playerTurn.toString()))
                         selectedChess = null;
                 }
             } else
             {
-                ((StackPane) event.getSource()).getChildren().add(selectedPane.getChildren().get(1));
+                selectedPane2 = (StackPane) event.getSource();
+                selectedPane2.getChildren().add(selectedPane1.getChildren().get(1));
                 cellController.getCell(((StackPane) event.getSource()).getId()).setChess(selectedChess);
                 selectedCell.setChess(null);
                 selectedChess = null;
@@ -132,13 +126,15 @@ public class GameController implements Initializable
                 playerTurn = Player.Color.BLUE;
                 break;
         }
+        rollDiceBt.setOnAction(event -> {rollDiceBtHandler();});
     }
 
-    public void rollDiceBt()
+    public void rollDiceBtHandler()
     {
         dice = Player.rollDice();
         dice0.setImage(new Image("File:src/resources/images/" + dice[0] + ".jpg"));
         dice1.setImage(new Image("File:src/resources/images/" + dice[1] + ".jpg"));
+        rollDiceBt.setOnAction(null);
         //spawnChess(playerTurn);
     }
 

@@ -76,5 +76,5 @@ public abstract class Player
         return dice;
     }
 
-    abstract public Chess selectChess();
+    abstract public Chess moveChess();
 }
