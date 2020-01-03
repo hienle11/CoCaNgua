@@ -23,14 +23,6 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-       /* StackPane stackpane = new StackPane();
-        ChessView blueChess = new ChessView("blue");
-        stackpane.getChildren().add(blueChess);
-        Scene scene = new Scene(stackpane, 300, 300);
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(scene);
-        primaryStage.show();*/
-
     }
 
 
