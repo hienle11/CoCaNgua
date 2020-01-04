@@ -11,12 +11,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import models.Chess;
+import models.Sound;
 import views.ChessView;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         Parent root = FXMLLoader.load(getClass().getResource("../views/GamePlay.fxml"));
         primaryStage.setTitle("Co Ca Ngua");
         primaryStage.setScene(new Scene(root));
