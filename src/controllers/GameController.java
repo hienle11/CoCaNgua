@@ -14,23 +14,17 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import models.Cell;
 import models.Chess;
 import models.Player;
-import models.Sound;
 import views.ChessView;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable
@@ -58,17 +52,17 @@ public class GameController implements Initializable
     private static int[] dice = new int[2];
     private static Player.Color playerTurn = Player.Color.BLUE;
 
+    private ChessView selectedChessView = null;
     private StackPane selectedPane1 = null;
     private StackPane selectedPane2 = null;
     private Chess selectedChess = null;
     private Cell selectedCell = null;
-    private CellController cellController = null;
-    private Sound sound = new Sound();
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        cellController = new CellController();
-        cellController.getCellViewList().addAll(
+        PlayerController.initialize();
+        CellController.getCellViewList().addAll(
                 blueHome0, blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
                 redHome0, redSpawn, red1, red2, red3, red4, red5, red6, red7, red8, red9, red10,
                 greenHome0, greenSpawn, green1, green2, green3, green4, green5, green6, green7, green8, green9, green10,
@@ -81,7 +75,7 @@ public class GameController implements Initializable
                 redNest1, redNest2, redNest3, redNest4,
                 greenNest1, greenNest2, greenNest3, greenNest4,
                 yellowNest1, yellowNest2, yellowNest3, yellowNest4);
-        cellController.initialize();
+        CellController.initialize();
     }
 
     public void normalCellOnMouseClicked(MouseEvent event)
@@ -91,10 +85,12 @@ public class GameController implements Initializable
             if (selectedChess == null)
             {
                 selectedPane1 = (StackPane) event.getSource();
-                selectedCell = cellController.getCell(selectedPane1.getId());
+                selectedCell = CellController.getCell(selectedPane1.getId());
                 selectedChess = selectedCell.getChess();
+                System.out.println("selected Cell = " + selectedCell.getId());
                 if (selectedChess != null)
                 {
+                    selectedChessView = (ChessView) selectedPane1.getChildren().get(1);
                     if (!selectedChess.getColor().toString().equals(playerTurn.toString()))
                         selectedChess = null;
                 }
@@ -102,7 +98,7 @@ public class GameController implements Initializable
             {
                 selectedPane2 = (StackPane) event.getSource();
                 selectedPane2.getChildren().add(selectedPane1.getChildren().get(1));
-                cellController.getCell(((StackPane) event.getSource()).getId()).setChess(selectedChess);
+                CellController.getCell(((StackPane) event.getSource()).getId()).setChess(selectedChess);
                 selectedCell.setChess(null);
                 selectedChess = null;
                 switchTurn();
@@ -112,7 +108,6 @@ public class GameController implements Initializable
 
     public void switchTurn()
     {
-        sound.stopDiceSound();
         switch (playerTurn)
         {
             case BLUE:
@@ -140,7 +135,6 @@ public class GameController implements Initializable
         dice0.setImage(new Image("File:src/resources/images/" + dice[0] + ".jpg"));
         dice1.setImage(new Image("File:src/resources/images/" + dice[1] + ".jpg"));
         rollDiceBt.setOnAction(null);
-        sound.playDiceSound();
         //spawnChess(playerTurn);
     }
 

@@ -7,4 +7,9 @@ public class HumanPlayer extends Player
     {
         return null;
     }
+    public HumanPlayer(Color color)
+    {
+        super(color);
+    }
+
 }

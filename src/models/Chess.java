@@ -20,31 +20,23 @@ public class Chess
         NORMAL,
         HOME
     }
-    public enum Color
-    {
-        BLUE,
-        RED,
-        GREEN,
-        YELLOW
-    }
 
-    private Color color;
+    private Player.Color color;
     private int position;
-    private Location location;
+    private Location location = Location.NEST;
     private int homeDistance;
 
-    public Chess(Color color, Location location)
+    public Chess(Player.Color color)
     {
         this.color = color;
-        this.location = location;
     }
 
-    public Color getColor()
+    public Player.Color getColor()
     {
         return color;
     }
 
-    public void setColor(Color color)
+    public void setColor(Player.Color color)
     {
         this.color = color;
     }

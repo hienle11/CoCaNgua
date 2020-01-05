@@ -24,9 +24,18 @@ public abstract class Player
         YELLOW
     }
     private Color color;
-    private int score;
-    private ArrayList<Chess> chessList = new ArrayList<>();
+    private int score = 0;
+    private Chess[] chess = new Chess[4];
     private String name;
+
+    public Player(Color color)
+    {
+        this.color = color;
+        this.chess[0] = new Chess(color);
+        this.chess[1] = new Chess(color);
+        this.chess[2] = new Chess(color);
+        this.chess[3] = new Chess(color);
+    }
 
     public Color getColor()
     {
@@ -48,14 +57,14 @@ public abstract class Player
         this.score = score;
     }
 
-    public ArrayList<Chess> getChessList()
+    public Chess getChess(int number)
     {
-        return chessList;
+        return chess[number];
     }
 
-    public void setChessList(ArrayList<Chess> chessList)
+    public void setChess(Chess[] chess)
     {
-        this.chessList = chessList;
+        this.chess = chess;
     }
 
     public String getName()
