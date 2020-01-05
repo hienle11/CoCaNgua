@@ -26,6 +26,7 @@ import javafx.scene.shape.Circle;
 import models.Cell;
 import models.Chess;
 import models.Player;
+import models.Sound;
 import views.ChessView;
 
 import java.net.URL;
@@ -62,7 +63,7 @@ public class GameController implements Initializable
     private Chess selectedChess = null;
     private Cell selectedCell = null;
     private CellController cellController = null;
-
+    private Sound sound = new Sound();
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -111,6 +112,7 @@ public class GameController implements Initializable
 
     public void switchTurn()
     {
+        sound.stopDiceSound();
         switch (playerTurn)
         {
             case BLUE:
@@ -126,7 +128,10 @@ public class GameController implements Initializable
                 playerTurn = Player.Color.BLUE;
                 break;
         }
-        rollDiceBt.setOnAction(event -> {rollDiceBtHandler();});
+        rollDiceBt.setOnAction(event -> {
+            rollDiceBtHandler();
+
+            });
     }
 
     public void rollDiceBtHandler()
@@ -135,6 +140,7 @@ public class GameController implements Initializable
         dice0.setImage(new Image("File:src/resources/images/" + dice[0] + ".jpg"));
         dice1.setImage(new Image("File:src/resources/images/" + dice[1] + ".jpg"));
         rollDiceBt.setOnAction(null);
+        sound.playDiceSound();
         //spawnChess(playerTurn);
     }
 
