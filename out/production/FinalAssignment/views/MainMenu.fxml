@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--RMIT University Vietnam-->
+<!--Course: INTE2512 Object-Oriented Programming-->
+<!--Semester: 2019C-->
+<!--Assessment: Final Assignment-->
+<!--Created date: 01/01/2020-->
+<!--By: Doan Luong Hoang (sxxxxxx)-->
+<!--Last modified: dd/mm/yyyy (e.g. 05/04/2019)-->
+<!--By: Doan Luong Hoang (sxxxxxxx)-->
+<!--Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuController">
+    <ImageView fx:id="menu" fitHeight="400.0" fitWidth="709.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../resources/images/vimenu.png" />
+    </ImageView>
+    <Button fx:id="start" layoutX="263.0" layoutY="233.0" mnemonicParsing="false" onMouseClicked="#start" prefWidth="125.0" text="Start Game" AnchorPane.bottomAnchor="134.0" AnchorPane.leftAnchor="263.0">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </Button>
+    <Button fx:id="rules" layoutX="263.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#displayRules" prefWidth="125.0" text="Game Rules" AnchorPane.bottomAnchor="94.0" AnchorPane.leftAnchor="263.0">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </Button>
+    <Button fx:id="language" layoutX="263.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#changeLanguage" prefWidth="125.0" text="Vietnamese" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="263.0">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </Button>
+    <Button fx:id="exit" layoutX="263.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#exit" prefWidth="125.0" text="Exit Game" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="263.0">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </Button>
+    <Button fx:id="done" disable="true" layoutX="231.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#getName" text="Done" visible="false">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </Button>
+    <Button fx:id="back" layoutX="424.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#back" text="Back" visible="false">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </Button>
+    <ComboBox fx:id="choice" layoutX="255.0" layoutY="200.0" onAction="#getPlayerNum" prefHeight="26.0" prefWidth="198.0" promptText="&lt;Choose number of players&gt;" visible="false" />
+   <Pane fx:id="pane1" layoutX="175.0" layoutY="233.0" prefHeight="26.0" prefWidth="198.0" visible="false">
+      <children>
+         <TextField fx:id="plName1" layoutX="88.0" layoutY="2.0" text="Player 1">
+            <font>
+               <Font name="Times New Roman" size="12.0" />
+            </font>
+         </TextField>
+         <Rectangle fx:id="color1" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+      </children>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+   </Pane>
+   <Pane fx:id="pane2" layoutX="175.0" layoutY="267.0" prefHeight="26.0" prefWidth="280.0" visible="false">
+      <children>
+         <TextField fx:id="plName2" layoutX="88.0" layoutY="2.0" text="Player 2">
+            <font>
+               <Font name="Times New Roman" size="12.0" />
+            </font>
+         </TextField>
+         <Rectangle fx:id="color2" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+      </children>
+   </Pane>
+   <Pane fx:id="pane3" layoutX="175.0" layoutY="300.0" prefHeight="26.0" prefWidth="280.0" visible="false">
+      <children>
+         <TextField fx:id="plName3" layoutX="88.0" layoutY="2.0" text="Player 3">
+            <font>
+               <Font name="Times New Roman" size="12.0" />
+            </font>
+         </TextField>
+         <Rectangle fx:id="color3" arcHeight="5.0" arcWidth="5.0" fill="RED" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+      </children>
+   </Pane>
+   <Pane fx:id="pane4" layoutX="175.0" layoutY="334.0" prefHeight="26.0" prefWidth="280.0" visible="false">
+      <children>
+          <TextField fx:id="plName4" layoutX="88.0" layoutY="2.0" text="Player 4">
+              <font>
+                  <Font name="Times New Roman" size="12.0" />
+              </font>
+         </TextField>
+         <Rectangle fx:id="color4" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+      </children>
+   </Pane>
+</AnchorPane>
