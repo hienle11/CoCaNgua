@@ -25,7 +25,6 @@ import views.CellView;
 import views.ChessView;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -61,7 +60,7 @@ public class GameController implements Initializable
     private Chess selectedChess = null;
     private Cell selectedCell1 = null;
     private Cell selectedCell2 = null;
-    private HashMap<Cell, Integer> possibleCellList = new HashMap<>();
+    private HashMap<Cell, Integer[]> possibleCellList = new HashMap<>();
 
 
     @Override
@@ -75,8 +74,8 @@ public class GameController implements Initializable
                 yellowHome0, yellowSpawn, yellow1, yellow2, yellow3, yellow4, yellow5, yellow6, yellow7, yellow8, yellow9, yellow10,
                 blueHome1, blueHome2, blueHome3, blueHome4, blueHome5, blueHome6,
                 redHome1, redHome2, redHome3, redHome4, redHome5, redHome6,
-                yellowHome1, yellowHome2, yellowHome3, yellowHome4, yellowHome5, yellowHome6,
                 greenHome1, greenHome2, greenHome3, greenHome4, greenHome5, greenHome6,
+                yellowHome1, yellowHome2, yellowHome3, yellowHome4, yellowHome5, yellowHome6,
                 blueNest1, blueNest2, blueNest3, blueNest4,
                 redNest1, redNest2, redNest3, redNest4,
                 greenNest1, greenNest2, greenNest3, greenNest4,
@@ -96,7 +95,10 @@ public class GameController implements Initializable
             {
                 selectedCellView2 = (CellView) event.getSource();
                 if(moveChess())
+                {
+                    hidePossibleCells();
                     switchTurn();
+                }
                 selectedChess = null;
             }
         }
@@ -122,6 +124,7 @@ public class GameController implements Initializable
                     break;
             }
         }
+        System.out.println("playerTurn = " + playerTurn.toString());
         rollDiceBt.setOnAction(event -> {
             rollDiceBtHandler();
 
@@ -146,7 +149,24 @@ public class GameController implements Initializable
         getPossibleMoves();
         if (possibleCellList.size() == 0)
             return false;
+        showPossibleCells();
         return true;
+    }
+
+    public void showPossibleCells()
+    {
+        possibleCellList.forEach((cell, chessAndDice) ->
+        {
+            CellController.getCellView(cell).showPossibleCells();
+        });
+    }
+
+    public void hidePossibleCells()
+    {
+        possibleCellList.forEach((cell, chessAndDice) ->
+        {
+            CellController.getCellView(cell).hidePossibleCells();
+        });
     }
 
     public void getPossibleMoves()
@@ -156,7 +176,6 @@ public class GameController implements Initializable
         for (int i = 0 ; i < 4; i ++)
         {
             checkedChess = PlayerController.getPlayer(playerTurn).getChess(i);
-            System.out.println(checkedChess.getCellId());
             checkedCell = CellController.getCell(checkedChess.getCellId());
             int currentCellIndex = CellController.getCellList().indexOf(checkedCell);
             if (checkedCell.getId().contains("Nest"))
@@ -169,30 +188,59 @@ public class GameController implements Initializable
     public void getNormalMoves(int currentCellIndex, int chessNumber)
     {
         boolean checkingResult = true;
-        Cell checkedCell, finalCell;
-        checkedCell = CellController.getCellList().get(currentCellIndex);
-        System.out.println("123checkedCell =  " + checkedCell.getId());
+        int finalCellIndex;
         for (int i = 0; i < 3; i ++)
         {
-            finalCell = CellController.getCellList().get(currentCellIndex + diceValue[i]);
-            System.out.println("123finalCell =  " + finalCell.getId());
-            if (finalCell.getChess() != null)
-            {
-                if (finalCell.getChess().getColor() == playerTurn)
-                    continue;
-            }
+            if((finalCellIndex = checkFinalCell(currentCellIndex, i)) < 0 )
+                continue;
             for (int j = 1; j < diceValue[i]; j++)
             {
-                checkedCell = CellController.getCellList().get(currentCellIndex + j);
-                if (checkedCell.getChess() != null)
-                    checkingResult = false;
+                checkingResult = checkOtherCells(currentCellIndex, j);
+                if (checkingResult == false)
+                    break;
             }
             if (checkingResult == true)
             {
-                possibleCellList.put(finalCell, chessNumber);
-                System.out.println("finalCell = " + finalCell.getId() + "chessNumber = " + chessNumber);
+                Integer [] chessAndDice = new Integer[2];
+                chessAndDice[0] = chessNumber;
+                chessAndDice[1] = i;
+                System.out.println("finalCellIndex = " + finalCellIndex);
+                possibleCellList.put(CellController.getCellList().get(finalCellIndex), chessAndDice);
             }
         }
+    }
+
+    public int checkFinalCell(int currentCellIndex, int diceValueIndex)
+    {
+        Cell finalCell;
+        int checkedCellIndex;
+        checkedCellIndex = currentCellIndex + diceValue[diceValueIndex];
+        if (checkedCellIndex >= 48)
+            checkedCellIndex -= 48;
+        finalCell = CellController.getCellList().get(checkedCellIndex);
+        if (finalCell.getChess() != null)
+        {
+            if (finalCell.getChess().getColor() == playerTurn)
+                return -1;
+        }
+        return checkedCellIndex;
+    }
+
+    public boolean checkOtherCells(int currentCellIndex, int steps)
+    {
+        Cell checkedCell;
+        int checkedCellIndex;
+        checkedCellIndex = currentCellIndex + steps;
+        if (checkedCellIndex >= 48)
+            checkedCellIndex -= 48;
+        checkedCell = CellController.getCellList().get(checkedCellIndex);
+        //System.out.println("Cell = " + checkedCell.getId());
+        if (checkedCell.getChess() != null)
+        {
+            //System.out.println("here =-=" +checkedCell.getChess().getColor().toString());
+            return false;
+        }
+        return true;
     }
 
     public void getSpawnMoves(int chessNumber)
@@ -215,19 +263,43 @@ public class GameController implements Initializable
                     possibleCell = CellController.getCell("yellowSpawn");
                     break;
             }
-            if (possibleCell.getChess() == null)
+            Chess chess = possibleCell.getChess();
+            if (chess == null || PlayerController.getPlayer(playerTurn).getChess(chessNumber).getColor() == chess.getColor())
             {
-                possibleCellList.put(possibleCell, chessNumber);
-                System.out.println("finalCell = " + possibleCell.getId() + "chessNumber = " + chessNumber);
+                Integer [] chessAndDice = new Integer[2];
+                chessAndDice[0] = chessNumber;
+                if(diceValue[0] == 6)
+                    chessAndDice[1] = 0;
+                else
+                    chessAndDice[1] = 1;
+                possibleCellList.put(possibleCell, chessAndDice);
             }
+        }
+    }
+
+    public void selectChess()
+    {
+        selectedCell1 = CellController.getCell(selectedCellView1);
+        selectedChess = selectedCell1.getChess();
+        if (selectedChess != null)
+        {
+            selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
+            if (!selectedChess.getColor().toString().equals(playerTurn.toString()))
+                selectedChess = null;
         }
     }
 
     public boolean moveChess()
     {
-        selectedCell2 = CellController.getCell(selectedCellView2.getId());
+        selectedCell2 = CellController.getCell(selectedCellView2);
         if(possibleCellList.containsKey(selectedCell2))
         {
+            if (selectedCell2.getChess() != null)
+            {
+                System.out.println("123 = " + selectedCell2.getChess().getColor());
+                Chess anotherChess = selectedCell2.getChess();
+                kickChess(anotherChess);
+            }
             selectedChessView.moveTo(selectedCellView2);
             selectedChess.moveTo(selectedCell2);
             selectedCell1.setChess(null);
@@ -237,16 +309,15 @@ public class GameController implements Initializable
             return false;
     }
 
-    public void selectChess()
+    public void kickChess(Chess kickedChess)
     {
-        selectedCell1 = CellController.getCell(selectedCellView1.getId());
-        selectedChess = selectedCell1.getChess();
-        if (selectedChess != null)
-        {
-            selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
-            if (!selectedChess.getColor().toString().equals(playerTurn.toString()))
-                selectedChess = null;
-        }
+        ChessView kickedChessView = (ChessView) selectedCellView2.getChildren().get(1);
+        Cell nestCell = CellController.findEmptyNest(kickedChess);
+        System.out.println("nestCellId = " + nestCell.getId());
+        CellView nestCellView = CellController.getCellView(nestCell);
+        nestCell.setChess(kickedChess);
+        kickedChess.moveTo(nestCell);
+        kickedChessView.moveTo(nestCellView);
     }
 }
 
