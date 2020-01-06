@@ -14,8 +14,8 @@ package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.layout.StackPane;
 import models.Cell;
+import views.CellView;
 import views.ChessView;
 
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ public class CellController
     private static final String yellowChessImage = "File:src/resources/images/YELLOW.jpg";
     private static final String greenChessImage = "File:src/resources/images/GREEN.jpg";
 
-    private static ObservableList<StackPane> cellViewList = FXCollections.observableArrayList();
+    private static ObservableList<CellView> cellViewList = FXCollections.observableArrayList();
     private static ArrayList<Cell> cellList = new ArrayList<>();
 
-    public static ObservableList<StackPane> getCellViewList()
+    public static ObservableList<CellView> getCellViewList()
     {
         return cellViewList;
     }

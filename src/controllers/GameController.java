@@ -18,14 +18,15 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import models.Cell;
 import models.Chess;
 import models.Player;
+import views.CellView;
 import views.ChessView;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable
@@ -35,7 +36,7 @@ public class GameController implements Initializable
     @FXML
     private ImageView dice0, dice1;
     @FXML
-    private StackPane blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
+    private CellView blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
             redSpawn, red1, red2, red3, red4, red5, red6, red7, red8, red9, red10,
             yellowSpawn, yellow1, yellow2, yellow3, yellow4, yellow5, yellow6, yellow7, yellow8, yellow9, yellow10,
             greenSpawn, green1, green2, green3, green4, green5, green6, green7, green8, green9, green10,
@@ -55,12 +56,13 @@ public class GameController implements Initializable
 
     private boolean diceIsRolled = false;
     private ChessView selectedChessView = null;
-    private StackPane selectedCellView1 = null;
-    private StackPane selectedCellView2 = null;
+    private CellView selectedCellView1 = null;
+    private CellView selectedCellView2 = null;
     private Chess selectedChess = null;
     private Cell selectedCell1 = null;
     private Cell selectedCell2 = null;
-    private ArrayList<Cell> possibleCellList = new ArrayList();
+    private HashMap<Cell, Integer> possibleCellList = new HashMap<>();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -88,13 +90,12 @@ public class GameController implements Initializable
         {
             if (selectedChess == null)
             {
-                selectedCellView1 = (StackPane) event.getSource();
-                selectChessView();
-                System.out.println("selectedCell = " + selectedCell1);
+                selectedCellView1 = (CellView) event.getSource();
+                selectChess();
             } else
             {
-                selectedCellView2 = (StackPane) event.getSource();
-                if(moveChessView())
+                selectedCellView2 = (CellView) event.getSource();
+                if(moveChess())
                     switchTurn();
                 selectedChess = null;
             }
@@ -145,7 +146,6 @@ public class GameController implements Initializable
         getPossibleMoves();
         if (possibleCellList.size() == 0)
             return false;
-        possibleCellList.forEach(cell -> System.out.println("possible cell = " + cell.getId()));
         return true;
     }
 
@@ -160,16 +160,16 @@ public class GameController implements Initializable
             checkedCell = CellController.getCell(checkedChess.getCellId());
             int currentCellIndex = CellController.getCellList().indexOf(checkedCell);
             if (checkedCell.getId().contains("Nest"))
-                getSpawnMoves();
+                getSpawnMoves(i);
             else
-                getNormalMoves(currentCellIndex);
+                getNormalMoves(currentCellIndex, i);
         }
     }
 
-    public void getNormalMoves(int currentCellIndex)
+    public void getNormalMoves(int currentCellIndex, int chessNumber)
     {
         boolean checkingResult = true;
-        Cell checkedCell = null, finalCell = null;
+        Cell checkedCell, finalCell;
         checkedCell = CellController.getCellList().get(currentCellIndex);
         System.out.println("123checkedCell =  " + checkedCell.getId());
         for (int i = 0; i < 3; i ++)
@@ -188,11 +188,14 @@ public class GameController implements Initializable
                     checkingResult = false;
             }
             if (checkingResult == true)
-                possibleCellList.add(finalCell);
+            {
+                possibleCellList.put(finalCell, chessNumber);
+                System.out.println("finalCell = " + finalCell.getId() + "chessNumber = " + chessNumber);
+            }
         }
     }
 
-    public void getSpawnMoves()
+    public void getSpawnMoves(int chessNumber)
     {
         Cell possibleCell = null;
         if (diceValue[0] == 6 || diceValue[1] == 6)
@@ -213,25 +216,28 @@ public class GameController implements Initializable
                     break;
             }
             if (possibleCell.getChess() == null)
-                possibleCellList.add(possibleCell);
+            {
+                possibleCellList.put(possibleCell, chessNumber);
+                System.out.println("finalCell = " + possibleCell.getId() + "chessNumber = " + chessNumber);
+            }
         }
     }
 
-    public boolean moveChessView()
+    public boolean moveChess()
     {
         selectedCell2 = CellController.getCell(selectedCellView2.getId());
-        if(possibleCellList.contains(selectedCell2))
+        if(possibleCellList.containsKey(selectedCell2))
         {
-            selectedCellView2.getChildren().add(selectedChessView);
+            selectedChessView.moveTo(selectedCellView2);
+            selectedChess.moveTo(selectedCell2);
             selectedCell1.setChess(null);
             selectedCell2.setChess(selectedChess);
-            selectedChess.moveTo(selectedCellView2.getId());
             return true;
         } else
             return false;
     }
 
-    public void selectChessView()
+    public void selectChess()
     {
         selectedCell1 = CellController.getCell(selectedCellView1.getId());
         selectedChess = selectedCell1.getChess();

@@ -72,9 +72,9 @@ public class Chess
         homeDistance -= numberOfMoves;
     }
 
-    public void moveTo(String cellId)
+    public void moveTo(Cell cell)
     {
-        this.cellId = cellId;
+        this.cellId = cell.getId();
     }
 
     private void kick(Chess anotherChess)
