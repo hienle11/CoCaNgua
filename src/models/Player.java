@@ -31,10 +31,11 @@ public abstract class Player
     public Player(Color color)
     {
         this.color = color;
-        this.chess[0] = new Chess(color);
-        this.chess[1] = new Chess(color);
-        this.chess[2] = new Chess(color);
-        this.chess[3] = new Chess(color);
+        for (int i = 0; i < 4; i ++)
+        {
+            String cellId = color.toString().toLowerCase() + "Nest" + (i+1);
+            this.chess[i] = new Chess(color, cellId);
+        }
     }
 
     public Color getColor()
@@ -62,6 +63,10 @@ public abstract class Player
         return chess[number];
     }
 
+    public Chess[] getChessList()
+    {
+        return chess;
+    }
     public void setChess(Chess[] chess)
     {
         this.chess = chess;
@@ -79,10 +84,11 @@ public abstract class Player
 
     public static int[] rollDice()
     {
-        int[] dice = new int[2];
-        dice[0] = (int) (Math.random() * 6 + 1);
-        dice[1] = (int) (Math.random() * 6 + 1);
-        return dice;
+        int[] diceValue = new int[3];
+        diceValue[0] = (int) (Math.random() * 6 + 1);
+        diceValue[1] = (int) (Math.random() * 6 + 1);
+        diceValue[2] = diceValue[0] + diceValue[1];
+        return diceValue;
     }
 
     abstract public Chess moveChess();

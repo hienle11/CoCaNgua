@@ -25,6 +25,7 @@ import models.Player;
 import views.ChessView;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable
@@ -49,14 +50,17 @@ public class GameController implements Initializable
 
 
 
-    private static int[] dice = new int[2];
+    private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
 
+    private boolean diceIsRolled = false;
     private ChessView selectedChessView = null;
-    private StackPane selectedPane1 = null;
-    private StackPane selectedPane2 = null;
+    private StackPane selectedCellView1 = null;
+    private StackPane selectedCellView2 = null;
     private Chess selectedChess = null;
-    private Cell selectedCell = null;
+    private Cell selectedCell1 = null;
+    private Cell selectedCell2 = null;
+    private ArrayList<Cell> possibleCellList = new ArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -80,67 +84,163 @@ public class GameController implements Initializable
 
     public void normalCellOnMouseClicked(MouseEvent event)
     {
-        if (selectedPane1 !=  event.getSource())
+        if (selectedCellView1 !=  event.getSource() && diceIsRolled)
         {
             if (selectedChess == null)
             {
-                selectedPane1 = (StackPane) event.getSource();
-                selectedCell = CellController.getCell(selectedPane1.getId());
-                selectedChess = selectedCell.getChess();
-                System.out.println("selected Cell = " + selectedCell.getId());
-                if (selectedChess != null)
-                {
-                    selectedChessView = (ChessView) selectedPane1.getChildren().get(1);
-                    if (!selectedChess.getColor().toString().equals(playerTurn.toString()))
-                        selectedChess = null;
-                }
+                selectedCellView1 = (StackPane) event.getSource();
+                selectChessView();
+                System.out.println("selectedCell = " + selectedCell1);
             } else
             {
-                selectedPane2 = (StackPane) event.getSource();
-                selectedPane2.getChildren().add(selectedPane1.getChildren().get(1));
-                CellController.getCell(((StackPane) event.getSource()).getId()).setChess(selectedChess);
-                selectedCell.setChess(null);
+                selectedCellView2 = (StackPane) event.getSource();
+                if(moveChessView())
+                    switchTurn();
                 selectedChess = null;
-                switchTurn();
             }
         }
     }
 
     public void switchTurn()
     {
-        switch (playerTurn)
+        if (diceValue[0] != diceValue[1])
         {
-            case BLUE:
-                playerTurn = Player.Color.RED;
-                break;
-            case RED:
-                playerTurn = Player.Color.GREEN;
-                break;
-            case GREEN:
-                playerTurn = Player.Color.YELLOW;
-                break;
-            case YELLOW:
-                playerTurn = Player.Color.BLUE;
-                break;
+            switch (playerTurn)
+            {
+                case BLUE:
+                    playerTurn = Player.Color.RED;
+                    break;
+                case RED:
+                    playerTurn = Player.Color.GREEN;
+                    break;
+                case GREEN:
+                    playerTurn = Player.Color.YELLOW;
+                    break;
+                case YELLOW:
+                    playerTurn = Player.Color.BLUE;
+                    break;
+            }
         }
         rollDiceBt.setOnAction(event -> {
             rollDiceBtHandler();
 
             });
+        diceIsRolled = false;
+        possibleCellList.clear();
     }
 
     public void rollDiceBtHandler()
     {
-        dice = Player.rollDice();
-        dice0.setImage(new Image("File:src/resources/images/" + dice[0] + ".jpg"));
-        dice1.setImage(new Image("File:src/resources/images/" + dice[1] + ".jpg"));
+        diceValue = Player.rollDice();
+        dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
+        dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
         rollDiceBt.setOnAction(null);
-        //spawnChess(playerTurn);
+        diceIsRolled = true;
+        if(!isMovable())
+            switchTurn();
     }
 
-    public void spawnChess(Player.Color playerColor)
+    public boolean isMovable()
     {
-        blueSpawn.getChildren().add(new ChessView(playerColor.toString()));
+        getPossibleMoves();
+        if (possibleCellList.size() == 0)
+            return false;
+        possibleCellList.forEach(cell -> System.out.println("possible cell = " + cell.getId()));
+        return true;
+    }
+
+    public void getPossibleMoves()
+    {
+        Cell checkedCell;
+        Chess checkedChess;
+        for (int i = 0 ; i < 4; i ++)
+        {
+            checkedChess = PlayerController.getPlayer(playerTurn).getChess(i);
+            System.out.println(checkedChess.getCellId());
+            checkedCell = CellController.getCell(checkedChess.getCellId());
+            int currentCellIndex = CellController.getCellList().indexOf(checkedCell);
+            if (checkedCell.getId().contains("Nest"))
+                getSpawnMoves();
+            else
+                getNormalMoves(currentCellIndex);
+        }
+    }
+
+    public void getNormalMoves(int currentCellIndex)
+    {
+        boolean checkingResult = true;
+        Cell checkedCell = null, finalCell = null;
+        checkedCell = CellController.getCellList().get(currentCellIndex);
+        System.out.println("123checkedCell =  " + checkedCell.getId());
+        for (int i = 0; i < 3; i ++)
+        {
+            finalCell = CellController.getCellList().get(currentCellIndex + diceValue[i]);
+            System.out.println("123finalCell =  " + finalCell.getId());
+            if (finalCell.getChess() != null)
+            {
+                if (finalCell.getChess().getColor() == playerTurn)
+                    continue;
+            }
+            for (int j = 1; j < diceValue[i]; j++)
+            {
+                checkedCell = CellController.getCellList().get(currentCellIndex + j);
+                if (checkedCell.getChess() != null)
+                    checkingResult = false;
+            }
+            if (checkingResult == true)
+                possibleCellList.add(finalCell);
+        }
+    }
+
+    public void getSpawnMoves()
+    {
+        Cell possibleCell = null;
+        if (diceValue[0] == 6 || diceValue[1] == 6)
+        {
+            switch (playerTurn)
+            {
+                case BLUE:
+                    possibleCell = CellController.getCell("blueSpawn");
+                    break;
+                case RED:
+                    possibleCell = CellController.getCell("redSpawn");
+                    break;
+                case GREEN:
+                    possibleCell = CellController.getCell("greenSpawn");
+                    break;
+                case YELLOW:
+                    possibleCell = CellController.getCell("yellowSpawn");
+                    break;
+            }
+            if (possibleCell.getChess() == null)
+                possibleCellList.add(possibleCell);
+        }
+    }
+
+    public boolean moveChessView()
+    {
+        selectedCell2 = CellController.getCell(selectedCellView2.getId());
+        if(possibleCellList.contains(selectedCell2))
+        {
+            selectedCellView2.getChildren().add(selectedChessView);
+            selectedCell1.setChess(null);
+            selectedCell2.setChess(selectedChess);
+            selectedChess.moveTo(selectedCellView2.getId());
+            return true;
+        } else
+            return false;
+    }
+
+    public void selectChessView()
+    {
+        selectedCell1 = CellController.getCell(selectedCellView1.getId());
+        selectedChess = selectedCell1.getChess();
+        if (selectedChess != null)
+        {
+            selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
+            if (!selectedChess.getColor().toString().equals(playerTurn.toString()))
+                selectedChess = null;
+        }
     }
 }
 

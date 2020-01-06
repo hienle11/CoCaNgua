@@ -43,4 +43,15 @@ public class PlayerController
     {
         return player[number];
     }
+
+    public static Player getPlayer(Player.Color color)
+    {
+        for (int i = 0; i < 4; i ++)
+        {
+            if (color == player[i].getColor())
+                return player[i];
+        }
+        return null;
+    }
+
 }

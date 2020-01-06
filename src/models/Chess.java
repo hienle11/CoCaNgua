@@ -22,13 +22,14 @@ public class Chess
     }
 
     private Player.Color color;
-    private int position;
+    private String cellId;
     private Location location = Location.NEST;
     private int homeDistance;
 
-    public Chess(Player.Color color)
+    public Chess(Player.Color color, String cellId)
     {
         this.color = color;
+        this.cellId = cellId;
     }
 
     public Player.Color getColor()
@@ -41,14 +42,14 @@ public class Chess
         this.color = color;
     }
 
-    public int getPosition()
+    public String getCellId()
     {
-        return position;
+        return cellId;
     }
 
-    public void setPosition(int position)
+    public void setCellId(String cellId)
     {
-        this.position = position;
+        this.cellId = cellId;
     }
 
     public Location getLocation()
@@ -71,9 +72,9 @@ public class Chess
         homeDistance -= numberOfMoves;
     }
 
-    public void move(int numberOfMoves)
+    public void moveTo(String cellId)
     {
-        position += numberOfMoves;
+        this.cellId = cellId;
     }
 
     private void kick(Chess anotherChess)
