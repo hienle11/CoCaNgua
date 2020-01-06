@@ -12,15 +12,8 @@
 
 package controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.image.ImageView;
-import models.Chess;
 import models.HumanPlayer;
 import models.Player;
-import views.ChessView;
-
-import java.util.ArrayList;
 
 public class PlayerController
 {
