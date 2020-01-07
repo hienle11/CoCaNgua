@@ -16,7 +16,7 @@ public class Chess
 {
     private Player.Color color;
     private String cellId;
-    private int homeDistance = - 1;
+    private int homeDistance = -1;
 
     public Chess(Player.Color color, String cellId)
     {
@@ -45,10 +45,18 @@ public class Chess
         homeDistance -= numberOfMoves;
     }
 
-    public void moveTo(Cell cell)
+    public void getKicked(Cell cell)
     {
-        if (cell.getId().contains("Nest"))
-            homeDistance = 48;
+        this.cellId = cell.getId();
+        homeDistance = -1;
+    }
+
+    public void moveTo(Cell cell, int steps)
+    {
+        if (homeDistance == -1)
+            homeDistance = 47;
+        else
+            homeDistance -= steps;
         this.cellId = cell.getId();
     }
 

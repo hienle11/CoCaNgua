@@ -90,27 +90,27 @@ public class CellController
         for(int i = 0; i < cellViewList.size(); i++)
             cellList.add(new Cell(cellViewList.get(i).getId()));
 
-        for (int i = 72; i < 88; i++)
+        for (int i = 76; i < 92; i++)
         {
-            if (i < 76)
+            if (i < 80)
             {
                 cellViewList.get(i).getChildren().add(new ChessView(blueChessImage));
-                cellList.get(i).setChess(PlayerController.getPlayer(0).getChess(i-72));
-            }
-            else if (i < 80)
-            {
-                cellViewList.get(i).getChildren().add(new ChessView(redChessImage));
-                cellList.get(i).setChess(PlayerController.getPlayer(1).getChess(i-76));
+                cellList.get(i).setChess(PlayerController.getPlayer(0).getChess(i-76));
             }
             else if (i < 84)
             {
+                cellViewList.get(i).getChildren().add(new ChessView(redChessImage));
+                cellList.get(i).setChess(PlayerController.getPlayer(1).getChess(i-80));
+            }
+            else if (i < 88)
+            {
                 cellViewList.get(i).getChildren().add(new ChessView(greenChessImage));
-                cellList.get(i).setChess(PlayerController.getPlayer(2).getChess(i-80));
+                cellList.get(i).setChess(PlayerController.getPlayer(2).getChess(i-84));
             }
             else
             {
                 cellViewList.get(i).getChildren().add(new ChessView(yellowChessImage));
-                cellList.get(i).setChess(PlayerController.getPlayer(3).getChess(i-84));
+                cellList.get(i).setChess(PlayerController.getPlayer(3).getChess(i-88));
             }
         }
     }

@@ -15,13 +15,14 @@ package views;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 
 
 public class CellView extends StackPane
 {
     public void showPossibleCells()
     {
-        ((Circle) (this.getChildren().get(0))).setFill(Color.VIOLET);
+        ((Shape) (this.getChildren().get(0))).setFill(Color.VIOLET);
 
        /* test = true;
         CellView cellView = this;
@@ -47,7 +48,7 @@ public class CellView extends StackPane
 
     public void hidePossibleCells()
     {
-        ((Circle) (this.getChildren().get(0))).setFill(Color.WHITE);
+        ((Shape) (this.getChildren().get(0))).setFill(Color.WHITE);
     }
 
 }

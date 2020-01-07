@@ -91,9 +91,9 @@ public abstract class Player
         return diceValue;
     }
 
-    public void moveChess(Chess chess, Cell cell1, Cell cell2)
+    public void moveChess(Chess chess, Cell cell1, Cell cell2, int diceValue)
     {
-        chess.moveTo(cell2);
+        chess.moveTo(cell2, diceValue);
         cell1.setChess(null);
         cell2.setChess(chess);
     }
