@@ -22,9 +22,4 @@ public class ComputerPlayer extends Player
     {
         return null;
     }
-    @Override
-    public Chess moveChess()
-    {
-        return null;
-    }
 }

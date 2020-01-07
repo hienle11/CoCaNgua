@@ -16,7 +16,7 @@ public class Chess
 {
     private Player.Color color;
     private String cellId;
-    private int homeDistance;
+    private int homeDistance = - 1;
 
     public Chess(Player.Color color, String cellId)
     {
@@ -47,7 +47,8 @@ public class Chess
 
     public void moveTo(Cell cell)
     {
-
+        if (cell.getId().contains("Nest"))
+            homeDistance = 48;
         this.cellId = cell.getId();
     }
 

@@ -17,10 +17,6 @@ import models.Player;
 
 public class PlayerController
 {
-    private static final String blueChessImage = "File:src/resources/images/BLUE.jpg";
-    private static final String redChessImage = "File:src/resources/images/RED.jpg";
-    private static final String yellowChessImage = "File:src/resources/images/YELLOW.jpg";
-    private static final String greenChessImage = "File:src/resources/images/GREEN.jpg";
     private static Player[] player = new Player[4];
 
 

@@ -60,6 +60,8 @@ public class GameController implements Initializable
     private Chess selectedChess = null;
     private Cell selectedCell1 = null;
     private Cell selectedCell2 = null;
+    private Chess chessHasMoved = null;
+    private Player currentPlayer = null;
     private HashMap<Cell, Integer[]> possibleCellList = new HashMap<>();
 
 
@@ -131,6 +133,7 @@ public class GameController implements Initializable
             });
         diceIsRolled = false;
         possibleCellList.clear();
+        currentPlayer = PlayerController.getPlayer(playerTurn);
     }
 
     public void rollDiceBtHandler()
@@ -301,9 +304,7 @@ public class GameController implements Initializable
                 kickChess(anotherChess);
             }
             selectedChessView.moveTo(selectedCellView2);
-            selectedChess.moveTo(selectedCell2);
-            selectedCell1.setChess(null);
-            selectedCell2.setChess(selectedChess);
+            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2);
             return true;
         } else
             return false;
@@ -313,11 +314,15 @@ public class GameController implements Initializable
     {
         ChessView kickedChessView = (ChessView) selectedCellView2.getChildren().get(1);
         Cell nestCell = CellController.findEmptyNest(kickedChess);
-        System.out.println("nestCellId = " + nestCell.getId());
-        CellView nestCellView = CellController.getCellView(nestCell);
+        CellView nestCellView = CellController.getCellView(nestCell); 
         nestCell.setChess(kickedChess);
         kickedChess.moveTo(nestCell);
         kickedChessView.moveTo(nestCellView);
+    }
+
+    public boolean isThereAnotherPossibleMove()
+    {
+        return true;
     }
 }
 

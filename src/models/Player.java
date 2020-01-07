@@ -91,5 +91,10 @@ public abstract class Player
         return diceValue;
     }
 
-    abstract public Chess moveChess();
+    public void moveChess(Chess chess, Cell cell1, Cell cell2)
+    {
+        chess.moveTo(cell2);
+        cell1.setChess(null);
+        cell2.setChess(chess);
+    }
 }
