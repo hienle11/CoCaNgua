@@ -28,6 +28,7 @@ public class Cell
         return chess;
     }
 
+
     public void setChess(Chess chess)
     {
         this.chess = chess;

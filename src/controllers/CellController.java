@@ -15,6 +15,7 @@ package controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import models.Cell;
+import models.Chess;
 import views.CellView;
 import views.ChessView;
 
@@ -50,6 +51,40 @@ public class CellController
         }
         return null;
     }
+
+    public static Cell getCell(CellView cellView)
+    {
+        for (int i = 0; i < cellList.size(); i ++)
+        {
+            if (cellList.get(i).getId().equals(cellView.getId()))
+                return cellList.get(i);
+        }
+        return null;
+    }
+
+    public static CellView getCellView(Cell cell)
+    {
+        for (int i = 0; i < cellList.size(); i ++)
+        {
+            if (cellViewList.get(i).getId().equals(cell.getId()))
+                return cellViewList.get(i);
+        }
+        return null;
+    }
+
+    public static Cell findEmptyNest(Chess chess)
+    {
+        Cell cell;
+        String cellId = chess.getColor().toString().toLowerCase() + "Nest";
+        for(int i = 1; i < 5; i ++)
+        {
+            cell = getCell(cellId + i);
+            if (cell.getChess() == null)
+                return cell;
+        }
+        return null;
+    }
+
     public static void initialize()
     {
         for(int i = 0; i < cellViewList.size(); i++)
