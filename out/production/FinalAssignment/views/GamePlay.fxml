@@ -237,7 +237,7 @@
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>
         </CellView>
-        <CellView fx:id="red2" layoutX="102.0" layoutY="387.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+        <CellView fx:id="red2" layoutX="106.0" layoutY="387.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
             <children>
                 <Circle fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
             </children>

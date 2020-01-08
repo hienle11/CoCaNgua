@@ -14,16 +14,27 @@ package views;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 
 public class CellView extends StackPane
 {
+    Shape shape = null;
+    Paint color = null;
+
     public void showPossibleCells()
     {
-        ((Shape) (this.getChildren().get(0))).setFill(Color.VIOLET);
-
+        if (shape == null)
+        {
+            shape = ((Shape) (this.getChildren().get(0)));
+            if (shape instanceof Rectangle)
+                color = shape.getFill();
+            else
+                color = Color.WHITE;
+        }
+        shape.setFill(Color.VIOLET);
        /* test = true;
         CellView cellView = this;
         new Thread(new Runnable()
@@ -48,6 +59,6 @@ public class CellView extends StackPane
 
     public void hidePossibleCells()
     {
-        ((Shape) (this.getChildren().get(0))).setFill(Color.WHITE);
+        shape.setFill(color);
     }
 }

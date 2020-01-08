@@ -12,6 +12,8 @@
 
 package controllers;
 
+import models.Cell;
+import models.ComputerPlayer;
 import models.HumanPlayer;
 import models.Player;
 
@@ -23,9 +25,13 @@ public class PlayerController
     public static void initialize()
     {
         player[0] = new HumanPlayer(Player.Color.BLUE);
-        player[1] = new HumanPlayer(Player.Color.RED);
+        player[0].setName("Minh lz");
+        player[1] = new ComputerPlayer(Player.Color.RED);
+        player[1].setName("Comp1");
         player[2] = new HumanPlayer(Player.Color.GREEN);
-        player[3] = new HumanPlayer(Player.Color.YELLOW);
+        player[2].setName("Hien;");
+        player[3] = new ComputerPlayer(Player.Color.YELLOW);
+        player[3].setName("Comp2");
     }
 
     public static Player getPlayer(int number)
