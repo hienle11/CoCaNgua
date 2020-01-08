@@ -56,7 +56,7 @@
                 </GridPane>
             </children>
         </CellView>
-        <CellView fx:id="blueNest" prefHeight="196.0" prefWidth="172.0">
+        <CellView prefHeight="196.0" prefWidth="172.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="259.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="3.0" width="243.0" />
                 <GridPane>

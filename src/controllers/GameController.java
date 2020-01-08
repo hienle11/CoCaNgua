@@ -170,7 +170,7 @@ public class GameController implements Initializable
     {
         for(int i = 0; i < 4; i++)
         {
-            if (!currentPlayer.getChess(i).getCellId().matches("Home+[3-6]$"));
+            if (!currentPlayer.getChess(i).getCellId().matches("Home+[3-6]$"))
                 return false;
         }
         return true;
