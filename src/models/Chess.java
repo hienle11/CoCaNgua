@@ -34,15 +34,9 @@ public class Chess
         return cellId;
     }
 
-
     public int getHomeDistance()
     {
         return homeDistance;
-    }
-
-    public void setHomeDistance(int numberOfMoves)
-    {
-        homeDistance -= numberOfMoves;
     }
 
     public void getKicked(Cell cell)

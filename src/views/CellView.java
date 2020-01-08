@@ -50,5 +50,4 @@ public class CellView extends StackPane
     {
         ((Shape) (this.getChildren().get(0))).setFill(Color.WHITE);
     }
-
 }

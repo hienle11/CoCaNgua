@@ -28,6 +28,7 @@ import views.ChessView;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class GameController implements Initializable
 {
@@ -53,8 +54,9 @@ public class GameController implements Initializable
 
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
+    private int diceWasUsed = -1;
+    private int chessNumberHasMoved = -1;
 
-    private int selectedDiceValue = 0;
     private boolean diceIsRolled = false;
     private ChessView selectedChessView = null;
     private CellView selectedCellView1 = null;
@@ -62,7 +64,6 @@ public class GameController implements Initializable
     private Chess selectedChess = null;
     private Cell selectedCell1 = null;
     private Cell selectedCell2 = null;
-    private Chess chessHasMoved = null;
     private Player currentPlayer = null;
     private HashMap<Cell, Integer[]> possibleMoves = new HashMap<>();
 
@@ -104,7 +105,8 @@ public class GameController implements Initializable
                 if(moveChess())
                 {
                     hidePossibleCells();
-                    switchTurn();
+                    if(!isMovable())
+                        switchTurn();
                 }
                 selectedChess = null;
             }
@@ -136,8 +138,9 @@ public class GameController implements Initializable
             rollDiceBtHandler();
 
             });
+        chessNumberHasMoved = -1;
+        diceWasUsed = -1;
         diceIsRolled = false;
-        possibleMoves.clear();
         currentPlayer = PlayerController.getPlayer(playerTurn);
     }
 
@@ -154,6 +157,9 @@ public class GameController implements Initializable
 
     public boolean isMovable()
     {
+        if (diceWasUsed == 2)
+            return false;
+        possibleMoves.clear();
         getPossibleMoves();
         if (possibleMoves.size() == 0)
             return false;
@@ -163,11 +169,14 @@ public class GameController implements Initializable
 
     public void getPossibleMoves()
     {
-        System.out.println(playerTurn.toString().toLowerCase() + "Home");
         Cell currentCell;
         Chess checkedChess;
         for (int i = 0 ; i < 4; i ++)
         {
+            System.out.println("chessNumberHasMOved = " + chessNumberHasMoved);
+            System.out.println("diceWasUsed" + diceWasUsed);
+            if(i == chessNumberHasMoved)
+                continue;
             checkedChess = currentPlayer.getChess(i);
             currentCell = CellController.getCell(checkedChess.getCellId());
             int currentCellIndex = CellController.getCellList().indexOf(currentCell);
@@ -175,7 +184,6 @@ public class GameController implements Initializable
                 getSpawnMoves(i);
             else if (currentCell.getId().contains(playerTurn.toString().toLowerCase() + "Home"))
             {
-                System.out.println("problem here");
                 if(currentCellIndex < 48)
                 {
                     switch (playerTurn)
@@ -207,6 +215,8 @@ public class GameController implements Initializable
         int finalCellIndex;
         for (int i = 0; i < 3; i ++)
         {
+            if(diceValue[i] < 0)
+                continue;
             //System.out.println("homeDistance " + currentPlayer.getChess(chessNumber).getHomeDistance());
             if (currentPlayer.getChess(chessNumber).getHomeDistance() - diceValue[i] < 0)
             {
@@ -274,7 +284,7 @@ public class GameController implements Initializable
     public void getSpawnMoves(int chessNumber)
     {
         Cell possibleCell = null;
-        if (diceValue[0] == 6 || diceValue[1] == 6)
+        if ((diceValue[0] == 6 && diceWasUsed != 0) || (diceValue[1] == 6 && diceWasUsed != 1))
         {
             switch (playerTurn)
             {
@@ -311,6 +321,8 @@ public class GameController implements Initializable
         boolean checkingResult = false;
         for (int i = 0; i < 3; i ++)
         {
+            if(diceValue[i] < 0)
+                continue;
             if(diceValue[i] > 6)
                 break;
             if(currentCell.getId().contains("0"))
@@ -365,17 +377,20 @@ public class GameController implements Initializable
     public boolean moveChess()
     {
         selectedCell2 = CellController.getCell(selectedCellView2);
-        if(possibleMoves.containsKey(selectedCell2) && selectedChess == currentPlayer.getChess(possibleMoves.get(selectedCell2)[0]))
+        if(isValidMove())
         {
+            chessNumberHasMoved = possibleMoves.get(selectedCell2)[0];
+            diceWasUsed = possibleMoves.get(selectedCell2)[1];
+            diceValue[diceWasUsed] = - diceWasUsed;
+            diceValue[2] = - diceWasUsed;
             if (selectedCell2.getChess() != null)
             {
                 Chess anotherChess = selectedCell2.getChess();
                 kickChess(anotherChess);
             }
 
-            selectedDiceValue = diceValue[possibleMoves.get(selectedCell2)[1]];
             selectedChessView.moveTo(selectedCellView2);
-            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, selectedDiceValue);
+            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, diceValue[diceWasUsed]);
             return true;
         } else
             return false;
@@ -391,9 +406,14 @@ public class GameController implements Initializable
         kickedChessView.moveTo(nestCellView);
     }
 
-    public boolean isThereAnotherPossibleMove()
+    public boolean isValidMove()
     {
-        return true;
+        if (!possibleMoves.containsKey(selectedCell2))
+            return false;
+        int chessNumber = possibleMoves.get(selectedCell2)[0];
+        if (selectedChess == currentPlayer.getChess(chessNumber))
+            return true;
+        return false;
     }
 
     public void showPossibleCells()
