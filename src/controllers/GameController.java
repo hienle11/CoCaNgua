@@ -12,13 +12,17 @@
 
 package controllers;
 
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
+
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import models.Cell;
 import models.Chess;
 import models.ComputerPlayer;
@@ -50,7 +54,8 @@ public class GameController implements Initializable
             yellowNest1, yellowNest2, yellowNest3, yellowNest4,
             greenNest1, greenNest2, greenNest3, greenNest4;
 
-
+    @FXML
+    Label turn;
 
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
@@ -141,10 +146,11 @@ public class GameController implements Initializable
                 }
             }
             System.out.println("playerTurn = " + playerTurn.toString());
+            turn.setText("Player Turn: " + playerTurn.toString());
+            turn.setAlignment(Pos.CENTER);
             rollDiceBt.setOnAction(event ->
             {
-                rollDiceBtHandler();
-
+             rollDiceAnimation();
             });
             chessNumberHasMoved = -1;
             diceWasUsed = -1;
@@ -159,6 +165,20 @@ public class GameController implements Initializable
                 computerMove();
             }
         } while(currentPlayerIsComputer);
+    }
+
+    public void rollDiceAnimation(){
+        RotateTransition rt = new RotateTransition(Duration.seconds(0.5),dice0);
+        rt.setFromAngle(0);
+        rt.setToAngle(360);
+        rt.play();
+        RotateTransition rt1 = new RotateTransition(Duration.seconds(0.5),dice1);
+        rt1.setFromAngle(0);
+        rt1.setToAngle(360);
+        rt1.setOnFinished(actionEvent -> {
+            rollDiceBtHandler();
+        });
+        rt1.play();
     }
 
     public void rollDiceBtHandler()
