@@ -71,7 +71,11 @@ public class ComputerPlayer extends Player
                         itIsABetterMove = true;
                 } else if (movePriority <= 1)// if the chess is moving normally
                 {
-                    if (isMovingNearerChess(pickedChessNumber, chessNumber))
+                    if (cell.getId().contains("Spawn"))
+                        continue;
+                    else if (isMovingNearerChess(pickedChessNumber, chessNumber))
+                        itIsABetterMove = true;
+                    else if (pickedStep < diceValue[diceIndex])
                         itIsABetterMove = true;
                 }
             }

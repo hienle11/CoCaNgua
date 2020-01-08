@@ -12,7 +12,6 @@
 
 package controllers;
 
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -107,60 +106,73 @@ public class GameController implements Initializable
                 {
                     hidePossibleCells();
                     if(!isMovable())
-                        switchTurn();
+                        endTurn();
                 }
                 selectedChess = null;
             }
         }
     }
 
-    public void switchTurn()
+    public void endTurn()
     {
+        if (isGameEnded())
+        {
+            System.out.println("game is ended");
+            System.exit(0);
+        }
         do
         {
-            if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
-            {
-                switch (playerTurn)
-                {
-                    case BLUE:
-                        playerTurn = Player.Color.RED;
-                        currentPlayerIsComputer = true;
-                        break;
-                    case RED:
-                        playerTurn = Player.Color.GREEN;
-                        currentPlayerIsComputer = false;
-                        break;
-                    case GREEN:
-                        playerTurn = Player.Color.YELLOW;
-                        currentPlayerIsComputer = true;
-                        break;
-                    case YELLOW:
-                        playerTurn = Player.Color.BLUE;
-                        currentPlayerIsComputer = false;
-                        break;
-                }
-            }
+            switchTurn();
             System.out.println("playerTurn = " + playerTurn.toString());
-            rollDiceBt.setOnAction(event ->
-            {
-                rollDiceBtHandler();
-
-            });
+            rollDiceBt.setOnAction(event -> rollDiceBtHandler());
             chessNumberHasMoved = -1;
             diceWasUsed = -1;
             diceIsRolled = false;
             currentPlayer = PlayerController.getPlayer(playerTurn);
             System.out.println("current Player is " + currentPlayer.getName() + "computer play = " + currentPlayerIsComputer);
-            System.out.println("asfasf = " + currentPlayerIsComputer);
             if (currentPlayerIsComputer)
             {
-                System.out.println("computer roll dice = " + diceValue[0] + diceValue[1] + diceValue[2]);
-                System.out.println("here");
                 computerMove();
             }
         } while(currentPlayerIsComputer);
     }
 
+    public void switchTurn()
+    {
+        if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
+        {
+            switch (playerTurn)
+            {
+                case BLUE:
+                    playerTurn = Player.Color.RED;
+                    currentPlayerIsComputer = true;
+                    break;
+                case RED:
+                    playerTurn = Player.Color.GREEN;
+                    currentPlayerIsComputer = true;
+                    break;
+                case GREEN:
+                    playerTurn = Player.Color.YELLOW;
+                    currentPlayerIsComputer = true;
+                    break;
+                case YELLOW:
+                    playerTurn = Player.Color.BLUE;
+                    currentPlayerIsComputer = false;
+                    break;
+            }
+        }
+    }
+
+
+    public boolean isGameEnded()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            if (!currentPlayer.getChess(i).getCellId().matches("Home+[3-6]"));
+                return false;
+        }
+        return true;
+    }
     public void rollDiceBtHandler()
     {
         diceValue = Player.rollDice();
@@ -169,7 +181,7 @@ public class GameController implements Initializable
         rollDiceBt.setOnAction(null);
         diceIsRolled = true;
         if(!isMovable())
-            switchTurn();
+            endTurn();
     }
 
     public boolean isMovable()
@@ -389,6 +401,40 @@ public class GameController implements Initializable
         }
     }
 
+    public void computerMove()
+    {
+        diceValue = Player.rollDice();
+        System.out.println("here dice Values= " + diceValue[0] + diceValue[1] + diceValue[2]);
+        dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
+        dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
+        rollDiceBt.setOnAction(null);
+        diceIsRolled = true;
+        while (isMovable())
+        {
+            System.out.println("Playername =" + currentPlayer.getName());
+            selectedCell2 = ((ComputerPlayer) currentPlayer).makeDecision(possibleMoves, diceValue);
+            updateConditions();
+            selectedChess = currentPlayer.getChess(possibleMoves.get(selectedCell2)[0]);
+            selectedCell1 = CellController.getCell(selectedChess.getCellId());
+            selectedCellView1 = CellController.getCellView(selectedCell1);
+            selectedCellView2 = CellController.getCellView(selectedCell2);
+            if (selectedCellView1.getChildren().size() == 3)
+                selectedChessView = (ChessView) selectedCellView1.getChildren().get(2);
+            else
+                selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
+            if (selectedCell2.getChess() != null)
+            {
+                Chess anotherChess = selectedCell2.getChess();
+                kickChess(anotherChess);
+            }
+            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, -diceValue[diceWasUsed]);
+            selectedChessView.moveTo(selectedCellView2);
+
+            hidePossibleCells();
+        }
+
+    }
+
     public boolean moveChess()
     {
         selectedCell2 = CellController.getCell(selectedCellView2);
@@ -419,38 +465,6 @@ public class GameController implements Initializable
             diceValue[2] = (-diceValue[2]);
     }
 
-    public void computerMove()
-    {
-        diceValue = Player.rollDice();
-        dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
-        dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
-        rollDiceBt.setOnAction(null);
-        diceIsRolled = true;
-        while (isMovable())
-        {
-            System.out.println("Playername =" + currentPlayer.getName());
-            selectedCell2 = ((ComputerPlayer) currentPlayer).makeDecision(possibleMoves, diceValue);
-            updateConditions();
-            selectedChess = currentPlayer.getChess(possibleMoves.get(selectedCell2)[0]);
-            selectedCell1 = CellController.getCell(selectedChess.getCellId());
-            selectedCellView1 = CellController.getCellView(selectedCell1);
-            selectedCellView2 = CellController.getCellView(selectedCell2);
-            if (selectedCellView1.getChildren().size() == 3)
-                selectedChessView = (ChessView) selectedCellView1.getChildren().get(2);
-            else
-                selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
-            if (selectedCell2.getChess() != null)
-            {
-                Chess anotherChess = selectedCell2.getChess();
-                kickChess(anotherChess);
-            }
-            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, -diceValue[diceWasUsed]);
-            selectedChessView.moveTo(selectedCellView2);
-
-            hidePossibleCells();
-        }
-
-    }
 
     public void kickChess(Chess kickedChess)
     {

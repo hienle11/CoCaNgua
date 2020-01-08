@@ -25,11 +25,11 @@ public class PlayerController
     public static void initialize()
     {
         player[0] = new HumanPlayer(Player.Color.BLUE);
-        player[0].setName("Minh lz");
+        player[0].setName("Player");
         player[1] = new ComputerPlayer(Player.Color.RED);
         player[1].setName("Comp1");
-        player[2] = new HumanPlayer(Player.Color.GREEN);
-        player[2].setName("Hien;");
+        player[2] = new ComputerPlayer(Player.Color.GREEN);
+        player[2].setName("Comp3");
         player[3] = new ComputerPlayer(Player.Color.YELLOW);
         player[3].setName("Comp2");
     }
