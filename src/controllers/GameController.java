@@ -12,12 +12,16 @@
 
 package controllers;
 
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import models.Cell;
 import models.Chess;
 import models.ComputerPlayer;
@@ -49,7 +53,8 @@ public class GameController implements Initializable
             yellowNest1, yellowNest2, yellowNest3, yellowNest4,
             greenNest1, greenNest2, greenNest3, greenNest4;
 
-
+    @FXML
+    Label turn;
 
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
@@ -173,6 +178,21 @@ public class GameController implements Initializable
         }
         return true;
     }
+
+    public void rollDiceAnimation(){
+        RotateTransition rt = new RotateTransition(Duration.seconds(0.5),dice0);
+        rt.setFromAngle(0);
+        rt.setToAngle(360);
+        rt.play();
+        RotateTransition rt1 = new RotateTransition(Duration.seconds(0.5),dice1);
+        rt1.setFromAngle(0);
+        rt1.setToAngle(360);
+        rt1.setOnFinished(actionEvent -> {
+            rollDiceBtHandler();
+        });
+        rt1.play();
+    }
+
     public void rollDiceBtHandler()
     {
         diceValue = Player.rollDice();
@@ -401,6 +421,36 @@ public class GameController implements Initializable
         }
     }
 
+    public boolean moveChess()
+    {
+        selectedCell2 = CellController.getCell(selectedCellView2);
+        if(isValidMove())
+        {
+            updateConditions();
+            //System.out.println("dice was used = " + diceWasUsed);
+            //System.out.println("diceValue was used = " + diceValue[diceWasUsed]);
+            //System.out.println("diceValue[2] = " + diceValue[2]);
+            if (selectedCell2.getChess() != null)
+            {
+                Chess anotherChess = selectedCell2.getChess();
+                kickChess(anotherChess);
+            }
+            selectedChessView.moveTo(selectedCellView2);
+            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, -diceValue[diceWasUsed]);
+            return true;
+        } else
+            return false;
+    }
+
+    public void updateConditions()
+    {
+        chessNumberHasMoved = possibleMoves.get(selectedCell2)[0];
+        diceWasUsed = possibleMoves.get(selectedCell2)[1];
+        diceValue[diceWasUsed] = (-diceValue[diceWasUsed]);
+        if(diceValue[2] > 0)
+            diceValue[2] = (-diceValue[2]);
+    }
+
     public void computerMove()
     {
         diceValue = Player.rollDice();
@@ -434,37 +484,6 @@ public class GameController implements Initializable
         }
 
     }
-
-    public boolean moveChess()
-    {
-        selectedCell2 = CellController.getCell(selectedCellView2);
-        if(isValidMove())
-        {
-            updateConditions();
-            //System.out.println("dice was used = " + diceWasUsed);
-            //System.out.println("diceValue was used = " + diceValue[diceWasUsed]);
-            //System.out.println("diceValue[2] = " + diceValue[2]);
-            if (selectedCell2.getChess() != null)
-            {
-                Chess anotherChess = selectedCell2.getChess();
-                kickChess(anotherChess);
-            }
-            selectedChessView.moveTo(selectedCellView2);
-            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, -diceValue[diceWasUsed]);
-            return true;
-        } else
-            return false;
-    }
-
-    public void updateConditions()
-    {
-        chessNumberHasMoved = possibleMoves.get(selectedCell2)[0];
-        diceWasUsed = possibleMoves.get(selectedCell2)[1];
-        diceValue[diceWasUsed] = (-diceValue[diceWasUsed]);
-        if(diceValue[2] > 0)
-            diceValue[2] = (-diceValue[2]);
-    }
-
 
     public void kickChess(Chess kickedChess)
     {
