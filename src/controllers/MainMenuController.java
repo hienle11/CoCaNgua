@@ -18,10 +18,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,11 +36,18 @@ import java.util.ResourceBundle;
 
 public class MainMenuController
 {
+    boolean multi = false;
     int current_lang = 0, current_color = 0;
     String[][] lang = new String[][]{{"vi", "en"}, {"VN", "US"}};
     TextField[] plName;
     Pane[] panes;
     Rectangle[] rectangles;
+    @FXML
+    private TextField hostID;
+
+    @FXML
+    private CheckBox multiplayer;
+
     @FXML
     private Pane pane1, pane2, pane3, pane4;
 
@@ -70,9 +80,12 @@ public class MainMenuController
         rules.setVisible(false);
         language.setVisible(false);
         exit.setVisible(false);
+        multiplayer.setDisable(true);
+        multiplayer.setLayoutX(100);
         choice.setVisible(true);
         back.setVisible(true);
         done.setVisible(true);
+        multi = multiplayer.isSelected();
     }
 
     @FXML
@@ -92,6 +105,7 @@ public class MainMenuController
         menu.setImage(new Image(bundle.getString("menu")));
         done.setText(bundle.getString("done"));
         back.setText(bundle.getString("back"));
+        multiplayer.setText(bundle.getString("multi"));
         for (int i = 0; i < 4; i++) plName[i].setText(bundle.getString("player") + (i + 1));
         current_lang = 1 - current_lang;
     }
@@ -120,7 +134,18 @@ public class MainMenuController
 
     @FXML
     void getName() {
-        for (TextField i : plName) System.out.println(i);
+        for (int i = 0; i < 4; i++) {
+            System.out.println(plName[i].getCharacters());
+            System.out.println(rectangles[i].getFill());
+        }
+        if (multi) {
+            for (int i = 0; i < 4; i++) {
+                panes[i].setVisible(false);
+            }
+            choice.setDisable(true);
+            hostID.setVisible(true);
+            done.setVisible(false);
+        }
     }
 
     @FXML
@@ -134,5 +159,12 @@ public class MainMenuController
         Color temp_color = (Color) temp.getFill();
         temp.setFill(rectangles[current_color].getFill());
         rectangles[current_color].setFill(temp_color);
+    }
+
+    @FXML
+    void getHostID(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            System.out.println(((TextField) event.getSource()).getCharacters());
+        }
     }
 }
