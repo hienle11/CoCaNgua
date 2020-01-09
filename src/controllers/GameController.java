@@ -224,7 +224,7 @@ public class GameController implements Initializable
         Set<Cell> possibleCellSet = possibleMoves.keySet();
         for(Cell cell:possibleCellSet)
             System.out.println("Set = " + cell.getId());
-            turn.setText(playerTurn.toString());
+            turn.setText("Player turn: "+ playerTurn.toString());
 
         if (possibleMoves.size() == 0)
             return false;
