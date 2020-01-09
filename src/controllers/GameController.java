@@ -224,6 +224,8 @@ public class GameController implements Initializable
         Set<Cell> possibleCellSet = possibleMoves.keySet();
         for(Cell cell:possibleCellSet)
             System.out.println("Set = " + cell.getId());
+            turn.setText(playerTurn.toString());
+
         if (possibleMoves.size() == 0)
             return false;
         else
@@ -471,6 +473,7 @@ public class GameController implements Initializable
     {
         diceValue = Player.rollDice();
         System.out.println("playerTurn = " + playerTurn.toString());
+        turn.setText("Player turn: "+ playerTurn.toString());
         System.out.println("here dice Values= " + diceValue[0] + diceValue[1] + diceValue[2]);
         dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
         dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
