@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import models.Cell;
 import models.Chess;
@@ -36,6 +37,8 @@ import java.util.Set;
 
 public class GameController implements Initializable
 {
+    @FXML
+        public StackPane stackPane;
     @FXML
     private Button rollDiceBt;
     @FXML
@@ -77,6 +80,7 @@ public class GameController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        stackPane.setManaged(false);
         PlayerController.initialize();
         CellController.getCellViewList().addAll(
                 blueHome0, blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
@@ -148,15 +152,15 @@ public class GameController implements Initializable
             {
                 case BLUE:
                     playerTurn = Player.Color.RED;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = false;
                     break;
                 case RED:
                     playerTurn = Player.Color.GREEN;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = false;
                     break;
                 case GREEN:
                     playerTurn = Player.Color.YELLOW;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = false;
                     break;
                 case YELLOW:
                     playerTurn = Player.Color.BLUE;
@@ -457,8 +461,8 @@ public class GameController implements Initializable
                 Chess anotherChess = selectedCell2.getChess();
                 kickChess(anotherChess);
             }
-            selectedChessView.moveTo(selectedCellView2);
             currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, -diceValue[diceWasUsed]);
+            selectedChessView.moveTo(selectedCellView2);
             return true;
         } else
             return false;
@@ -500,8 +504,8 @@ public class GameController implements Initializable
                 kickChess(anotherChess);
             }
             currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, -diceValue[diceWasUsed]);
-            selectedChessView.moveTo(selectedCellView2);
             hidePossibleCells();
+            selectedChessView.moveTo(selectedCellView2);
         }
         endTurn();
     }
