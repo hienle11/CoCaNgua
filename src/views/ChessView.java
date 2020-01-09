@@ -12,8 +12,11 @@
 
 package views;
 
+import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
+import javafx.util.Duration;
 
 public class ChessView extends ImageView
 {
@@ -27,6 +30,22 @@ public class ChessView extends ImageView
 
     public void moveTo(CellView selectedCellView)
     {
+        CellView transporter = new CellView();
+        CellView initialCellView = (CellView)this.getParent();
+        transporter.setLayoutX(initialCellView.getLayoutX());
+        transporter.setLayoutY(initialCellView.getLayoutY());
+        transporter.getChildren().add(this);
+        Line line = new Line();
+        line.setStartX(initialCellView.getLayoutX());
+        line.setStartY(initialCellView.getLayoutY());
+        line.setEndX(selectedCellView.getLayoutX());
+        line.setEndY(selectedCellView.getLayoutY());
+        PathTransition transition = new PathTransition();
+        transition.setNode(transporter);
+        transition.setDuration(Duration.seconds(3));
+        transition.setPath(line);
+        transition.setCycleCount(1);
+        transition.play();
         selectedCellView.getChildren().add(this);
     }
 }
