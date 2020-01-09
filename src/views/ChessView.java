@@ -12,14 +12,8 @@
 
 package views;
 
-import controllers.GameController;
-import javafx.animation.PathTransition;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Line;
-import javafx.util.Duration;
 
 public class ChessView extends ImageView
 {
@@ -27,9 +21,8 @@ public class ChessView extends ImageView
     public ChessView(String imagePath)
     {
         setImage(new Image(imagePath));
-        setFitHeight(20);
-        setFitWidth(20);
-        setBlendMode(BlendMode.SRC_ATOP);
+        setFitHeight(30);
+        setFitWidth(25);
     }
 
     public void moveTo(CellView selectedCellView)

@@ -583,22 +583,22 @@
       </Label>
       <Label layoutX="632.0" layoutY="447.0" text="Player" textFill="#17c317" />
       <Label fx:id="turn" layoutX="715.0" layoutY="359.0" prefHeight="41.0" prefWidth="104.0" />
-            <CellView fx:id="greenNest1" layoutX="574.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="25.0">
+            <CellView fx:id="greenNest4" layoutX="574.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="25.0">
                 <children>
                     <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
                 </children>
             </CellView>
-            <CellView fx:id="greenNest2" layoutX="474.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="30.0">
+            <CellView fx:id="greenNest3" layoutX="474.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="30.0">
                 <children>
                     <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
                 </children>
             </CellView>
-            <CellView fx:id="greenNest4" layoutX="574.0" layoutY="486.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="19.0" prefWidth="28.0">
+            <CellView fx:id="greenNest2" layoutX="574.0" layoutY="486.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="19.0" prefWidth="28.0">
                 <children>
                     <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
                 </children>
             </CellView>
-            <CellView fx:id="greenNest3" layoutX="474.0" layoutY="486.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <CellView fx:id="greenNest1" layoutX="474.0" layoutY="486.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
                 <children>
                     <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
                 </children>

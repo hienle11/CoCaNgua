@@ -1,4 +1,14 @@
-
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Assignment
+  Created date: 10/01/2020
+  By: Phuoc (s3695516)
+  Last modified: dd/mm/yyyy (e.g. 05/04/2019)
+  By: Phuoc (s3695516)
+  Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.
+*/
 
 package controllers;
 
@@ -56,5 +66,10 @@ public class ButtonController
         // get the current stage and load a new scene;
         WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
         window.loadWindow(gamePlayWindow);
+    }
+
+    public static void rollDiceBtHandler()
+    {
+        AnimationController.rollDiceAnimation();
     }
 }

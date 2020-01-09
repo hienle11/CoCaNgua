@@ -23,10 +23,10 @@ import java.util.ArrayList;
 
 public class CellController
 {
-    private static final String blueChessImage = "File:src/resources/images/BLUE.jpg";
-    private static final String redChessImage = "File:src/resources/images/RED.jpg";
-    private static final String yellowChessImage = "File:src/resources/images/YELLOW.jpg";
-    private static final String greenChessImage = "File:src/resources/images/GREEN.jpg";
+    private static final String blueChessImage = "File:src/resources/images/BLUE.png";
+    private static final String redChessImage = "File:src/resources/images/RED.png";
+    private static final String yellowChessImage = "File:src/resources/images/YELLOW.png";
+    private static final String greenChessImage = "File:src/resources/images/GREEN.png";
 
     private static ObservableList<CellView> cellViewList = FXCollections.observableArrayList();
     private static ArrayList<Cell> cellList = new ArrayList<>();
