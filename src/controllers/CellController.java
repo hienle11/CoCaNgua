@@ -83,7 +83,7 @@ public class CellController
         return null;
     }
 
-    public static CellView getCellView(String id)
+    public static CellView getHomeCellView(String id)
     {
         for (int i = 0; i < cellList.size(); i ++)
         {
@@ -95,7 +95,14 @@ public class CellController
 
     public static CellView getNextCellView(CellView currentCellView)
     {
-        int currentCellViewIndex = cellViewList.indexOf(currentCellView);
+        int currentCellViewIndex;
+        if (PlayerController.isAHomeArrivalMove())
+        {
+            currentCellViewIndex = getHomeCellIndex();
+        }else
+        {
+            currentCellViewIndex = cellViewList.indexOf(currentCellView);
+        }
         return cellViewList.get(currentCellViewIndex + 1);
     }
 

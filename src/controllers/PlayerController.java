@@ -106,8 +106,6 @@ public class PlayerController
         selectedCell1 = CellController.getCell(selectedChess.getCellId());
         selectedCellView1 = CellController.getCellView(selectedCell1);
         selectedCellView2 = CellController.getCellView(selectedCell2);
-        System.out.println("7777777 = " + CellController.getCellViewList().indexOf(selectedCellView1));
-        System.out.println("12421412214 = " + selectedCellView2.getId());
         selectedChessView = getChessView(selectedCellView1);
         if (selectedCell2.getChess() != null)
         {
@@ -240,7 +238,6 @@ public class PlayerController
 
     public static boolean isAHomeArrivalMove()
     {
-        System.out.println("cellvie 11111" + selectedCellView1.getId());
-        return selectedCellView1.getId().contains(TurnController.getPlayerTurn().toString().toLowerCase() + "Home0");
+        return (selectedCellView1.getId().contains(TurnController.getPlayerTurn().toString().toLowerCase() + "Home0"));
     }
 }

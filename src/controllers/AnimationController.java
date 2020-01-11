@@ -70,18 +70,13 @@ public class AnimationController
     public static void animateChessMoving()
     {
         CellView currentCellView;
-        if (PlayerController.isAHomeArrivalMove())
-        {
-            System.out.println("this is the last time " + CellController.getHomeCellIndex());
-            currentCellView = CellController.getCellViewList().get(CellController.getHomeCellIndex());
-        }
-        else
-            currentCellView = PlayerController.getSelectedCellView1();
+
+        currentCellView = PlayerController.getSelectedCellView1();
+        System.out.println("indexOfCurrentCellView = " + CellController.getCellViewList().indexOf(currentCellView));
 
         if (currentCellView != PlayerController.getSelectedCellView2())
         {
             CellView nextCellView;
-            System.out.println("809809808089 = " + PlayerController.getSelectedCellView2().getId());
 
             if (PlayerController.isASpawnMove())
                 nextCellView = PlayerController.getSelectedCellView2();

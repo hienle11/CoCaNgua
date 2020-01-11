@@ -25,7 +25,7 @@ public class TurnController
     private static int diceWasUsed = -1;
     private static int chessNumberHasMoved = -1;
     private static Player currentPlayer = null;
-    private static boolean currentPlayerIsComputer = false;
+    private static boolean currentPlayerIsComputer = true;
     private static boolean diceIsRolled = false;
 
     public static void setDiceIsRolled(boolean diceIsRolled)
@@ -77,6 +77,7 @@ public class TurnController
     {
         currentPlayer =  PlayerController.getPlayer(playerTurn);
         turn.setText("Player Turn: " + playerTurn.toString());
+        endTurn();
     }
 
     public static void endTurn()
