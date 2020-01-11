@@ -12,31 +12,47 @@
 
 package controllers;
 
-import javafx.scene.image.Image;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import models.*;
 import views.CellView;
-import views.ChessView;
 
 public class PlayerController
 {
     private static Player[] player = new Player[4];
-    private static ChessView selectedChessView = null;
+    private static ImageView kickedChessView = null;
+    private static ImageView selectedChessView = null;
     private static CellView selectedCellView1 = null;
     private static CellView selectedCellView2 = null;
+    private static CellView emptyNestCellView = null;
 
-    public static ChessView getSelectedChessView()
+    private static ObservableList<ImageView> chessViewList = FXCollections.observableArrayList();
+
+    public static ObservableList<ImageView> getChessViewList()
+    {
+        return chessViewList;
+    }
+
+    public static ImageView getSelectedChessView()
     {
         return selectedChessView;
     }
 
-    public static Cell getSelectedCell1()
+    public static CellView getEmptyNestCellView()
     {
-        return selectedCell1;
+        return emptyNestCellView;
     }
 
-    public static Cell getSelectedCell2()
+    public static void setKickedChessView(ImageView kickedChessView)
     {
-        return selectedCell2;
+        PlayerController.kickedChessView = kickedChessView;
+    }
+
+    public static ImageView getKickedChessView()
+    {
+        return kickedChessView;
     }
 
     private static Chess selectedChess = null;
@@ -45,14 +61,24 @@ public class PlayerController
 
     public static void initialize()
     {
-        player[0] = new HumanPlayer(Player.Color.BLUE);
+        player[0] = new ComputerPlayer(Player.Color.BLUE);
         player[0].setName("Player");
         player[1] = new ComputerPlayer(Player.Color.RED);
         player[1].setName("Comp1");
-        player[2] = new HumanPlayer(Player.Color.GREEN);
+        player[2] = new ComputerPlayer(Player.Color.GREEN);
         player[2].setName("Comp3");
         player[3] = new ComputerPlayer(Player.Color.YELLOW);
         player[3].setName("Comp2");
+    }
+    public static ImageView getChessView(CellView cellView)
+    {
+        for (int i = 0; i < chessViewList.size(); i++)
+        {
+            if((chessViewList.get(i).getLayoutX() == (cellView.getLayoutX() + 4))
+                    && (chessViewList.get(i).getLayoutY() == (cellView.getLayoutY() + 4)))
+                return chessViewList.get(i);
+        }
+        return null;
     }
 
     public static Player getPlayer(int number)
@@ -80,10 +106,9 @@ public class PlayerController
         selectedCell1 = CellController.getCell(selectedChess.getCellId());
         selectedCellView1 = CellController.getCellView(selectedCell1);
         selectedCellView2 = CellController.getCellView(selectedCell2);
-        if (selectedCellView1.getChildren().size() == 3)
-            selectedChessView = (ChessView) selectedCellView1.getChildren().get(2);
-        else
-            selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
+        System.out.println("7777777 = " + CellController.getCellViewList().indexOf(selectedCellView1));
+        System.out.println("12421412214 = " + selectedCellView2.getId());
+        selectedChessView = getChessView(selectedCellView1);
         if (selectedCell2.getChess() != null)
         {
             Chess anotherChess = selectedCell2.getChess();
@@ -94,45 +119,61 @@ public class PlayerController
     }
 
 
-    public static void selectChess()
+    public static void selectChess(MouseEvent event)
     {
+        Object selectedObject = event.getSource();
+
+        if (selectedObject instanceof ImageView)
+        {
+            System.out.println("12455");
+            selectedChessView = (ImageView) selectedObject;
+            selectedCellView1 = CellController.getCellView(selectedChessView);
+        } else if (selectedObject instanceof CellView)
+        {
+            selectedCellView1 = (CellView) selectedObject;
+            selectedChessView = PlayerController.getChessView(selectedCellView1);
+        }
+        selectedCellView1.showPossibleCell();
         selectedCell1 = CellController.getCell(selectedCellView1);
+
         selectedChess = selectedCell1.getChess();
         if (selectedChess != null)
         {
-            //System.out.println("selectedChess HomeDistance: = " + selectedChess.getHomeDistance());
-            if (selectedCellView1.getChildren().size() == 3)
-                selectedChessView = (ChessView) selectedCellView1.getChildren().get(2);
-            else
-                selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
             if (!selectedChess.getColor().toString().equals(TurnController.getPlayerTurn().toString()))
                 selectedChess = null;
-
         }
     }
 
-    public static boolean moveChess()
+    public static boolean moveChess(MouseEvent event)
     {
-        selectedCell2 = CellController.getCell(selectedCellView2);
-        if(isValidMove())
+        System.out.println("123");
+        selectedCellView1.hidePossibleCell();
+        if (event.getSource() instanceof CellView)
         {
-            TurnController.updateConditions(selectedCell2);
-            if (selectedCell2.getChess() != null)
+            selectedCellView2 = (CellView) event.getSource();
+            selectedCell2 = CellController.getCell(selectedCellView2);
+            if (isValidMove())
             {
-                Chess anotherChess = selectedCell2.getChess();
-                kickChess(anotherChess);
+                TurnController.updateConditions(selectedCell2);
+                if (selectedCell2.getChess() != null)
+                {
+                    Chess anotherChess = selectedCell2.getChess();
+                    kickChess(anotherChess);
+                }
+                TurnController.getCurrentPlayer().moveChess(selectedChess, selectedCell1, selectedCell2, TurnController.getDiceValueWasUsed());
+                System.out.println("here selectedChess = " + selectedChess.getCellId());
+                System.out.println("here cell1 = " + selectedCell1.getId());
+                System.out.println("here cell1 = " + selectedCell2.getId());
+                System.out.println("dice value was used =  " + TurnController.getDiceValueWasUsed());
+                selectedChess = null;
+                return true;
             }
-            TurnController.getCurrentPlayer().moveChess(selectedChess, selectedCell1, selectedCell2, TurnController.getDiceValueWasUsed());
-            PlayerController.setSelectedChess(null);
-            return true;
-        } else
-        {
-            PlayerController.setSelectedChess(null);
-            return false;
         }
+        selectedChess = null;
+        return false;
     }
 
-    public static void setSelectedChessView(ChessView selectedChessView)
+    public static void setSelectedChessView(ImageView selectedChessView)
     {
         PlayerController.selectedChessView = selectedChessView;
     }
@@ -169,12 +210,11 @@ public class PlayerController
 
     public static void kickChess(Chess kickedChess)
     {
-        ChessView kickedChessView = (ChessView) selectedCellView2.getChildren().get(1);
+        kickedChessView = PlayerController.getChessView(selectedCellView2);
         Cell nestCell = CellController.findEmptyNest(kickedChess);
-        CellView nestCellView = CellController.getCellView(nestCell);
+        emptyNestCellView = CellController.getCellView(nestCell);
         nestCell.setChess(kickedChess);
         kickedChess.getKicked(nestCell);
-        kickedChessView.moveTo(nestCellView);
     }
 
     public static boolean isValidMove()
@@ -196,5 +236,11 @@ public class PlayerController
     public static boolean isASpawnMove()
     {
         return selectedCellView2.getId().contains(TurnController.getPlayerTurn().toString().toLowerCase() + "Spawn");
+    }
+
+    public static boolean isAHomeArrivalMove()
+    {
+        System.out.println("cellvie 11111" + selectedCellView1.getId());
+        return selectedCellView1.getId().contains(TurnController.getPlayerTurn().toString().toLowerCase() + "Home0");
     }
 }

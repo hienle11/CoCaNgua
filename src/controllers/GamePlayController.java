@@ -12,13 +12,13 @@
 
 package controllers;
 
-import javafx.animation.Animation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import views.CellView;
@@ -29,11 +29,17 @@ import java.util.ResourceBundle;
 public class GamePlayController implements Initializable
 {
     @FXML
+         public Pane root;
+    @FXML
         public StackPane transportingPane;
     @FXML
     private Button rollDiceBt;
     @FXML
-    private ImageView dice0, dice1;
+    private ImageView dice0, dice1,
+            blueChess0, blueChess1, blueChess2, blueChess3,
+            redChess0, redChess1, redChess2, redChess3,
+            greenChess0, greenChess1, greenChess2, greenChess3,
+            yellowChess0, yellowChess1, yellowChess2, yellowChess3;
     @FXML
     private CellView blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
             redSpawn, red1, red2, red3, red4, red5, red6, red7, red8, red9, red10,
@@ -54,6 +60,11 @@ public class GamePlayController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        root.toFront();
+        PlayerController.getChessViewList().addAll(blueChess0, blueChess1, blueChess2, blueChess3,
+                redChess0, redChess1, redChess2, redChess3,
+                greenChess0, greenChess1, greenChess2, greenChess3,
+                yellowChess0, yellowChess1, yellowChess2, yellowChess3);
         PlayerController.initialize();
         CellController.getCellViewList().addAll(
                 blueHome0, blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
@@ -69,26 +80,25 @@ public class GamePlayController implements Initializable
                 greenNest1, greenNest2, greenNest3, greenNest4,
                 yellowNest1, yellowNest2, yellowNest3, yellowNest4);
         CellController.initialize();
-        AnimationController.initialize(dice0, dice1, transportingPane);
+        AnimationController.initialize(dice0, dice1);
         ButtonController.initialize(rollDiceBt);
-        TurnController.initialize();
+        TurnController.initialize(turn);
     }
 
     public void normalCellOnMouseClicked(MouseEvent event)
     {
-        if (PlayerController.getSelectedCellView1() !=  event.getSource() && TurnController.isDiceIsRolled())
+        if (PlayerController.getSelectedCellView1() !=  event.getSource() && TurnController.isDiceIsRolled() && !TurnController.isCurrentPlayerIsComputer())
         {
-            if (PlayerController.getSelectedChess() == null)
+            if (PlayerController.getSelectedCellView1() != null)
+                PlayerController.getSelectedCellView1().hidePossibleCell();
+            if (PlayerController.getSelectedChessView() == null || PlayerController.getSelectedChess() == null)
             {
-                PlayerController.setSelectedCellView1((CellView) event.getSource());
-                //System.out.println("selectedCell1 = " + selectedCellView1.getId());
-                PlayerController.selectChess();
+                PlayerController.selectChess(event);
             } else
             {
-                PlayerController.setSelectedCellView2((CellView) event.getSource());
-                //System.out.println("selectedCell2 = " + selectedCellView2.getId());
-                if(PlayerController.moveChess())
+                if(PlayerController.moveChess(event))
                 {
+
                     AnimationController.animateChessMoving();
                 }
             }

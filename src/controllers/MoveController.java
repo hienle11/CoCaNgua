@@ -17,7 +17,6 @@ import models.Chess;
 import models.Player;
 
 import java.util.HashMap;
-import java.util.Set;
 
 public class MoveController
 {
@@ -49,7 +48,6 @@ public class MoveController
         {
             if(i == TurnController.getChessNumberHasMoved())
                 continue;
-            System.out.println("player Name = " + TurnController.getCurrentPlayer().getName());
             checkedChess = TurnController.getCurrentPlayer().getChess(i);
             currentCell = CellController.getCell(checkedChess.getCellId());
             int currentCellIndex = CellController.getCellList().indexOf(currentCell);
@@ -59,21 +57,7 @@ public class MoveController
             {
                 if(currentCellIndex < 48)
                 {
-                    switch (TurnController.getPlayerTurn())
-                    {
-                        case BLUE:
-                            currentCellIndex = 48;
-                            break;
-                        case RED:
-                            currentCellIndex = 55;
-                            break;
-                        case GREEN:
-                            currentCellIndex = 62;
-                            break;
-                        case YELLOW:
-                            currentCellIndex = 69;
-                            break;
-                    }
+                    currentCellIndex = CellController.getHomeCellIndex();
                 }
                 getHomeArrivalMoves(currentCellIndex, i);
             }
@@ -90,7 +74,6 @@ public class MoveController
         {
             if(TurnController.getDiceValue()[i] < 0)
                 continue;
-            //System.out.println("homeDistance " + currentPlayer.getChess(chessNumber).getHomeDistance());
             if (TurnController.getCurrentPlayer().getChess(chessNumber).getHomeDistance() - TurnController.getDiceValue()[i] < 0)
             {
                 continue;
@@ -125,7 +108,6 @@ public class MoveController
         if (checkedCellIndex >= 48 && (!homeArrival))
             checkedCellIndex -= 48;
         finalCell = CellController.getCellList().get(checkedCellIndex);
-        //System.out.println("finalCell = " + finalCell.getId());
         if (finalCell.getChess() != null)
         {
             if (finalCell.getChess().getColor() == TurnController.getPlayerTurn())
@@ -145,10 +127,8 @@ public class MoveController
 
         }
         checkedCell = CellController.getCellList().get(checkedCellIndex);
-        //System.out.println("Cell = " + checkedCell.getId());
         if (checkedCell.getChess() != null)
         {
-            //System.out.println("here =-=" +checkedCell.getChess().getColor().toString());
             return false;
         }
         return true;
@@ -237,7 +217,7 @@ public class MoveController
     {
         possibleMoves.forEach((cell, chessAndDice) ->
         {
-            CellController.getCellView(cell).showPossibleCells();
+            CellController.getCellView(cell).showPossibleCell();
         });
     }
 
@@ -245,7 +225,7 @@ public class MoveController
     {
         possibleMoves.forEach((cell, chessAndDice) ->
         {
-            CellController.getCellView(cell).hidePossibleCells();
+            CellController.getCellView(cell).hidePossibleCell();
         });
     }
 

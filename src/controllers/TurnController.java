@@ -12,11 +12,14 @@
 
 package controllers;
 
+import javafx.scene.control.Label;
 import models.Cell;
 import models.Player;
 
 public class TurnController
 {
+    private static Label turn;
+
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
     private static int diceWasUsed = -1;
@@ -70,9 +73,10 @@ public class TurnController
         return diceIsRolled;
     }
 
-    public static void initialize()
+    public static void initialize(Label turn)
     {
         currentPlayer =  PlayerController.getPlayer(playerTurn);
+        turn.setText("Player Turn: " + playerTurn.toString());
     }
 
     public static void endTurn()
@@ -87,7 +91,6 @@ public class TurnController
         diceWasUsed = -1;
         diceIsRolled = false;
         currentPlayer = PlayerController.getPlayer(playerTurn);
-        System.out.println("playerTurn" + playerTurn);
         ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
         if (currentPlayerIsComputer)
         {
@@ -100,7 +103,6 @@ public class TurnController
     {
         if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
         {
-            System.out.println("cant move");
             switch (playerTurn)
             {
                 case BLUE:
@@ -109,7 +111,7 @@ public class TurnController
                     break;
                 case RED:
                     playerTurn = Player.Color.GREEN;
-                    currentPlayerIsComputer = false;
+                    currentPlayerIsComputer = true;
                     break;
                 case GREEN:
                     playerTurn = Player.Color.YELLOW;
@@ -117,9 +119,10 @@ public class TurnController
                     break;
                 case YELLOW:
                     playerTurn = Player.Color.BLUE;
-                    currentPlayerIsComputer = false;
+                    currentPlayerIsComputer = true;
                     break;
             }
+            System.out.println("Turn = " + playerTurn.toString());
         }
     }
 
@@ -128,7 +131,6 @@ public class TurnController
     {
         for(int i = 0; i < 4; i++)
         {
-            System.out.println("endGame: + " + currentPlayer.getChess(i).getCellId());
             if (!currentPlayer.getChess(i).getCellId().matches("Home+[3-6]"))
                 return false;
         }

@@ -16,29 +16,21 @@ import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-import models.Cell;
 import models.Player;
 import views.CellView;
-import views.ChessView;
-
-import java.lang.management.PlatformLoggingMXBean;
 
 public class AnimationController
 {
     private static ImageView dice0, dice1;
-    private static StackPane transportingPane;
 
-    public static void initialize(ImageView newDice0, ImageView newDice1, StackPane newTransportingPane)
+    public static void initialize(ImageView newDice0, ImageView newDice1)
     {
         dice0 = newDice0;
         dice1 = newDice1;
-        transportingPane = newTransportingPane;
-        transportingPane.setManaged(false);
-        transportingPane.toFront();
     }
 
     public static void animateDiceRolling()
@@ -77,32 +69,49 @@ public class AnimationController
 
     public static void animateChessMoving()
     {
-        CellView currentCellView = PlayerController.getSelectedCellView1();
+        CellView currentCellView;
+        if (PlayerController.isAHomeArrivalMove())
+        {
+            System.out.println("this is the last time " + CellController.getHomeCellIndex());
+            currentCellView = CellController.getCellViewList().get(CellController.getHomeCellIndex());
+        }
+        else
+            currentCellView = PlayerController.getSelectedCellView1();
+
         if (currentCellView != PlayerController.getSelectedCellView2())
         {
             CellView nextCellView;
+            System.out.println("809809808089 = " + PlayerController.getSelectedCellView2().getId());
+
             if (PlayerController.isASpawnMove())
                 nextCellView = PlayerController.getSelectedCellView2();
             else
                 nextCellView = CellController.getNextCellView(currentCellView);
-            transportingPane.getChildren().add(PlayerController.getSelectedChessView());
 
             Line line = new Line();
-            line.setStartX(currentCellView.getLayoutX() + 34);
-            line.setStartY(currentCellView.getLayoutY() + 34);
-            line.setEndX(nextCellView.getLayoutX() + 34);
-            line.setEndY(nextCellView.getLayoutY() + 34);
+            line.setStartX(14);
+            line.setStartY(14);
+            line.setEndX(nextCellView.getLayoutX() - currentCellView.getLayoutX() + 14);
+            line.setEndY(nextCellView.getLayoutY() - currentCellView.getLayoutY() + 14);
 
             PathTransition transition = new PathTransition();
             transition.setNode(PlayerController.getSelectedChessView());
-            transition.setDuration(Duration.seconds(0.5));
+            transition.setDuration(Duration.seconds(0.2));
             transition.setPath(line);
             transition.setCycleCount(1);
-
             MoveController.hidePossibleCells();
             startMovingAnimation(transition, nextCellView);
-        } else
+        }
+        else if (PlayerController.getKickedChessView() != null)
         {
+            animateChessGettingKicked();
+        }
+        else
+        {
+            PlayerController.getSelectedChessView().setLayoutX(PlayerController.getSelectedCellView2().getLayoutX() + 4);
+            PlayerController.getSelectedChessView().setLayoutY(PlayerController.getSelectedCellView2().getLayoutY() + 4);
+            PlayerController.getSelectedChessView().setTranslateX(0);
+            PlayerController.getSelectedChessView().setTranslateY(0);
             PlayerController.setSelectedChess(null);
             if (!MoveController.isMovable())
                 TurnController.endTurn();
@@ -111,17 +120,45 @@ public class AnimationController
         }
     }
 
+    private static void animateChessGettingKicked()
+    {
+        CellView emptyNest = PlayerController.getEmptyNestCellView();
+        ImageView kickedChessView = PlayerController.getKickedChessView();
+        Line line = new Line();
+        line.setStartX(14);
+        line.setStartY(14);
+
+        line.setEndX(emptyNest.getLayoutX() - kickedChessView.getLayoutX() + 10);
+        line.setEndY(emptyNest.getLayoutY() - kickedChessView.getLayoutY() + 10);
+
+        PathTransition transition = new PathTransition();
+        transition.setNode(PlayerController.getKickedChessView());
+        transition.setDuration(Duration.seconds(0.5));
+        transition.setPath(line);
+        transition.setCycleCount(1);
+
+        MoveController.hidePossibleCells();
+        transition.setOnFinished(e->
+        {
+            PlayerController.getKickedChessView().setLayoutX(PlayerController.getEmptyNestCellView().getLayoutX() + 4);
+            PlayerController.getKickedChessView().setLayoutY(PlayerController.getEmptyNestCellView().getLayoutY() + 4);
+            PlayerController.getKickedChessView().setTranslateX(0);
+            PlayerController.getKickedChessView().setTranslateY(0);
+            PlayerController.setKickedChessView(null);
+            animateChessMoving();
+        });
+        transition.play();
+    }
+
     private static void startMovingAnimation(PathTransition transition, CellView destinationCellView)
     {
         transition.setOnFinished(e ->
         {
-            String playerTurn = TurnController.getPlayerTurn().toString();
-            ChessView newChessView = new ChessView("File:src/resources/images/" + playerTurn + ".png");
-            transportingPane.getChildren().remove(0);
+            PlayerController.getSelectedChessView().setLayoutX(destinationCellView.getLayoutX() + 4);
+            PlayerController.getSelectedChessView().setLayoutY(destinationCellView.getLayoutY() + 4);
+            PlayerController.getSelectedChessView().setTranslateX(0);
+            PlayerController.getSelectedChessView().setTranslateY(0);
             PlayerController.setSelectedCellView1(destinationCellView);
-            PlayerController.setSelectedChessView(newChessView);
-            newChessView.moveTo(destinationCellView);
-
             animateChessMoving();
         });
         transition.play();

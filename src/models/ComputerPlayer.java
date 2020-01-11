@@ -115,9 +115,6 @@ public class ComputerPlayer extends Player
 
     private boolean isMovingNearerChess(int pickedChessNumber, int chessNumber)
     {
-        System.out.println("homeDistance1 = " + this.getChess(pickedChessNumber).getHomeDistance());
-        System.out.println("homeDistance2 = " + this.getChess(chessNumber).getHomeDistance());
-
         return this.getChess(pickedChessNumber).getHomeDistance() > this.getChess(chessNumber).getHomeDistance();
     }
 }
