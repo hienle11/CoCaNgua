@@ -87,18 +87,20 @@ public class TurnController
         diceWasUsed = -1;
         diceIsRolled = false;
         currentPlayer = PlayerController.getPlayer(playerTurn);
+        System.out.println("playerTurn" + playerTurn);
+        ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
         if (currentPlayerIsComputer)
         {
-            AnimationController.rollDiceAnimation();
+            ButtonController.getRollDiceBt().setOnAction(null);
+            AnimationController.animateDiceRolling();
         }
-        else
-            AnimationController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
     }
 
     public static void switchTurn()
     {
         if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
         {
+            System.out.println("cant move");
             switch (playerTurn)
             {
                 case BLUE:

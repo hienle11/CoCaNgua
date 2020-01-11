@@ -17,16 +17,17 @@ import javafx.scene.image.ImageView;
 
 public class ChessView extends ImageView
 {
-
     public ChessView(String imagePath)
     {
         setImage(new Image(imagePath));
         setFitHeight(30);
         setFitWidth(25);
+        toFront();
     }
 
     public void moveTo(CellView selectedCellView)
     {
         selectedCellView.getChildren().add(this);
     }
+
 }

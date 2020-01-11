@@ -23,6 +23,22 @@ public class PlayerController
     private static ChessView selectedChessView = null;
     private static CellView selectedCellView1 = null;
     private static CellView selectedCellView2 = null;
+
+    public static ChessView getSelectedChessView()
+    {
+        return selectedChessView;
+    }
+
+    public static Cell getSelectedCell1()
+    {
+        return selectedCell1;
+    }
+
+    public static Cell getSelectedCell2()
+    {
+        return selectedCell2;
+    }
+
     private static Chess selectedChess = null;
     private static Cell selectedCell1 = null;
     private static Cell selectedCell2 = null;
@@ -56,31 +72,25 @@ public class PlayerController
 
     public static void computerMove()
     {
-
-        while (MoveController.isMovable())
+        Player currentPlayer = TurnController.getCurrentPlayer();
+        int[] diceValue = TurnController.getDiceValue();
+        selectedCell2 = ((ComputerPlayer) currentPlayer).makeDecision(MoveController.getPossibleMoves(), diceValue);
+        TurnController.updateConditions(selectedCell2);
+        selectedChess = currentPlayer.getChess(MoveController.getPossibleMoves().get(selectedCell2)[0]);
+        selectedCell1 = CellController.getCell(selectedChess.getCellId());
+        selectedCellView1 = CellController.getCellView(selectedCell1);
+        selectedCellView2 = CellController.getCellView(selectedCell2);
+        if (selectedCellView1.getChildren().size() == 3)
+            selectedChessView = (ChessView) selectedCellView1.getChildren().get(2);
+        else
+            selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
+        if (selectedCell2.getChess() != null)
         {
-            Player currentPlayer = TurnController.getCurrentPlayer();
-            int[] diceValue = TurnController.getDiceValue();
-            selectedCell2 = ((ComputerPlayer) currentPlayer).makeDecision(MoveController.getPossibleMoves(), diceValue);
-            TurnController.updateConditions(selectedCell2);
-            selectedChess = currentPlayer.getChess(MoveController.getPossibleMoves().get(selectedCell2)[0]);
-            selectedCell1 = CellController.getCell(selectedChess.getCellId());
-            selectedCellView1 = CellController.getCellView(selectedCell1);
-            selectedCellView2 = CellController.getCellView(selectedCell2);
-            if (selectedCellView1.getChildren().size() == 3)
-                selectedChessView = (ChessView) selectedCellView1.getChildren().get(2);
-            else
-                selectedChessView = (ChessView) selectedCellView1.getChildren().get(1);
-            if (selectedCell2.getChess() != null)
-            {
-                Chess anotherChess = selectedCell2.getChess();
-                kickChess(anotherChess);
-            }
-            currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, TurnController.getDiceValueWasUsed());
-            MoveController.hidePossibleCells();
-            selectedChessView.moveTo(selectedCellView2);
+            Chess anotherChess = selectedCell2.getChess();
+            kickChess(anotherChess);
         }
-        TurnController.endTurn();
+        currentPlayer.moveChess(selectedChess, selectedCell1, selectedCell2, TurnController.getDiceValueWasUsed());
+        AnimationController.animateChessMoving();
     }
 
 
@@ -107,19 +117,24 @@ public class PlayerController
         if(isValidMove())
         {
             TurnController.updateConditions(selectedCell2);
-            //System.out.println("dice was used = " + diceWasUsed);
-            //System.out.println("diceValue was used = " + diceValue[diceWasUsed]);
-            //System.out.println("diceValue[2] = " + diceValue[2]);
             if (selectedCell2.getChess() != null)
             {
                 Chess anotherChess = selectedCell2.getChess();
                 kickChess(anotherChess);
             }
             TurnController.getCurrentPlayer().moveChess(selectedChess, selectedCell1, selectedCell2, TurnController.getDiceValueWasUsed());
-            selectedChessView.moveTo(selectedCellView2);
+            PlayerController.setSelectedChess(null);
             return true;
         } else
+        {
+            PlayerController.setSelectedChess(null);
             return false;
+        }
+    }
+
+    public static void setSelectedChessView(ChessView selectedChessView)
+    {
+        PlayerController.selectedChessView = selectedChessView;
     }
 
     public static CellView getSelectedCellView1()
@@ -172,11 +187,14 @@ public class PlayerController
         return false;
     }
 
-    public static void humanMove()
+    public static void HumanMove()
     {
         if(!MoveController.isMovable())
             TurnController.endTurn();
     }
 
-
+    public static boolean isASpawnMove()
+    {
+        return selectedCellView2.getId().contains(TurnController.getPlayerTurn().toString().toLowerCase() + "Spawn");
+    }
 }

@@ -12,6 +12,7 @@
 
 package controllers;
 
+import javafx.animation.Animation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 public class GamePlayController implements Initializable
 {
     @FXML
-        public StackPane stackPane;
+        public StackPane transportingPane;
     @FXML
     private Button rollDiceBt;
     @FXML
@@ -50,14 +51,9 @@ public class GamePlayController implements Initializable
     @FXML
     Label turn;
 
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        stackPane.setManaged(false);
         PlayerController.initialize();
         CellController.getCellViewList().addAll(
                 blueHome0, blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
@@ -72,11 +68,9 @@ public class GamePlayController implements Initializable
                 redNest1, redNest2, redNest3, redNest4,
                 greenNest1, greenNest2, greenNest3, greenNest4,
                 yellowNest1, yellowNest2, yellowNest3, yellowNest4);
-        System.out.println("here");
         CellController.initialize();
-        System.out.println("here1");
-        AnimationController.initialize(dice0, dice1, rollDiceBt);
-        System.out.println("here2");
+        AnimationController.initialize(dice0, dice1, transportingPane);
+        ButtonController.initialize(rollDiceBt);
         TurnController.initialize();
     }
 
@@ -95,11 +89,8 @@ public class GamePlayController implements Initializable
                 //System.out.println("selectedCell2 = " + selectedCellView2.getId());
                 if(PlayerController.moveChess())
                 {
-                    MoveController.hidePossibleCells();
-                    if(!MoveController.isMovable())
-                        TurnController.endTurn();
+                    AnimationController.animateChessMoving();
                 }
-                PlayerController.setSelectedChess(null);
             }
         }
     }
@@ -108,8 +99,5 @@ public class GamePlayController implements Initializable
     {
         ButtonController.rollDiceBtHandler();
     }
-
-
-
 }
 

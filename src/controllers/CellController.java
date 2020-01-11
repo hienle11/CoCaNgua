@@ -72,6 +72,12 @@ public class CellController
         return null;
     }
 
+    public static CellView getNextCellView(CellView currentCellView)
+    {
+        int currentCellViewIndex = cellViewList.indexOf(currentCellView);
+        return cellViewList.get(currentCellViewIndex + 1);
+    }
+
     public static Cell findEmptyNest(Chess chess)
     {
         Cell cell;

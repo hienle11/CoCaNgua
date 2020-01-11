@@ -12,31 +12,34 @@
 
 package controllers;
 
+import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.util.Duration;
+import models.Cell;
 import models.Player;
+import views.CellView;
+import views.ChessView;
 
 public class AnimationController
 {
     private static ImageView dice0, dice1;
-    private static Button rollDiceBt;
+    private static StackPane transportingPane;
 
-    public static void initialize(ImageView newDice0, ImageView newDice1, Button newRollDiceBt)
+    public static void initialize(ImageView newDice0, ImageView newDice1, StackPane newTransportingPane)
     {
         dice0 = newDice0;
         dice1 = newDice1;
-        rollDiceBt = newRollDiceBt;
+        transportingPane = newTransportingPane;
+        transportingPane.setManaged(false);
+        transportingPane.toFront();
     }
 
-    public static Button getRollDiceBt()
-    {
-        return rollDiceBt;
-    }
-
-    public static void rollDiceAnimation()
+    public static void animateDiceRolling()
     {
         dice0.setImage(new Image("File:src/resources/images/6.jpg"));
         dice1.setImage(new Image("File:src/resources/images/6.jpg"));
@@ -50,7 +53,7 @@ public class AnimationController
         rt1.setToAngle(360);
         rt1.setCycleCount(5);
 
-        rollDiceBt.setOnAction(null);
+        ButtonController.getRollDiceBt().setOnAction(null);
         TurnController.setDiceValue(Player.rollDice());
         int[] diceValue = TurnController.getDiceValue();
         dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
@@ -58,9 +61,66 @@ public class AnimationController
         TurnController.setDiceIsRolled(true);
         if (TurnController.isCurrentPlayerIsComputer())
         {
-            rt1.setOnFinished(e -> PlayerController.computerMove());
-        } else
-            rt1.setOnFinished(e -> PlayerController.humanMove());
+            rt1.setOnFinished(e ->
+            {
+                if (MoveController.isMovable())
+                    PlayerController.computerMove();
+                else
+                    TurnController.endTurn();
+            });
+        }else
+            rt1.setOnFinished(e -> PlayerController.HumanMove());
         rt1.play();
+    }
+
+    public static void animateChessMoving()
+    {
+        CellView currentCellView = PlayerController.getSelectedCellView1();
+        if (currentCellView != PlayerController.getSelectedCellView2())
+        {
+            CellView nextCellView;
+            if (PlayerController.isASpawnMove())
+                nextCellView = PlayerController.getSelectedCellView2();
+            else
+                nextCellView = CellController.getNextCellView(currentCellView);
+            transportingPane.getChildren().add(PlayerController.getSelectedChessView());
+
+            Line line = new Line();
+            line.setStartX(currentCellView.getLayoutX() + 34);
+            line.setStartY(currentCellView.getLayoutY() + 34);
+            line.setEndX(nextCellView.getLayoutX() + 34);
+            line.setEndY(nextCellView.getLayoutY() + 34);
+
+            PathTransition transition = new PathTransition();
+            transition.setNode(PlayerController.getSelectedChessView());
+            transition.setDuration(Duration.seconds(0.5));
+            transition.setPath(line);
+            transition.setCycleCount(1);
+
+            MoveController.hidePossibleCells();
+            startMovingAnimation(transition, nextCellView);
+        } else
+        {
+            if (!MoveController.isMovable())
+                TurnController.endTurn();
+            else if (TurnController.isCurrentPlayerIsComputer())
+                PlayerController.computerMove();
+        }
+    }
+
+    private static void startMovingAnimation(PathTransition transition, CellView destinationCellView)
+    {
+        transition.setOnFinished(e ->
+        {
+            String playerTurn = TurnController.getPlayerTurn().toString();
+            //ChessView newChessView = new ChessView("File:src/resources/images/" + playerTurn + ".png");
+            //transportingPane.getChildren().remove(0);
+            PlayerController.setSelectedCellView1(destinationCellView);
+            //PlayerController.setSelectedChessView(newChessView);
+            //selectedChes.moveTo(destinationCellView);
+            PlayerController.getSelectedChessView().moveTo(destinationCellView);
+            animateChessMoving();
+        });
+        transition.play();
     }
 }

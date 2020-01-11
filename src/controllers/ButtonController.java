@@ -15,8 +15,6 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 // this class is created to handle actions of buttons
@@ -25,6 +23,18 @@ public class ButtonController
     // store the path of fxml files in to Strings
     private static final String gamePlayWindow = "../view/GamePlay.fxml";
     private static final String mainMenuWindow = "../view/MainMenu.fxml";
+
+    private static Button rollDiceBt = null;
+
+    public static Button getRollDiceBt()
+    {
+        return rollDiceBt;
+    }
+
+    public static void initialize(Button newRollDiceButton)
+    {
+        rollDiceBt = newRollDiceButton;
+    }
 
     // this method is created to handle the Quit Game Button
     public static void quitGameBtHandler(ActionEvent event)
@@ -70,6 +80,6 @@ public class ButtonController
 
     public static void rollDiceBtHandler()
     {
-        AnimationController.rollDiceAnimation();
+        AnimationController.animateDiceRolling();
     }
 }
