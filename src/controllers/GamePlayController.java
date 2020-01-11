@@ -55,7 +55,7 @@ public class GamePlayController implements Initializable
             greenNest1, greenNest2, greenNest3, greenNest4;
 
     @FXML
-    Label turn;
+    Label turn, name0, name1, name2, name3;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -108,6 +108,13 @@ public class GamePlayController implements Initializable
     public void rollDiceBtHandler()
     {
         ButtonController.rollDiceBtHandler();
+    }
+
+    public void setName(CharSequence[] str) {
+        name0.setText(String.valueOf(str[0]));
+        name1.setText(String.valueOf(str[1]));
+        name2.setText(String.valueOf(str[2]));
+        name3.setText(String.valueOf(str[3]));
     }
 }
 
