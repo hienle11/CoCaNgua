@@ -25,6 +25,8 @@ import models.Player;
 import views.CellView;
 import views.ChessView;
 
+import java.lang.management.PlatformLoggingMXBean;
+
 public class AnimationController
 {
     private static ImageView dice0, dice1;
@@ -113,12 +115,12 @@ public class AnimationController
         transition.setOnFinished(e ->
         {
             String playerTurn = TurnController.getPlayerTurn().toString();
-            //ChessView newChessView = new ChessView("File:src/resources/images/" + playerTurn + ".png");
-            //transportingPane.getChildren().remove(0);
+            ChessView newChessView = new ChessView("File:src/resources/images/" + playerTurn + ".png");
+            transportingPane.getChildren().remove(0);
             PlayerController.setSelectedCellView1(destinationCellView);
-            //PlayerController.setSelectedChessView(newChessView);
-            //selectedChes.moveTo(destinationCellView);
-            PlayerController.getSelectedChessView().moveTo(destinationCellView);
+            PlayerController.setSelectedChessView(newChessView);
+            newChessView.moveTo(destinationCellView);
+
             animateChessMoving();
         });
         transition.play();

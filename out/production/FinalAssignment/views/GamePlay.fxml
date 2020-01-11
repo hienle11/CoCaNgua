@@ -17,9 +17,9 @@
 <?import javafx.scene.text.*?>
 <?import views.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" style="-fx-border-color: blue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" style="-fx-border-color: blue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GamePlayController">
     <children>
-      <StackPane fx:id="stackPane" prefHeight="699.0" prefWidth="869.0" />
+      <StackPane fx:id="transportingPane" prefHeight="699.0" prefWidth="869.0" />
         <CellView layoutX="434.0" prefHeight="259.0" prefWidth="250.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="WHITE" height="250.0" stroke="YELLOW" strokeType="INSIDE" strokeWidth="3.0" width="251.0" />
