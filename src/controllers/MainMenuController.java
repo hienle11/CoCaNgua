@@ -25,12 +25,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -132,11 +135,22 @@ public class MainMenuController
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../views/MainMenu.fxml"))));
     }
 
+    void setNameInGamePlay(Node node, CharSequence[] str) throws IOException {
+        Stage stage = (Stage) node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../views/GamePlay.fxml"));
+        Scene scene = new Scene(loader.load());
+        GamePlayController controller = loader.getController();
+        controller.setName(str);
+        stage.setScene(scene);
+    }
+
     @FXML
-    void getName() {
+    void getName(MouseEvent event) throws IOException {
+        ArrayList<Color> color = new ArrayList<>(List.of(Color.BLUE,Color.YELLOW,Color.RED,Color.GREEN));
+        CharSequence[] str = new CharSequence[4];
         for (int i = 0; i < 4; i++) {
-            System.out.println(plName[i].getCharacters());
-            System.out.println(rectangles[i].getFill());
+            str[color.indexOf(rectangles[i].getFill())] = plName[i].getCharacters();
         }
         if (multi) {
             for (int i = 0; i < 4; i++) {
@@ -146,6 +160,7 @@ public class MainMenuController
             hostID.setVisible(true);
             done.setVisible(false);
         }
+        setNameInGamePlay((Node)event.getSource(), str);
     }
 
     @FXML
