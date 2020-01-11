@@ -103,6 +103,7 @@ public class AnimationController
             startMovingAnimation(transition, nextCellView);
         } else
         {
+            PlayerController.setSelectedChess(null);
             if (!MoveController.isMovable())
                 TurnController.endTurn();
             else if (TurnController.isCurrentPlayerIsComputer())
