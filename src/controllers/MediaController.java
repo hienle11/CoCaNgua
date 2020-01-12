@@ -21,37 +21,21 @@ import java.io.File;
 //this class is created to control the media of the game
 public class MediaController
 {
-    private static MediaPlayer mediaPlayer = null;
-
-    //this method is to initialize the media of the game
-    public static void initializeMedia()
-    {
-    }
-
     //Media paths
-    private String kickPath = "src/resources/sounds/kick.mp3";
-    private String runPath = "src/resources/sounds/move.mp3";
-    private String whiningPath = "src/resources/sounds/horseWhinny.wav";
-    private String rollPath = "src/resources/sounds/roll.wav";
+    private static String kickPath = "src/resources/sounds/kick.mp3";
+    private static String movePath = "src/resources/sounds/move.mp3";
+    private static String whiningPath = "src/resources/sounds/horseWhinny.wav";
+    private static String rollPath = "src/resources/sounds/roll.wav";
 
     //Audio clip obj
-    private AudioClip kickSound = new AudioClip(new File(kickPath).toURI().toString());
-    private AudioClip runSound = new AudioClip(new File(runPath).toURI().toString());
-    private AudioClip whinnySound = new AudioClip(new File(whiningPath).toURI().toString());
-    private AudioClip rollSound = new AudioClip(new File(rollPath).toURI().toString());
+    private static AudioClip kickSound = new AudioClip(new File(kickPath).toURI().toString());
+    private static AudioClip moveSound = new AudioClip(new File(movePath).toURI().toString());
+    private static AudioClip whinnySound = new AudioClip(new File(whiningPath).toURI().toString());
+    private static AudioClip rollSound = new AudioClip(new File(rollPath).toURI().toString());
 
     //Play audio clip methods
-    public void playKickSound(){kickSound.play();}
-    public void playRunSound(){runSound.play();}
-    public void playWhinnySound(){whinnySound.play();}
-    public void playRollSound(){rollSound.play();}
-
-    //Pause audio clip methods
-    public void stopRunSound(){runSound.stop();}
-
-    // this method is to check if the media is playing
-    public static boolean isPlaying()
-    {
-        return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
-    }
+    public static void playKickSound(){kickSound.play();}
+    public static void playMoveSound(){moveSound.play();}
+    public static void playWhinnySound(){whinnySound.play();}
+    public static void playRollSound(){rollSound.play();}
 }

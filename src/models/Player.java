@@ -56,6 +56,17 @@ public abstract class Player
         this.score = score;
     }
 
+    public int getChessNumber(Chess chess)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            System.out.println("loop");
+            if (this.chess[i] == chess)
+                return i;
+        }
+        return -1;
+    }
+
     public Chess getChess(int number)
     {
         return chess[number];

@@ -14,34 +14,31 @@ package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
 import models.Cell;
 import models.Chess;
 import views.CellView;
-import views.ChessView;
 
 import java.util.ArrayList;
 
 public class CellController
 {
-    private static final String blueChessImage = "File:src/resources/images/BLUE.png";
-    private static final String redChessImage = "File:src/resources/images/RED.png";
-    private static final String yellowChessImage = "File:src/resources/images/YELLOW.png";
-    private static final String greenChessImage = "File:src/resources/images/GREEN.png";
+    // properties of CellController
+    private static ObservableList<CellView> cellViewList = FXCollections.observableArrayList(); // list of CellViews
+    private static ArrayList<Cell> cellList = new ArrayList<>();                                // list of Cell
 
-    private static ObservableList<CellView> cellViewList = FXCollections.observableArrayList();
-    private static ArrayList<Cell> cellList = new ArrayList<>();
-
+    // accessors for cellView list and cell List
     public static ObservableList<CellView> getCellViewList()
     {
         return cellViewList;
-    }
-
+    }           //
 
     public static ArrayList<Cell> getCellList()
     {
        return cellList;
     }
 
+    // this method is to get the Cell by its id
     public static Cell getCell(String id)
     {
         for (int i = 0; i < cellList.size(); i ++)
@@ -52,6 +49,7 @@ public class CellController
         return null;
     }
 
+    // this method is to get the Cell from the corresponding CellView
     public static Cell getCell(CellView cellView)
     {
         for (int i = 0; i < cellList.size(); i ++)
@@ -62,6 +60,19 @@ public class CellController
         return null;
     }
 
+    // this method is to get the CellView from the ChessView standing on it
+    public static CellView getCellView(ImageView chessView)
+    {
+        for (int i = 0; i < cellViewList.size(); i++)
+        {
+            if((cellViewList.get(i).getLayoutX() == (chessView.getLayoutX() - 4))
+                && (cellViewList.get(i).getLayoutY() == (chessView.getLayoutY() - 4)))
+                return cellViewList.get(i);
+        }
+        return null;
+    }
+
+    // this method is to get the cellView from the corresponding cell
     public static CellView getCellView(Cell cell)
     {
         for (int i = 0; i < cellList.size(); i ++)
@@ -72,12 +83,21 @@ public class CellController
         return null;
     }
 
+    // this method is to get the nextCellView of a cellView
     public static CellView getNextCellView(CellView currentCellView)
     {
-        int currentCellViewIndex = cellViewList.indexOf(currentCellView);
+        int currentCellViewIndex;
+        if (PlayerController.isAHomeArrivalMove())
+        {
+            currentCellViewIndex = getHomeCellIndex();
+        }else
+        {
+            currentCellViewIndex = cellViewList.indexOf(currentCellView);
+        }
         return cellViewList.get(currentCellViewIndex + 1);
     }
 
+    // this method is to find an empty nest for the chess got kicked
     public static Cell findEmptyNest(Chess chess)
     {
         Cell cell;
@@ -91,33 +111,46 @@ public class CellController
         return null;
     }
 
+    // this method is to initialize the cell List and the cellView List
     public static void initialize()
     {
         for(int i = 0; i < cellViewList.size(); i++)
             cellList.add(new Cell(cellViewList.get(i).getId()));
-
         for (int i = 76; i < 92; i++)
         {
             if (i < 80)
             {
-                cellViewList.get(i).getChildren().add(new ChessView(blueChessImage));
                 cellList.get(i).setChess(PlayerController.getPlayer(0).getChess(i-76));
             }
             else if (i < 84)
             {
-                cellViewList.get(i).getChildren().add(new ChessView(redChessImage));
                 cellList.get(i).setChess(PlayerController.getPlayer(1).getChess(i-80));
             }
             else if (i < 88)
             {
-                cellViewList.get(i).getChildren().add(new ChessView(greenChessImage));
                 cellList.get(i).setChess(PlayerController.getPlayer(2).getChess(i-84));
             }
             else
             {
-                cellViewList.get(i).getChildren().add(new ChessView(yellowChessImage));
                 cellList.get(i).setChess(PlayerController.getPlayer(3).getChess(i-88));
             }
         }
+    }
+
+    // this method is to convert the normalCell index into homeCell index when a chess arrives at home0
+    public static int getHomeCellIndex()
+    {
+        switch (TurnController.getPlayerTurn())
+        {
+            case BLUE:
+                return 48;
+            case RED:
+                return 55;
+            case GREEN:
+                return 62;
+            case YELLOW:
+                return 69;
+        }
+        return -1;
     }
 }

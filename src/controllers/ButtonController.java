@@ -39,6 +39,7 @@ public class ButtonController
     // this method is created to handle the Quit Game Button
     public static void quitGameBtHandler(ActionEvent event)
     {
+        //MediaController.stop();
         // get the current stage and load a new scene to it
         WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
         window.loadWindow(mainMenuWindow);
@@ -50,7 +51,7 @@ public class ButtonController
         System.exit(0);
     }
 
-    // this method is created to handle the Sound Button
+//    // this method is created to handle the Sound Button
 //    public static void soundBtHandler(ActionEvent event)
 //    {
 //        String btImage;

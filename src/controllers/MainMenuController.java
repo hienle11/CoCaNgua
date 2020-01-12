@@ -25,19 +25,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MainMenuController
 {
     boolean multi = false;
-    int current_lang = 0, current_color = 0;
+    int current_lang = 0, current_color = 0, num = 0;
     String[][] lang = new String[][]{{"vi", "en"}, {"VN", "US"}};
     TextField[] plName;
     Pane[] panes;
@@ -119,7 +122,7 @@ public class MainMenuController
     void getPlayerNum() {
         done.setDisable(false);
         boolean visible = true;
-        int num = (choice.getValue()).charAt(0) - '0';
+        num = (choice.getValue()).charAt(0) - '0';
         for (int i = 0; i < 4; i++) {
             if (i == num) visible = false;
             panes[i].setVisible(visible);
@@ -132,20 +135,37 @@ public class MainMenuController
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../views/MainMenu.fxml"))));
     }
 
+    void setNameInGamePlay(Node node, CharSequence[] str, boolean[] compPlayer) throws IOException {
+        Stage stage = (Stage) node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../views/GamePlay.fxml"));
+        Scene scene = new Scene(loader.load());
+        GamePlayController controller = loader.getController();
+        controller.setData(str, compPlayer);
+        stage.setScene(scene);
+    }
+
     @FXML
-    void getName() {
+    void getName(MouseEvent event) throws IOException {
+        ArrayList<Color> color = new ArrayList<>(List.of(Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW));
+        boolean[] compPlayer = new boolean[4];
+        CharSequence[] str = new CharSequence[4];
         for (int i = 0; i < 4; i++) {
-            System.out.println(plName[i].getCharacters());
-            System.out.println(rectangles[i].getFill());
+            int k = color.indexOf(rectangles[i].getFill());
+            str[k] = plName[i].getCharacters();
+            compPlayer[k] = (i > num - 1);
         }
-        if (multi) {
-            for (int i = 0; i < 4; i++) {
-                panes[i].setVisible(false);
-            }
-            choice.setDisable(true);
-            hostID.setVisible(true);
-            done.setVisible(false);
-        }
+//        for (CharSequence i : str) System.out.println(i);
+//        for (boolean i : compPlayer) System.out.println(i);
+//        if (multi) {
+//            for (int i = 0; i < 4; i++) {
+//                panes[i].setVisible(false);
+//            }
+//            choice.setDisable(true);
+//            hostID.setVisible(true);
+//            done.setVisible(false);
+//        }
+        setNameInGamePlay((Node)event.getSource(), str, compPlayer);
     }
 
     @FXML

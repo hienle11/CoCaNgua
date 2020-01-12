@@ -12,18 +12,24 @@
 
 package controllers;
 
+import javafx.scene.control.Label;
 import models.Cell;
 import models.Player;
 
 public class TurnController
 {
+    private static Label turn;
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
-    private static int diceWasUsed = -1;
-    private static int chessNumberHasMoved = -1;
+    private static int diceWasUsed = -1, chessNumberHasMoved = -1;
     private static Player currentPlayer = null;
-    private static boolean currentPlayerIsComputer = false;
-    private static boolean diceIsRolled = false;
+    private static boolean currentPlayerIsComputer, diceIsRolled = false;
+    private static boolean[] comPlayer;
+
+    public static void setComOrHuman(boolean[] comPlayer) {
+        TurnController.comPlayer = comPlayer;
+        currentPlayerIsComputer = comPlayer[0];
+    }
 
     public static void setDiceIsRolled(boolean diceIsRolled)
     {
@@ -70,9 +76,11 @@ public class TurnController
         return diceIsRolled;
     }
 
-    public static void initialize()
+    public static void initialize(Label turn)
     {
         currentPlayer =  PlayerController.getPlayer(playerTurn);
+        turn.setText("Player Turn: " + playerTurn.toString());
+        endTurn();
     }
 
     public static void endTurn()
@@ -87,7 +95,6 @@ public class TurnController
         diceWasUsed = -1;
         diceIsRolled = false;
         currentPlayer = PlayerController.getPlayer(playerTurn);
-        System.out.println("playerTurn" + playerTurn);
         ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
         if (currentPlayerIsComputer)
         {
@@ -100,26 +107,26 @@ public class TurnController
     {
         if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
         {
-            System.out.println("cant move");
             switch (playerTurn)
             {
                 case BLUE:
                     playerTurn = Player.Color.RED;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = comPlayer[1];
                     break;
                 case RED:
                     playerTurn = Player.Color.GREEN;
-                    currentPlayerIsComputer = false;
+                    currentPlayerIsComputer = comPlayer[2];
                     break;
                 case GREEN:
                     playerTurn = Player.Color.YELLOW;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = comPlayer[3];
                     break;
                 case YELLOW:
                     playerTurn = Player.Color.BLUE;
-                    currentPlayerIsComputer = false;
+                    currentPlayerIsComputer = comPlayer[0];
                     break;
             }
+            System.out.println("Turn = " + playerTurn.toString());
         }
     }
 
@@ -128,7 +135,6 @@ public class TurnController
     {
         for(int i = 0; i < 4; i++)
         {
-            System.out.println("endGame: + " + currentPlayer.getChess(i).getCellId());
             if (!currentPlayer.getChess(i).getCellId().matches("Home+[3-6]"))
                 return false;
         }
@@ -144,7 +150,7 @@ public class TurnController
             diceValue[2] = (-diceValue[2]);
     }
 
-    public static boolean isDicesContainSix()
+    public static boolean doDicesContainSix()
     {
         return (diceValue[0] == 6 && diceWasUsed != 0) || (diceValue[1] == 6 && diceWasUsed != 1);
     }

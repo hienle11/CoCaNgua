@@ -17,12 +17,12 @@
 <?import javafx.scene.text.*?>
 <?import views.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" style="-fx-border-color: blue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GamePlayController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" style="-fx-border-color: blue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GamePlayController">
     <children>
       <StackPane fx:id="transportingPane" prefHeight="699.0" prefWidth="869.0" />
         <CellView layoutX="434.0" prefHeight="259.0" prefWidth="250.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="WHITE" height="250.0" stroke="YELLOW" strokeType="INSIDE" strokeWidth="3.0" width="251.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="WHITE" height="252.0" stroke="YELLOW" strokeType="INSIDE" strokeWidth="3.0" width="251.0" />
             </children>
         </CellView>
         <CellView layoutX="-2.0" prefHeight="259.0" prefWidth="244.0">
@@ -521,19 +521,19 @@
             </children>
         </CellView>
         <Button fx:id="rollDiceBt" layoutX="738.0" layoutY="231.0" mnemonicParsing="false" onAction="#rollDiceBtHandler" text="Roll Dice" />
-      <Label layoutX="9.0" layoutY="7.0" text="Score:" underline="true">
+      <Label layoutX="10.0" layoutY="25.0" text="Score:" underline="true">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font></Label>
-      <Label layoutX="5.0" layoutY="450.0" text="Score:" underline="true">
+      <Label layoutX="10.0" layoutY="460.0" text="Score:" underline="true">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font></Label>
-      <Label layoutX="439.0" layoutY="6.0" text="Score:" underline="true">
+      <Label layoutX="440.0" layoutY="25.0" text="Score:" underline="true">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font></Label>
-      <Label layoutX="438.0" layoutY="447.0" text="Score:" underline="true">
+      <Label layoutX="440.0" layoutY="460.0" text="Score:" underline="true">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font></Label>
@@ -574,94 +574,183 @@
                </children>
             </GridPane>
          </children></StackPane>
-      <Label layoutX="196.0" layoutY="446.0" text="Player" textFill="#bf2424" />
-      <Label layoutX="201.0" layoutY="7.0" text="Player" textFill="#0f12c6" />
-      <Label layoutX="628.0" layoutY="6.0" text="Player" textFill="#979714">
+      <Label fx:id="name1" layoutX="10.0" layoutY="440.0" text="Player" textFill="#bf2424">
          <font>
-            <Font name="Arial" size="12.0" />
+            <Font name="Arial" size="14.0" />
+         </font></Label>
+      <Label fx:id="name0" layoutX="10.0" layoutY="5.0" text="Player" textFill="#0f12c6">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font></Label>
+      <Label fx:id="name2" layoutX="440.0" layoutY="5.0" text="Player" textFill="#979714">
+         <font>
+            <Font name="Arial" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="632.0" layoutY="447.0" text="Player" textFill="#17c317" />
+      <Label fx:id="name3" layoutX="440.0" layoutY="440.0" text="Player" textFill="#17c317">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font></Label>
       <Label fx:id="turn" layoutX="715.0" layoutY="359.0" prefHeight="41.0" prefWidth="104.0" />
-            <CellView fx:id="greenNest4" layoutX="574.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="25.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="greenNest3" layoutX="474.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="30.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="greenNest2" layoutX="574.0" layoutY="486.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="19.0" prefWidth="28.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="greenNest1" layoutX="474.0" layoutY="486.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="blueNest4" layoutX="152.0" layoutY="168.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="blueNest3" layoutX="60.0" layoutY="168.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="blueNest1" layoutX="60.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="blueNest2" layoutX="152.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="yellowNest4" layoutX="574.0" layoutY="172.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="yellowNest3" layoutX="474.0" layoutY="172.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="29.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="yellowNest2" layoutX="474.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="36.0" prefWidth="25.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="yellowNest1" layoutX="574.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="redNest4" layoutX="155.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="redNest3" layoutX="60.0" layoutY="596.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="redNest2" layoutX="152.0" layoutY="491.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
-            <CellView fx:id="redNest1" layoutX="60.0" layoutY="491.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
-                <children>
-                    <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
-                </children>
-            </CellView>
+        <CellView fx:id="greenNest4" layoutX="574.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="25.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="greenNest3" layoutX="474.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="30.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="greenNest2" layoutX="574.0" layoutY="491.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="19.0" prefWidth="28.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="greenNest1" layoutX="474.0" layoutY="491.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="blueNest4" layoutX="152.0" layoutY="168.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="blueNest3" layoutX="60.0" layoutY="168.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="blueNest1" layoutX="60.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="blueNest2" layoutX="152.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="BLUE" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="yellowNest4" layoutX="574.0" layoutY="168.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="yellowNest3" layoutX="474.0" layoutY="168.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="29.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="yellowNest2" layoutX="474.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="36.0" prefWidth="25.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="yellowNest1" layoutX="574.0" layoutY="70.0" onMouseClicked="#normalCellOnMouseClicked">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="yellow" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="redNest4" layoutX="152.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="redNest3" layoutX="60.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="redNest2" layoutX="152.0" layoutY="491.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <CellView fx:id="redNest1" layoutX="60.0" layoutY="491.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="33.0" prefWidth="35.0">
+            <children>
+                <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+            </children>
+        </CellView>
+        <ImageView fx:id="blueChess0" fitHeight="30.0" fitWidth="28.0" layoutX="64" layoutY="74" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/BLUE.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="blueChess1" fitHeight="30.0" fitWidth="28.0" layoutX="156" layoutY="74" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/BLUE.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="blueChess2" fitHeight="30.0" fitWidth="28.0" layoutX="64" layoutY="172" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/BLUE.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="blueChess3" fitHeight="30.0" fitWidth="28.0" layoutX="156" layoutY="172" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/BLUE.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="redChess0" fitHeight="30.0" fitWidth="28.0" layoutX="64" layoutY="495" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/RED.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="redChess1" fitHeight="30.0" fitWidth="28.0" layoutX="156" layoutY="495.0" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/RED.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="redChess2" fitHeight="30.0" fitWidth="28.0" layoutX="156" layoutY="598" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/RED.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="redChess3" fitHeight="30.0" fitWidth="28.0" layoutX="64" layoutY="598" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/RED.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="greenChess0" fitHeight="30.0" fitWidth="28.0" layoutX="478" layoutY="495" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/GREEN.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="greenChess1" fitHeight="30.0" fitWidth="28.0" layoutX="578" layoutY="495" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/GREEN.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="greenChess2" fitHeight="30.0" fitWidth="28.0" layoutX="478" layoutY="598" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/GREEN.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="greenChess3" fitHeight="30.0" fitWidth="28.0" layoutX="578" layoutY="598" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/GREEN.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="yellowChess0" fitHeight="30.0" fitWidth="28.0" layoutX="478" layoutY="74" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/YELLOW.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="yellowChess1" fitHeight="30.0" fitWidth="28.0" layoutX="578" layoutY="74" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/YELLOW.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="yellowChess2" fitHeight="30.0" fitWidth="28.0" layoutX="478" layoutY="172" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/YELLOW.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="yellowChess3" fitHeight="30.0" fitWidth="28.0" layoutX="578" layoutY="172" onMouseClicked="#normalCellOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../resources/images/YELLOW.png" />
+            </image>
+        </ImageView>
     </children>
 </Pane>
