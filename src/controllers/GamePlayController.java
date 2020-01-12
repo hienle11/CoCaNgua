@@ -81,10 +81,13 @@ public class GamePlayController implements Initializable
 
     public void normalCellOnMouseClicked(MouseEvent event)
     {
-        if (PlayerController.getSelectedCellView1() !=  event.getSource() && TurnController.isDiceIsRolled() && !TurnController.isCurrentPlayerIsComputer())
+        if (PlayerController.getSelectedCellView1() !=  event.getSource() && PlayerController.isAllowToClick())
         {
-            if (PlayerController.getSelectedCellView1() != null)
-                PlayerController.getSelectedCellView1().hidePossibleCell();
+            if (PlayerController.getSelectedCellView1() != null
+                    && !MoveController.getPossibleMoves().containsKey(PlayerController.getSelectedCell1()))
+            {
+                PlayerController.getSelectedCellView1().hideCellSelection();
+            }
             if (PlayerController.getSelectedChessView() == null || PlayerController.getSelectedChess() == null)
             {
                 PlayerController.selectChess(event);
@@ -114,7 +117,6 @@ public class GamePlayController implements Initializable
         AnimationController.initialize(dice0, dice1);
         ButtonController.initialize(rollDiceBt);
         TurnController.initialize(turn);
-
     }
 }
 

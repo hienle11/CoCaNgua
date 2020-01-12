@@ -137,7 +137,7 @@ public class MoveController
     private static void getSpawnMoves(int chessNumber)
     {
         Cell possibleCell = null;
-        if (TurnController.isDicesContainSix())
+        if (TurnController.doDicesContainSix())
         {
             Player.Color playerTurn = TurnController.getPlayerTurn();
             switch (playerTurn)
@@ -217,7 +217,7 @@ public class MoveController
     {
         possibleMoves.forEach((cell, chessAndDice) ->
         {
-            CellController.getCellView(cell).showPossibleCell();
+            CellController.getCellView(cell).showCellSelection();
         });
     }
 
@@ -225,7 +225,7 @@ public class MoveController
     {
         possibleMoves.forEach((cell, chessAndDice) ->
         {
-            CellController.getCellView(cell).hidePossibleCell();
+            CellController.getCellView(cell).hideCellSelection();
         });
     }
 

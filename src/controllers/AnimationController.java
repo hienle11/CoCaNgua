@@ -28,6 +28,13 @@ public class AnimationController
     private static int diceThrow = 0;
     private static ImageView dice0, dice1;
 
+    public static boolean isChessMoving()
+    {
+        return chessIsMoving;
+    }
+
+    private static boolean chessIsMoving = false;
+
     public static RotateTransition diceRoll() {
         dice0.setImage(new Image("File:src/resources/images/6.jpg"));
         dice1.setImage(new Image("File:src/resources/images/6.jpg"));
@@ -124,7 +131,7 @@ public class AnimationController
 
         currentCellView = PlayerController.getSelectedCellView1();
         System.out.println("indexOfCurrentCellView = " + CellController.getCellViewList().indexOf(currentCellView));
-
+        chessIsMoving = true;
         if (currentCellView != PlayerController.getSelectedCellView2())
         {
             CellView nextCellView;
@@ -159,6 +166,7 @@ public class AnimationController
             PlayerController.getSelectedChessView().setTranslateX(0);
             PlayerController.getSelectedChessView().setTranslateY(0);
             PlayerController.setSelectedChess(null);
+            chessIsMoving = false;
             if (!MoveController.isMovable())
                 TurnController.endTurn();
             else if (TurnController.isCurrentPlayerIsComputer())

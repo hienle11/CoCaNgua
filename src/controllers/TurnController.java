@@ -19,7 +19,6 @@ import models.Player;
 public class TurnController
 {
     private static Label turn;
-
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
     private static int diceWasUsed = -1, chessNumberHasMoved = -1;
@@ -151,7 +150,7 @@ public class TurnController
             diceValue[2] = (-diceValue[2]);
     }
 
-    public static boolean isDicesContainSix()
+    public static boolean doDicesContainSix()
     {
         return (diceValue[0] == 6 && diceWasUsed != 0) || (diceValue[1] == 6 && diceWasUsed != 1);
     }
