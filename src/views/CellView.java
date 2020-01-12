@@ -24,7 +24,7 @@ public class CellView extends StackPane
     Shape shape = null;
     Paint color = null;
 
-    public void showCellSelection()
+    public void showPossibleCells()
     {
         if (shape == null)
         {
@@ -57,7 +57,7 @@ public class CellView extends StackPane
         }).start();*/
     }
 
-    public void hideCellSelection()
+    public void hidePossibleCells()
     {
         shape.setFill(color);
     }
