@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import org.jetbrains.annotations.NotNull;
 import views.CellView;
 
 import java.net.URL;
@@ -65,7 +66,6 @@ public class GamePlayController implements Initializable
                 redChess0, redChess1, redChess2, redChess3,
                 greenChess0, greenChess1, greenChess2, greenChess3,
                 yellowChess0, yellowChess1, yellowChess2, yellowChess3);
-        PlayerController.initialize();
         CellController.getCellViewList().addAll(
                 blueHome0, blueSpawn, blue1, blue2, blue3, blue4, blue5, blue6, blue7, blue8, blue9, blue10,
                 redHome0, redSpawn, red1, red2, red3, red4, red5, red6, red7, red8, red9, red10,
@@ -79,10 +79,6 @@ public class GamePlayController implements Initializable
                 redNest1, redNest2, redNest3, redNest4,
                 greenNest1, greenNest2, greenNest3, greenNest4,
                 yellowNest1, yellowNest2, yellowNest3, yellowNest4);
-        CellController.initialize();
-        AnimationController.initialize(dice0, dice1);
-        ButtonController.initialize(rollDiceBt);
-        TurnController.initialize(turn);
     }
 
     public void normalCellOnMouseClicked(MouseEvent event)
@@ -110,11 +106,17 @@ public class GamePlayController implements Initializable
         ButtonController.rollDiceBtHandler();
     }
 
-    public void setName(CharSequence[] str) {
+    public void setData(@NotNull CharSequence[] str, boolean[] comPlayer) {
         name0.setText(String.valueOf(str[0]));
         name1.setText(String.valueOf(str[1]));
         name2.setText(String.valueOf(str[2]));
         name3.setText(String.valueOf(str[3]));
+        PlayerController.initialize(str, comPlayer);
+        CellController.initialize();
+        AnimationController.initialize(dice0, dice1);
+        ButtonController.initialize(rollDiceBt);
+        TurnController.initialize(turn);
+
     }
 }
 

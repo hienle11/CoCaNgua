@@ -22,6 +22,7 @@ import views.CellView;
 public class PlayerController
 {
     private static Player[] player = new Player[4];
+    private static Player.Color[] color = new Player.Color[]{Player.Color.BLUE, Player.Color.RED, Player.Color.GREEN, Player.Color.YELLOW};
     private static ImageView kickedChessView = null;
     private static ImageView selectedChessView = null;
     private static CellView selectedCellView1 = null;
@@ -59,16 +60,22 @@ public class PlayerController
     private static Cell selectedCell1 = null;
     private static Cell selectedCell2 = null;
 
-    public static void initialize()
+    public static void initialize(CharSequence[] str, boolean[] comPlayer)
     {
-        player[0] = new ComputerPlayer(Player.Color.BLUE);
-        player[0].setName("Player");
-        player[1] = new ComputerPlayer(Player.Color.RED);
-        player[1].setName("Comp1");
-        player[2] = new ComputerPlayer(Player.Color.GREEN);
-        player[2].setName("Comp3");
-        player[3] = new ComputerPlayer(Player.Color.YELLOW);
-        player[3].setName("Comp2");
+//        player[0] = new ComputerPlayer(Player.Color.BLUE);
+//        player[0].setName(String.valueOf(str[0]));
+//        player[1] = new ComputerPlayer(Player.Color.RED);
+//        player[1].setName(String.valueOf(str[1]));
+//        player[2] = new ComputerPlayer(Player.Color.GREEN);
+//        player[2].setName(String.valueOf(str[2]));
+//        player[3] = new ComputerPlayer(Player.Color.YELLOW);
+//        player[3].setName(String.valueOf(str[3]));
+        for (int i = 0; i < 4; i++) {
+            player[i] = (comPlayer[i]) ? new ComputerPlayer(color[i]) : new HumanPlayer(color[i]);
+            player[i].setName(String.valueOf(str[i]));
+            System.out.println(comPlayer[i]);
+        }
+        TurnController.setComOrHuman(comPlayer);
     }
     public static ImageView getChessView(CellView cellView)
     {

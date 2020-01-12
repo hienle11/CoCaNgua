@@ -22,11 +22,15 @@ public class TurnController
 
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
-    private static int diceWasUsed = -1;
-    private static int chessNumberHasMoved = -1;
+    private static int diceWasUsed = -1, chessNumberHasMoved = -1;
     private static Player currentPlayer = null;
-    private static boolean currentPlayerIsComputer = true;
-    private static boolean diceIsRolled = false;
+    private static boolean currentPlayerIsComputer, diceIsRolled = false;
+    private static boolean[] comPlayer;
+
+    public static void setComOrHuman(boolean[] comPlayer) {
+        TurnController.comPlayer = comPlayer;
+        currentPlayerIsComputer = comPlayer[0];
+    }
 
     public static void setDiceIsRolled(boolean diceIsRolled)
     {
@@ -108,19 +112,19 @@ public class TurnController
             {
                 case BLUE:
                     playerTurn = Player.Color.RED;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = comPlayer[1];
                     break;
                 case RED:
                     playerTurn = Player.Color.GREEN;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = comPlayer[2];
                     break;
                 case GREEN:
                     playerTurn = Player.Color.YELLOW;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = comPlayer[3];
                     break;
                 case YELLOW:
                     playerTurn = Player.Color.BLUE;
-                    currentPlayerIsComputer = true;
+                    currentPlayerIsComputer = comPlayer[0];
                     break;
             }
             System.out.println("Turn = " + playerTurn.toString());
