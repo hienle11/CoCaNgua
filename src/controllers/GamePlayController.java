@@ -20,8 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
-import org.jetbrains.annotations.NotNull;
 import views.CellView;
 
 import java.net.URL;
@@ -106,7 +104,7 @@ public class GamePlayController implements Initializable
         ButtonController.rollDiceBtHandler();
     }
 
-    public void setData(@NotNull CharSequence[] str, boolean[] comPlayer) {
+    public void setData(CharSequence[] str, boolean[] comPlayer) {
         name0.setText(String.valueOf(str[0]));
         name1.setText(String.valueOf(str[1]));
         name2.setText(String.valueOf(str[2]));

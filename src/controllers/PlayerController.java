@@ -73,7 +73,7 @@ public class PlayerController
         for (int i = 0; i < 4; i++) {
             player[i] = (comPlayer[i]) ? new ComputerPlayer(color[i]) : new HumanPlayer(color[i]);
             player[i].setName(String.valueOf(str[i]));
-            System.out.println(comPlayer[i]);
+//            System.out.println(comPlayer[i]);
         }
         TurnController.setComOrHuman(comPlayer);
     }

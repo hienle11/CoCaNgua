@@ -25,16 +25,10 @@ import views.CellView;
 
 public class AnimationController
 {
+    private static int diceThrow = 0;
     private static ImageView dice0, dice1;
 
-    public static void initialize(ImageView newDice0, ImageView newDice1)
-    {
-        dice0 = newDice0;
-        dice1 = newDice1;
-    }
-
-    public static void animateDiceRolling()
-    {
+    public static RotateTransition diceRoll() {
         dice0.setImage(new Image("File:src/resources/images/6.jpg"));
         dice1.setImage(new Image("File:src/resources/images/6.jpg"));
         RotateTransition rt = new RotateTransition(Duration.seconds(0.1),dice0);
@@ -46,13 +40,70 @@ public class AnimationController
         rt1.setFromAngle(0);
         rt1.setToAngle(360);
         rt1.setCycleCount(5);
-
         ButtonController.getRollDiceBt().setOnAction(null);
         TurnController.setDiceValue(Player.rollDice());
         int[] diceValue = TurnController.getDiceValue();
         dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
         dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
+//        TurnController.setDiceIsRolled(true);
+        return rt1;
+    }
+
+//    public static void findMax(int[] maxThrow) {
+//        int max = 0;
+//        for (int k : maxThrow) {
+//            if (max < k)
+//        }
+//    }
+
+//    public static void determineFirstTurn() {
+//        int[] maxThrow = new int[4];
+//        RotateTransition rt1 = diceRoll();
+//        if (TurnController.isCurrentPlayerIsComputer())
+//        {
+//            rt1.setOnFinished(e ->
+//            {
+//                maxThrow[diceThrow] = TurnController.getDiceValue()[2];
+//                TurnController.endTurn();
+//                diceThrow++;
+//
+//            });
+//        }else
+//            rt1.setOnFinished(e -> PlayerController.HumanMove());
+//        rt1.play();
+//
+//    }
+
+    public static void initialize(ImageView newDice0, ImageView newDice1)
+    {
+        dice0 = newDice0;
+        dice1 = newDice1;
+//        determineFirstTurn();
+    }
+
+    public static void animateDiceRolling()
+    {
+//        dice0.setImage(new Image("File:src/resources/images/6.jpg"));
+//        dice1.setImage(new Image("File:src/resources/images/6.jpg"));
+//        RotateTransition rt = new RotateTransition(Duration.seconds(0.1),dice0);
+//        rt.setFromAngle(0);
+//        rt.setToAngle(360);
+//        rt.setCycleCount(5);
+//        rt.play();
+//        RotateTransition rt1 = new RotateTransition(Duration.seconds(0.1),dice1);
+//        rt1.setFromAngle(0);
+//        rt1.setToAngle(360);
+//        rt1.setCycleCount(5);
+
+//        ButtonController.getRollDiceBt().setOnAction(null);
+//        TurnController.setDiceValue(Player.rollDice());
+//        int[] diceValue = TurnController.getDiceValue();
+//        dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
+//        dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
+//        TurnController.setDiceIsRolled(true);
+//        TurnController.setDiceValue(Player.rollDice());
         TurnController.setDiceIsRolled(true);
+        RotateTransition rt1 = diceRoll();
         if (TurnController.isCurrentPlayerIsComputer())
         {
             rt1.setOnFinished(e ->
