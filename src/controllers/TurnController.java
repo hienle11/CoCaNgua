@@ -14,6 +14,7 @@ package controllers;
 
 import javafx.scene.control.Label;
 import models.Cell;
+import models.Chess;
 import models.Player;
 
 public class TurnController
@@ -21,7 +22,8 @@ public class TurnController
     private static Label turn;
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
-    private static int diceWasUsed = -1, chessNumberHasMoved = -1;
+    private static int diceWasUsed = -1;
+    private static Chess chessHasMoved = null;
     private static Player currentPlayer = null;
     private static boolean currentPlayerIsComputer, diceIsRolled = false;
     private static boolean[] comPlayer;
@@ -56,9 +58,9 @@ public class TurnController
         return diceWasUsed;
     }
 
-    public static int getChessNumberHasMoved()
+    public static Chess getChessHasMoved()
     {
-        return chessNumberHasMoved;
+        return chessHasMoved;
     }
 
     public static Player getCurrentPlayer()
@@ -78,6 +80,10 @@ public class TurnController
 
     public static void initialize(Label turn)
     {
+        playerTurn = Player.Color.BLUE;
+        diceWasUsed = -1;
+        chessHasMoved = null;
+        diceIsRolled = false;
         currentPlayer =  PlayerController.getPlayer(playerTurn);
         turn.setText("Player Turn: " + playerTurn.toString());
         endTurn();
@@ -91,15 +97,14 @@ public class TurnController
             System.exit(0);
         }
         switchTurn();
-        chessNumberHasMoved = -1;
+        chessHasMoved = null;
         diceWasUsed = -1;
         diceIsRolled = false;
         currentPlayer = PlayerController.getPlayer(playerTurn);
         ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
         if (currentPlayerIsComputer)
         {
-            ButtonController.getRollDiceBt().setOnAction(null);
-            AnimationController.animateDiceRolling();
+            ButtonController.rollDiceBtHandler();
         }
     }
 
@@ -133,19 +138,28 @@ public class TurnController
 
     private static boolean isGameEnded()
     {
+        boolean flag = true;
         for(int i = 0; i < 4; i++)
         {
-            if (!currentPlayer.getChess(i).getCellId().matches("Home+[3-6]"))
-                return false;
+            if (!currentPlayer.getChess(i).getCellId().contains("Home6")
+                && !currentPlayer.getChess(i).getCellId().contains("Home5")
+                && !currentPlayer.getChess(i).getCellId().contains("Home4")
+                && !currentPlayer.getChess(i).getCellId().contains("Home3")) {
+                    System.out.println("ChessPosition " + currentPlayer.getChess(i).getCellId());
+                    flag =  false;
+            }
         }
-        return true;
+        System.out.println("flag = " + flag);
+        return flag;
     }
 
     public static void updateConditions(Cell selectedCell2)
     {
-        chessNumberHasMoved = MoveController.getPossibleMoves().get(selectedCell2)[0];
+        chessHasMoved = PlayerController.getSelectedChess();
         diceWasUsed = MoveController.getPossibleMoves().get(selectedCell2)[1];
+        System.out.println("dice was used = " + diceWasUsed);
         diceValue[diceWasUsed] = (-diceValue[diceWasUsed]);
+        System.out.println("dice was used value  = " + diceValue[diceWasUsed]);
         if(diceValue[2] > 0)
             diceValue[2] = (-diceValue[2]);
     }

@@ -46,7 +46,7 @@ public class MoveController
         Chess checkedChess;
         for (int i = 0 ; i < 4; i ++)
         {
-            if(i == TurnController.getChessNumberHasMoved())
+            if(PlayerController.getPlayer(TurnController.getPlayerTurn()).getChess(i) == TurnController.getChessHasMoved())
                 continue;
             checkedChess = TurnController.getCurrentPlayer().getChess(i);
             currentCell = CellController.getCell(checkedChess.getCellId());

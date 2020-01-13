@@ -16,13 +16,14 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import models.Player;
 
 // this class is created to handle actions of buttons
 public class ButtonController
 {
     // store the path of fxml files in to Strings
-    private static final String gamePlayWindow = "../view/GamePlay.fxml";
-    private static final String mainMenuWindow = "../view/MainMenu.fxml";
+    private static final String gamePlayWindow = "../views/GamePlay.fxml";
+    private static final String mainMenuWindow = "../views/MainMenu.fxml";
 
     private static Button rollDiceBt = null;
 
@@ -71,15 +72,20 @@ public class ButtonController
 //    }
 
     //this method is created to handle the Start Game Button
-    public static void startGameBtHandler(ActionEvent event)
+    public static void playAgBtHandler(ActionEvent event)
     {
         // get the current stage and load a new scene;
         WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
         window.loadWindow(gamePlayWindow);
     }
 
+
     public static void rollDiceBtHandler()
     {
+        ButtonController.getRollDiceBt().setOnAction(null);
+        TurnController.setDiceValue(Player.rollDice());
+        int[] diceValue = TurnController.getDiceValue();
+        TurnController.setDiceIsRolled(true);
         AnimationController.animateDiceRolling();
     }
 }

@@ -47,12 +47,7 @@ public class AnimationController
         rt1.setFromAngle(0);
         rt1.setToAngle(360);
         rt1.setCycleCount(5);
-        ButtonController.getRollDiceBt().setOnAction(null);
-        TurnController.setDiceValue(Player.rollDice());
-        int[] diceValue = TurnController.getDiceValue();
-        dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
-        dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
-//        TurnController.setDiceIsRolled(true);
+
         return rt1;
     }
 
@@ -117,46 +112,32 @@ public class AnimationController
         {
             rt1.setOnFinished(e ->
             {
+                dice0.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[0] + ".jpg"));
+                dice1.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[1] + ".jpg"));
                 if (MoveController.isMovable())
                     PlayerController.computerMove();
                 else
                     TurnController.endTurn();
             });
         }else
-            rt1.setOnFinished(e -> PlayerController.HumanMove());
+            rt1.setOnFinished(e ->
+            {
+                dice0.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[0] + ".jpg"));
+                dice1.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[1] + ".jpg"));
+                PlayerController.HumanMove();
+            });
         rt1.play();
     }
 
     public static void animateChessMoving()
     {
         CellView currentCellView;
-
         currentCellView = PlayerController.getSelectedCellView1();
-        System.out.println("indexOfCurrentCellView = " + CellController.getCellViewList().indexOf(currentCellView));
         chessIsMoving = true;
+        
         if (currentCellView != PlayerController.getSelectedCellView2())
         {
-            CellView nextCellView;
-
-            if (PlayerController.isASpawnMove())
-                nextCellView = PlayerController.getSelectedCellView2();
-            else
-                nextCellView = CellController.getNextCellView(currentCellView);
-
-            Line line = new Line();
-            line.setStartX(14);
-            line.setStartY(14);
-            line.setEndX(nextCellView.getLayoutX() - currentCellView.getLayoutX() + 14);
-            line.setEndY(nextCellView.getLayoutY() - currentCellView.getLayoutY() + 14);
-
-            PathTransition transition = new PathTransition();
-            transition.setNode(PlayerController.getSelectedChessView());
-            transition.setDuration(Duration.seconds(0.2));
-            transition.setPath(line);
-            transition.setCycleCount(1);
-            MoveController.hidePossibleCells();
-            startMovingAnimation(transition, nextCellView);
-            MediaController.playMoveSound();
+           animateChessMoving(currentCellView);
         }
         else if (PlayerController.getKickedChessView() != null)
         {
@@ -181,10 +162,10 @@ public class AnimationController
     {
         CellView emptyNest = PlayerController.getEmptyNestCellView();
         ImageView kickedChessView = PlayerController.getKickedChessView();
+
         Line line = new Line();
         line.setStartX(14);
         line.setStartY(14);
-
         line.setEndX(emptyNest.getLayoutX() - kickedChessView.getLayoutX() + 10);
         line.setEndY(emptyNest.getLayoutY() - kickedChessView.getLayoutY() + 10);
 
@@ -195,6 +176,7 @@ public class AnimationController
         transition.setCycleCount(1);
 
         MoveController.hidePossibleCells();
+
         transition.setOnFinished(e->
         {
             PlayerController.getKickedChessView().setLayoutX(PlayerController.getEmptyNestCellView().getLayoutX() + 4);
@@ -207,17 +189,40 @@ public class AnimationController
         transition.play();
     }
 
-    private static void startMovingAnimation(PathTransition transition, CellView destinationCellView)
+    private static void animateChessMoving(CellView currentCellView)
     {
+        CellView nextCellView;
+
+        if (PlayerController.isASpawnMove())
+            nextCellView = PlayerController.getSelectedCellView2();
+        else
+            nextCellView = CellController.getNextCellView(currentCellView);
+
+        Line line = new Line();
+        line.setStartX(14);
+        line.setStartY(14);
+        line.setEndX(nextCellView.getLayoutX() - currentCellView.getLayoutX() + 14);
+        line.setEndY(nextCellView.getLayoutY() - currentCellView.getLayoutY() + 14);
+
+        PathTransition transition = new PathTransition();
+        transition.setNode(PlayerController.getSelectedChessView());
+        transition.setDuration(Duration.seconds(0.2));
+        transition.setPath(line);
+        transition.setCycleCount(1);
+
+        MoveController.hidePossibleCells();
+        MediaController.playMoveSound();
+        
         transition.setOnFinished(e ->
         {
-            PlayerController.getSelectedChessView().setLayoutX(destinationCellView.getLayoutX() + 4);
-            PlayerController.getSelectedChessView().setLayoutY(destinationCellView.getLayoutY() + 4);
+            PlayerController.getSelectedChessView().setLayoutX(nextCellView.getLayoutX() + 4);
+            PlayerController.getSelectedChessView().setLayoutY(nextCellView.getLayoutY() + 4);
             PlayerController.getSelectedChessView().setTranslateX(0);
             PlayerController.getSelectedChessView().setTranslateY(0);
-            PlayerController.setSelectedCellView1(destinationCellView);
+            PlayerController.setSelectedCellView1(nextCellView);
             animateChessMoving();
         });
+
         transition.play();
     }
 }

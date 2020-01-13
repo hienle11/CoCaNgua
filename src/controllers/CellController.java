@@ -114,6 +114,7 @@ public class CellController
     // this method is to initialize the cell List and the cellView List
     public static void initialize()
     {
+
         for(int i = 0; i < cellViewList.size(); i++)
             cellList.add(new Cell(cellViewList.get(i).getId()));
         for (int i = 76; i < 92; i++)

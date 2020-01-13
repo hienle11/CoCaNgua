@@ -18,4 +18,5 @@ public class HumanPlayer extends Player
     {
         super(color);
     }
+
 }

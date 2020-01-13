@@ -39,6 +39,10 @@ public class Chess
         return homeDistance;
     }
 
+    public void setCellId(String cellId) {
+        this.cellId = cellId;
+    }
+
     public void getKicked(Cell cell)
     {
         this.cellId = cell.getId();

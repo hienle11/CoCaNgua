@@ -19,7 +19,7 @@
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" style="-fx-border-color: blue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GamePlayController">
     <children>
-      <StackPane fx:id="transportingPane" prefHeight="699.0" prefWidth="869.0" />
+      <StackPane fx:id="transportingPane" layoutX="180.0" layoutY="99.0" prefHeight="699.0" prefWidth="869.0" />
         <CellView layoutX="434.0" prefHeight="259.0" prefWidth="250.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="WHITE" height="252.0" stroke="YELLOW" strokeType="INSIDE" strokeWidth="3.0" width="251.0" />
@@ -546,8 +546,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="744.0" layoutY="591.0" mnemonicParsing="false" text="Play again" />
-      <Button layoutX="757.0" layoutY="633.0" mnemonicParsing="false" text="Quit" />
+      <Button fx:id="playAgBt" onAction="#playAgBtHandler" layoutX="744.0" layoutY="591.0" mnemonicParsing="false" text="Play again" />
+      <Button fx:id="quitBt" layoutX="757.0" layoutY="633.0" mnemonicParsing="false" text="Quit" />
       <StackPane layoutX="708.0" layoutY="266.0" prefHeight="102.0" prefWidth="121.0">
          <children>
             <GridPane prefHeight="82.0" prefWidth="121.0">

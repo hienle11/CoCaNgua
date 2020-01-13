@@ -95,7 +95,6 @@ public class MainMenuController
     void displayRules() {
 
     }
-
     @FXML
     void changeLanguage() {
         Locale.setDefault(new Locale(lang[0][current_lang], lang[1][current_lang]));
@@ -135,16 +134,6 @@ public class MainMenuController
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../views/MainMenu.fxml"))));
     }
 
-    void setNameInGamePlay(Node node, CharSequence[] str, boolean[] compPlayer) throws IOException {
-        Stage stage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../views/GamePlay.fxml"));
-        Scene scene = new Scene(loader.load());
-        GamePlayController controller = loader.getController();
-        controller.setData(str, compPlayer);
-        stage.setScene(scene);
-    }
-
     @FXML
     void getName(MouseEvent event) throws IOException {
         ArrayList<Color> color = new ArrayList<>(List.of(Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW));
@@ -165,7 +154,10 @@ public class MainMenuController
 //            hostID.setVisible(true);
 //            done.setVisible(false);
 //        }
-        setNameInGamePlay((Node)event.getSource(), str, compPlayer);
+        GamePlayController.comPlayer = compPlayer;
+        GamePlayController.str = str;
+        WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
+        window.loadWindow("../views/GamePlay.fxml");
     }
 
     @FXML

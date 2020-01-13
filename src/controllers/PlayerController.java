@@ -140,13 +140,29 @@ public class PlayerController
     }
 
     // this method is to perform the move of the computer player
+    public static void testMove(String cell1Id, String cell2Id)
+    {
+        Cell cell2 = CellController.getCell(cell2Id);
+        Cell cell1 = CellController.getCell(cell1Id);
+        Chess chess = cell1.getChess();
+        CellView cellView1 = CellController.getCellView(cell1);
+        CellView cellView2 = CellController.getCellView(cell2);
+        ImageView chessView = PlayerController.getChessView(cellView1);
+
+        chess.setCellId(cell2.getId());
+        cell1.setChess(null);
+        cell2.setChess(chess);
+
+        chessView.setLayoutX(cellView2.getLayoutX() + 4);
+        chessView.setLayoutY(cellView2.getLayoutY() + 4);
+    }
     public static void computerMove()
     {
         Player currentPlayer = TurnController.getCurrentPlayer();                                                       //get the current player
         int[] diceValue = TurnController.getDiceValue();                                                                //get dice value
         selectedCell2 = ((ComputerPlayer) currentPlayer).makeDecision(MoveController.getPossibleMoves(), diceValue);    //make the move decision
-        TurnController.updateConditions(selectedCell2);         //update conditions in TurnController(which move has been chosen)
-        selectedChess = currentPlayer.getChess(MoveController.getPossibleMoves().get(selectedCell2)[0]);                //
+        selectedChess = currentPlayer.getChess(MoveController.getPossibleMoves().get(selectedCell2)[0]);
+        TurnController.updateConditions(selectedCell2);         //update conditions in TurnController(which move has been chosen)//
         selectedCell1 = CellController.getCell(selectedChess.getCellId());
         selectedCellView1 = CellController.getCellView(selectedCell1);
         selectedCellView2 = CellController.getCellView(selectedCell2);
@@ -238,7 +254,9 @@ public class PlayerController
         {
             int chessNumber = MoveController.getPossibleMoves().get(selectedCell2)[0];  // get the corresponding chessNumber in the move
             if (selectedChess == TurnController.getCurrentPlayer().getChess(chessNumber))   //if player choose the correct chess,
+            {
                 return true;                                                                //it is the valid move
+            }
             // if the chess chosen is not exist in the possible list, check if it is spawning
             else if (selectedCell1.getId().contains("Nest") && selectedCell2.getId().contains("Spawn")) //if yes, it is a valid move
             {
