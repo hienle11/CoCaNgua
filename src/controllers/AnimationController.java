@@ -16,8 +16,6 @@ import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import models.Player;
@@ -85,47 +83,33 @@ public class AnimationController
 
     public static void animateDiceRolling()
     {
-//        dice0.setImage(new Image("File:src/resources/images/6.jpg"));
-//        dice1.setImage(new Image("File:src/resources/images/6.jpg"));
-//        RotateTransition rt = new RotateTransition(Duration.seconds(0.1),dice0);
-//        rt.setFromAngle(0);
-//        rt.setToAngle(360);
-//        rt.setCycleCount(5);
-//        rt.play();
-//        RotateTransition rt1 = new RotateTransition(Duration.seconds(0.1),dice1);
-//        rt1.setFromAngle(0);
-//        rt1.setToAngle(360);
-//        rt1.setCycleCount(5);
-
-//        ButtonController.getRollDiceBt().setOnAction(null);
-//        TurnController.setDiceValue(Player.rollDice());
-//        int[] diceValue = TurnController.getDiceValue();
-//        dice0.setImage(new Image("File:src/resources/images/" + diceValue[0] + ".jpg"));
-//        dice1.setImage(new Image("File:src/resources/images/" + diceValue[1] + ".jpg"));
-//        TurnController.setDiceIsRolled(true);
-//        TurnController.setDiceValue(Player.rollDice());
-
         MediaController.playRollSound();
         TurnController.setDiceIsRolled(true);
         RotateTransition rt1 = diceRoll();
-        if (TurnController.isCurrentPlayerIsComputer())
+
+        rt1.setOnFinished(e ->
         {
-            rt1.setOnFinished(e ->
+            dice0.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[0] + ".jpg"));
+            dice1.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[1] + ".jpg"));
+            if (TurnController.opponentTurn)
             {
-                dice0.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[0] + ".jpg"));
-                dice1.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[1] + ".jpg"));
+                if (SocketController.getMessage().equals("movable"))
+                    PlayerController.waitForOpponentMove();
+                else
+                    TurnController.endTurn();
+            }
+            else if (TurnController.isCurrentPlayerIsComputer())
+            {
                 if (MoveController.isMovable())
                     PlayerController.computerMove();
                 else
                     TurnController.endTurn();
-            });
-        }else
-            rt1.setOnFinished(e ->
+            } else
             {
-                dice0.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[0] + ".jpg"));
-                dice1.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[1] + ".jpg"));
                 PlayerController.HumanMove();
-            });
+            }
+        });
+
         rt1.play();
     }
 
@@ -134,16 +118,15 @@ public class AnimationController
         CellView currentCellView;
         currentCellView = PlayerController.getSelectedCellView1();
         chessIsMoving = true;
-        
+
         if (currentCellView != PlayerController.getSelectedCellView2())
         {
-           animateChessMoving(currentCellView);
+            animateChessNormalMoving(currentCellView);
         }
         else if (PlayerController.getKickedChessView() != null)
         {
             animateChessGettingKicked();
-        }
-        else
+        } else
         {
             PlayerController.getSelectedChessView().setLayoutX(PlayerController.getSelectedCellView2().getLayoutX() + 4);
             PlayerController.getSelectedChessView().setLayoutY(PlayerController.getSelectedCellView2().getLayoutY() + 4);
@@ -151,10 +134,19 @@ public class AnimationController
             PlayerController.getSelectedChessView().setTranslateY(0);
             PlayerController.setSelectedChess(null);
             chessIsMoving = false;
-            if (!MoveController.isMovable())
-                TurnController.endTurn();
-            else if (TurnController.isCurrentPlayerIsComputer())
-                PlayerController.computerMove();
+            if (TurnController.opponentTurn)
+            {
+                if (SocketController.getMessage().equals("movable"))
+                    PlayerController.waitForOpponentMove();
+                else
+                    TurnController.endTurn();
+            } else
+            {
+                if (!MoveController.isMovable())
+                    TurnController.endTurn();
+                else if (TurnController.isCurrentPlayerIsComputer())
+                    PlayerController.computerMove();
+            }
         }
     }
 
@@ -189,7 +181,7 @@ public class AnimationController
         transition.play();
     }
 
-    private static void animateChessMoving(CellView currentCellView)
+    private static void animateChessNormalMoving(CellView currentCellView)
     {
         CellView nextCellView;
 
@@ -212,7 +204,7 @@ public class AnimationController
 
         MoveController.hidePossibleCells();
         MediaController.playMoveSound();
-        
+
         transition.setOnFinished(e ->
         {
             PlayerController.getSelectedChessView().setLayoutX(nextCellView.getLayoutX() + 4);

@@ -62,6 +62,11 @@ public class PlayerController
         return selectedChess;
     }
 
+    public static Cell getSelectedCell2()
+    {
+        return selectedCell2;
+    }
+
     public static Cell getSelectedCell1()
     {
         return selectedCell1;
@@ -140,22 +145,6 @@ public class PlayerController
     }
 
     // this method is to perform the move of the computer player
-    public static void testMove(String cell1Id, String cell2Id)
-    {
-        Cell cell2 = CellController.getCell(cell2Id);
-        Cell cell1 = CellController.getCell(cell1Id);
-        Chess chess = cell1.getChess();
-        CellView cellView1 = CellController.getCellView(cell1);
-        CellView cellView2 = CellController.getCellView(cell2);
-        ImageView chessView = PlayerController.getChessView(cellView1);
-
-        chess.setCellId(cell2.getId());
-        cell1.setChess(null);
-        cell2.setChess(chess);
-
-        chessView.setLayoutX(cellView2.getLayoutX() + 4);
-        chessView.setLayoutY(cellView2.getLayoutY() + 4);
-    }
     public static void computerMove()
     {
         Player currentPlayer = TurnController.getCurrentPlayer();                                                       //get the current player
@@ -164,6 +153,7 @@ public class PlayerController
         selectedChess = currentPlayer.getChess(MoveController.getPossibleMoves().get(selectedCell2)[0]);
         TurnController.updateConditions(selectedCell2);         //update conditions in TurnController(which move has been chosen)//
         selectedCell1 = CellController.getCell(selectedChess.getCellId());
+        updateClients();
         selectedCellView1 = CellController.getCellView(selectedCell1);
         selectedCellView2 = CellController.getCellView(selectedCell2);
         selectedChessView = getChessView(selectedCellView1);
@@ -227,6 +217,7 @@ public class PlayerController
             }
             //update the move to models
             TurnController.getCurrentPlayer().moveChess(selectedChess, selectedCell1, selectedCell2, TurnController.getDiceValueWasUsed());
+            updateClients();
             selectedChess = null;
             return true;
         }
@@ -270,7 +261,10 @@ public class PlayerController
     public static void HumanMove()
     {
         if(!MoveController.isMovable())
+        {
+            System.out.println("endturn here");
             TurnController.endTurn();
+        }
     }
 
     //this method is to check if player has chosen a spawn move
@@ -288,7 +282,63 @@ public class PlayerController
     //this method is to check if player is allow to click on the GUI
     public static boolean isAllowToClick()
     {
+        System.out.println("is dice rolled " + TurnController.isDiceIsRolled());
         return (TurnController.isDiceIsRolled() && !TurnController.isCurrentPlayerIsComputer()
-                && !AnimationController.isChessMoving());
+                && !AnimationController.isChessMoving() && !TurnController.opponentTurn);
+    }
+
+    public static void waitForOpponentRollDice()
+    {
+        String diceValueInString = SocketController.getMessage();
+
+        int[] diceValueInInteger = new int[3];
+        diceValueInInteger[0] = Integer.parseInt(diceValueInString) / 10;
+        diceValueInInteger[1] = Integer.parseInt(diceValueInString) % 10;
+        diceValueInInteger[2] = diceValueInInteger[0] + diceValueInInteger[1];
+        TurnController.setDiceValue(diceValueInInteger);
+    }
+    public static void waitForOpponentMove()
+    {
+        String cellId1 = SocketController.getMessage();
+        String cellId2 = SocketController.getMessage();
+        System.out.println("Cell1 = " + cellId1);
+        System.out.println("Cell2 = " + cellId2);
+        PlayerController.updateMove(cellId1, cellId2, true);
+    }
+
+    public static void updateClients()
+    {
+        if (GamePlayController.playOnline)
+        {
+            SocketController.sendMessage(selectedCell1.getId());
+            SocketController.sendMessage(selectedCell2.getId());
+        }
+    }
+
+    public static void updateMove(String cell1Id, String cell2Id, boolean animation)
+    {
+        Cell cell2 = CellController.getCell(cell2Id);
+        Cell cell1 = CellController.getCell(cell1Id);
+        Chess chess = cell1.getChess();
+        CellView cellView1 = CellController.getCellView(cell1);
+        CellView cellView2 = CellController.getCellView(cell2);
+        ImageView chessView = PlayerController.getChessView(cellView1);
+
+        chess.setCellId(cell2.getId());
+        cell1.setChess(null);
+        cell2.setChess(chess);
+
+        if (animation == true)
+        {
+            System.out.println("movechess");
+            selectedChessView = chessView;
+            selectedCellView1 = cellView1;
+            selectedCellView2 = cellView2;
+            AnimationController.animateChessMoving();
+        } else
+        {
+            chessView.setLayoutX(cellView2.getLayoutX() + 4);
+            chessView.setLayoutY(cellView2.getLayoutY() + 4);
+        }
     }
 }

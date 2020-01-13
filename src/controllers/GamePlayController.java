@@ -58,6 +58,8 @@ public class GamePlayController implements Initializable
 
     static CharSequence[] str;
     static boolean[] comPlayer;
+    static boolean playOnline = false;
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -91,8 +93,8 @@ public class GamePlayController implements Initializable
 
         AnimationController.initialize(dice0, dice1);
         ButtonController.initialize(rollDiceBt);
+        //SocketController.initialize();
         TurnController.initialize(turn);
-
         //manualTestCases();
     }
 
@@ -100,6 +102,7 @@ public class GamePlayController implements Initializable
     {
         if (PlayerController.getSelectedCellView1() !=  event.getSource() && PlayerController.isAllowToClick())
         {
+            System.out.println("click");
             if (PlayerController.getSelectedCellView1() != null
                     && !MoveController.getPossibleMoves().containsKey(PlayerController.getSelectedCell1()))
             {
@@ -128,10 +131,10 @@ public class GamePlayController implements Initializable
 
     public void manualTestCases()
     {
-        PlayerController.testMove("blueNest1", "blueHome6");
-        PlayerController.testMove("blueNest2", "blueHome5");
-        PlayerController.testMove("blueNest3", "blueHome4");
-        PlayerController.testMove("blueNest4", "blueHome2");
+        PlayerController.updateMove("blueNest1", "blueHome6", false);
+        PlayerController.updateMove("blueNest2", "blueHome5", false);
+        PlayerController.updateMove("blueNest3", "blueHome4", false);
+        PlayerController.updateMove("blueNest4", "blueHome2", false);
 
         rollDiceBt.setOnAction(e->
         {

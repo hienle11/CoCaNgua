@@ -20,6 +20,7 @@ import models.Player;
 public class TurnController
 {
     private static Label turn;
+    public static boolean opponentTurn = false;
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
     private static int diceWasUsed = -1;
@@ -101,10 +102,13 @@ public class TurnController
         diceWasUsed = -1;
         diceIsRolled = false;
         currentPlayer = PlayerController.getPlayer(playerTurn);
-        ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
-        if (currentPlayerIsComputer)
+        if (currentPlayerIsComputer || (GamePlayController.playOnline && opponentTurn))
         {
             ButtonController.rollDiceBtHandler();
+        }else
+        {
+            System.out.println("here = button active");
+            ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
         }
     }
 
@@ -112,10 +116,12 @@ public class TurnController
     {
         if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
         {
+            opponentTurn = false;
             switch (playerTurn)
             {
                 case BLUE:
                     playerTurn = Player.Color.RED;
+                    opponentTurn = false;
                     currentPlayerIsComputer = comPlayer[1];
                     break;
                 case RED:
@@ -142,14 +148,12 @@ public class TurnController
         for(int i = 0; i < 4; i++)
         {
             if (!currentPlayer.getChess(i).getCellId().contains("Home6")
-                && !currentPlayer.getChess(i).getCellId().contains("Home5")
-                && !currentPlayer.getChess(i).getCellId().contains("Home4")
-                && !currentPlayer.getChess(i).getCellId().contains("Home3")) {
-                    System.out.println("ChessPosition " + currentPlayer.getChess(i).getCellId());
-                    flag =  false;
+                    && !currentPlayer.getChess(i).getCellId().contains("Home5")
+                    && !currentPlayer.getChess(i).getCellId().contains("Home4")
+                    && !currentPlayer.getChess(i).getCellId().contains("Home3")) {
+                flag =  false;
             }
         }
-        System.out.println("flag = " + flag);
         return flag;
     }
 

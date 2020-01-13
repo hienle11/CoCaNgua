@@ -82,9 +82,19 @@ public class ButtonController
 
     public static void rollDiceBtHandler()
     {
-        ButtonController.getRollDiceBt().setOnAction(null);
-        TurnController.setDiceValue(Player.rollDice());
-        int[] diceValue = TurnController.getDiceValue();
+        rollDiceBt.setOnAction(null);
+        if (TurnController.opponentTurn)
+        {
+            PlayerController.waitForOpponentRollDice();
+        }
+        else
+        {
+            System.out.println("I roll");
+            TurnController.setDiceValue(Player.rollDice());
+            int[] diceValue = TurnController.getDiceValue();
+            if (GamePlayController.playOnline)
+                SocketController.sendMessage("" + diceValue[0] + diceValue[1]);
+        }
         TurnController.setDiceIsRolled(true);
         AnimationController.animateDiceRolling();
     }

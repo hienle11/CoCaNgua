@@ -29,15 +29,29 @@ public class MoveController
 
     public static boolean isMovable()
     {
+        boolean result = true;
         if (TurnController.getDiceWasUsed() == 2)
-            return false;
-        possibleMoves.clear();
-        calculatePossibleMoves();
-        if (possibleMoves.size() == 0)
-            return false;
-        else
-            showPossibleCells();
-        return true;
+        {
+            result = false;
+        } else
+        {
+            possibleMoves.clear();
+            calculatePossibleMoves();
+            if (possibleMoves.size() == 0)
+                result = false;
+            else
+                showPossibleCells();
+        }
+
+        if (GamePlayController.playOnline && !TurnController.opponentTurn)
+        {
+            if (result == true)
+                SocketController.sendMessage("movable");
+            else
+                SocketController.sendMessage("unmovable");
+        }
+        System.out.println("this time");
+        return result;
     }
 
     private static void calculatePossibleMoves()

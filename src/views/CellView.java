@@ -59,6 +59,7 @@ public class CellView extends StackPane
 
     public void hideCellSelection()
     {
-        shape.setFill(color);
+        if (shape != null)
+            shape.setFill(color);
     }
 }
