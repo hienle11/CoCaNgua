@@ -20,19 +20,26 @@ import models.Player;
 public class TurnController
 {
     private static Label turn;
+    private static boolean[] choosenPlayer = new boolean[4];
     public static boolean opponentTurn = false;
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
-    private static int diceWasUsed = -1;
+    private static int diceWasUsed = -1, currentTurn = 0;
     private static Chess chessHasMoved = null;
     private static Player currentPlayer = null;
     private static boolean currentPlayerIsComputer, diceIsRolled = false;
     private static boolean[] comPlayer;
 
     public static void setComOrHuman(boolean[] comPlayer) {
+        TurnController.choosenPlayer = PlayerController.getChoosenPlayer();
         TurnController.comPlayer = comPlayer;
-        currentPlayerIsComputer = comPlayer[0];
+        for (int i = 0; i < 4; i++) {
+//            if (choosenPlayer[i]) {
+            currentPlayerIsComputer = comPlayer[i];
+//            }
+        }
     }
+
 
     public static void setDiceIsRolled(boolean diceIsRolled)
     {
@@ -81,13 +88,21 @@ public class TurnController
 
     public static void initialize(Label turn)
     {
-        playerTurn = Player.Color.BLUE;
+        int i = 0;
+        //        InitialThrowController.determineFirstThrow();
+        for (i = 0; i < 4; i++) {
+            if(choosenPlayer[i]) {
+                playerTurn = PlayerController.color[i];
+                break;
+            }
+        }
+//        playerTurn = PlayerController.color[InitialThrowController.determineFirstThrow()];
         diceWasUsed = -1;
         chessHasMoved = null;
         diceIsRolled = false;
         currentPlayer =  PlayerController.getPlayer(playerTurn);
         turn.setText("Player Turn: " + playerTurn.toString());
-        endTurn();
+        if (comPlayer[i]) endTurn();
     }
 
     public static void endTurn()
@@ -116,27 +131,45 @@ public class TurnController
     {
         if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
         {
-            opponentTurn = false;
-            switch (playerTurn)
-            {
-                case BLUE:
-                    playerTurn = Player.Color.RED;
-                    opponentTurn = false;
-                    currentPlayerIsComputer = comPlayer[1];
-                    break;
-                case RED:
-                    playerTurn = Player.Color.GREEN;
-                    currentPlayerIsComputer = comPlayer[2];
-                    break;
-                case GREEN:
-                    playerTurn = Player.Color.YELLOW;
-                    currentPlayerIsComputer = comPlayer[3];
-                    break;
-                case YELLOW:
-                    playerTurn = Player.Color.BLUE;
-                    currentPlayerIsComputer = comPlayer[0];
-                    break;
+//            switch (playerTurn)
+//            {
+//                case BLUE:
+//                    playerTurn = Player.Color.RED;
+//                    currentPlayerIsComputer = comPlayer[1];
+//                    break;
+//                case RED:
+//                    playerTurn = Player.Color.GREEN;
+//                    currentPlayerIsComputer = comPlayer[2];
+//                    break;
+//                case GREEN:
+//                    playerTurn = Player.Color.YELLOW;
+//                    currentPlayerIsComputer = comPlayer[3];
+//                    break;
+//                case YELLOW:
+//                    playerTurn = Player.Color.BLUE;
+//                    currentPlayerIsComputer = comPlayer[0];
+//                    break;
+//            }
+//            for (boolean i : choosenPlayer) System.out.println(i);
+//            while (true) {
+//                if (playerTurn == PlayerController.color[currentTurn]) {
+//                    if (currentTurn >= 3) currentTurn = 0;
+//                    currentTurn++;
+//                    if (choosenPlayer[currentTurn]) {
+//                        playerTurn = PlayerController.color[currentTurn];
+//                        currentPlayerIsComputer = comPlayer[currentTurn];
+//                        break;
+//                    }
+//                }
+//            }
+            currentTurn++;
+            if (currentTurn > 3) currentTurn = 0;
+            while(!choosenPlayer[currentTurn]) {
+                currentTurn++;
+                if (currentTurn > 3) currentTurn = 0;
             }
+            playerTurn = PlayerController.color[currentTurn];
+            currentPlayerIsComputer = comPlayer[currentTurn];
             System.out.println("Turn = " + playerTurn.toString());
         }
     }

@@ -45,11 +45,13 @@ public class MainMenuController
     TextField[] plName;
     Pane[] panes;
     Rectangle[] rectangles;
+    CheckBox[] isCom;
+
     @FXML
     private TextField hostID;
 
     @FXML
-    private CheckBox multiplayer;
+    private CheckBox multiplayer, isCom0, isCom1, isCom2, isCom3;
 
     @FXML
     private Pane pane1, pane2, pane3, pane4;
@@ -71,7 +73,8 @@ public class MainMenuController
 
     @FXML
     void initialize() {
-        choice.getItems().addAll("2","3","4");
+        choice.getItems().addAll("1","2","3","4");
+        isCom = new CheckBox[]{isCom0, isCom1, isCom2, isCom3};
         plName = new TextField[]{plName1,plName2,plName3,plName4};
         panes = new Pane[]{pane1, pane2, pane3, pane4};
         rectangles = new Rectangle[]{color1, color2, color3, color4};
@@ -138,11 +141,13 @@ public class MainMenuController
     void getName(MouseEvent event) throws IOException {
         ArrayList<Color> color = new ArrayList<>(List.of(Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW));
         boolean[] compPlayer = new boolean[4];
+        boolean[] choosenPlayer = new boolean[4];
         CharSequence[] str = new CharSequence[4];
         for (int i = 0; i < 4; i++) {
             int k = color.indexOf(rectangles[i].getFill());
             str[k] = plName[i].getCharacters();
-            compPlayer[k] = (i > num - 1);
+            compPlayer[k] = (isCom[i].isSelected());
+            choosenPlayer[k] = (i <= num - 1);
         }
 //        for (CharSequence i : str) System.out.println(i);
 //        for (boolean i : compPlayer) System.out.println(i);
@@ -156,6 +161,7 @@ public class MainMenuController
 //        }
         GamePlayController.comPlayer = compPlayer;
         GamePlayController.str = str;
+        GamePlayController.choosenPlayer = choosenPlayer;
         WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
         window.loadWindow("../views/GamePlay.fxml");
     }

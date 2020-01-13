@@ -58,6 +58,7 @@ public class GamePlayController implements Initializable
 
     static CharSequence[] str;
     static boolean[] comPlayer;
+    static boolean[] choosenPlayer;
     static boolean playOnline = false;
 
     @Override
@@ -68,7 +69,7 @@ public class GamePlayController implements Initializable
         name1.setText(String.valueOf(str[1]));
         name2.setText(String.valueOf(str[2]));
         name3.setText(String.valueOf(str[3]));
-        PlayerController.initialize(str, comPlayer);
+        PlayerController.initialize(str, comPlayer, choosenPlayer);
         PlayerController.getChessViewList().clear();
         PlayerController.getChessViewList().addAll(blueChess0, blueChess1, blueChess2, blueChess3,
                 redChess0, redChess1, redChess2, redChess3,

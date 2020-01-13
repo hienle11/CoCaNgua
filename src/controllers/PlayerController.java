@@ -23,7 +23,7 @@ public class PlayerController
 {
     // properties of PlayerController class
     private static Player[] player = new Player[4];         // list of 4 players
-    private static Player.Color[] color = new Player.Color[]{Player.Color.BLUE, Player.Color.RED, Player.Color.GREEN, Player.Color.YELLOW};
+    static Player.Color[] color = new Player.Color[]{Player.Color.BLUE, Player.Color.RED, Player.Color.GREEN, Player.Color.YELLOW};
     private static ObservableList<ImageView> chessViewList = FXCollections.observableArrayList(); // list of all chessViews
     private static ImageView kickedChessView = null;        // ImageView of the chess get kicked
     private static ImageView selectedChessView = null;      // ImageView of the chess selected by the player
@@ -33,6 +33,7 @@ public class PlayerController
     private static Chess selectedChess = null;              // the chess selected by the player
     private static Cell selectedCell1 = null;               // the cell containing the chess selected by the player
     private static Cell selectedCell2 = null;               // the cell which the chess will move to
+    private static boolean[] choosenPlayer = new boolean[4];
 
     //Necessary accessors and mutators for other classes to communicate with PlayerController
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,8 +126,12 @@ public class PlayerController
         return null;
     }
 
+    public static boolean[] getChoosenPlayer() {
+        return choosenPlayer;
+    }
+
     // this method is to initialize players when the game is started
-    public static void initialize(CharSequence[] str, boolean[] comPlayer)
+    public static void initialize(CharSequence[] str, boolean[] comPlayer, boolean[] choosenPlayer)
     {
 //        player[0] = new ComputerPlayer(Player.Color.BLUE);
 //        player[0].setName(String.valueOf(str[0]));
@@ -136,9 +141,13 @@ public class PlayerController
 //        player[2].setName(String.valueOf(str[2]));
 //        player[3] = new ComputerPlayer(Player.Color.YELLOW);
 //        player[3].setName(String.valueOf(str[3]));
+        PlayerController.choosenPlayer = choosenPlayer;
         for (int i = 0; i < 4; i++) {
+//            if (choosenPlayer[i]) {
             player[i] = (comPlayer[i]) ? new ComputerPlayer(color[i]) : new HumanPlayer(color[i]);
+//            System.out.println(comPlayer[i]);
             player[i].setName(String.valueOf(str[i]));
+//            }
 //            System.out.println(comPlayer[i]);
         }
         TurnController.setComOrHuman(comPlayer);
