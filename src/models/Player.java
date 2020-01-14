@@ -5,7 +5,7 @@
   Assessment: Final Assignment
   Created date: 24/12/2019
   By: Le Quang Hien (s3695516)
-  Last modified: dd/mm/yyyy (e.g. 05/04/2019)
+  Last modified: 14/01/2020
   By: Le Quang Hien (s3695516)
   Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.
 */
@@ -41,10 +41,6 @@ public abstract class Player
         this.score += score;
     }
 
-    public void updateScore(int homeScore){
-        this.score += homeScore;
-    }
-
     public Color getColor()
     {
         return color;
@@ -60,34 +56,9 @@ public abstract class Player
         return score;
     }
 
-    public void setScore(int score)
-    {
-        this.score = score;
-    }
-
-    public int getChessNumber(Chess chess)
-    {
-        for(int i = 0; i < 4; i++)
-        {
-            System.out.println("loop");
-            if (this.chess[i] == chess)
-                return i;
-        }
-        return -1;
-    }
-
     public Chess getChess(int number)
     {
         return chess[number];
-    }
-
-    public Chess[] getChessList()
-    {
-        return chess;
-    }
-    public void setChess(Chess[] chess)
-    {
-        this.chess = chess;
     }
 
     public String getName()

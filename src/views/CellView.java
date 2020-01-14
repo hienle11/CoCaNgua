@@ -5,7 +5,7 @@
   Assessment: Final Assignment
   Created date: 05/01/2020
   By: Le Quang Hien (s3695516)
-  Last modified: dd/mm/yyyy (e.g. 05/04/2019)
+  Last modified: 14/01/2020
   By: Le Quang Hien (s3695516)
   Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.
 */
@@ -35,26 +35,6 @@ public class CellView extends StackPane
                 color = Color.WHITE;
         }
         shape.setFill(Color.VIOLET);
-       /* test = true;
-        CellView cellView = this;
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    double defaultStrokeWidth = ((Circle)(cellView.getChildren().get(0))).getStrokeWidth();
-                    for (int i = 0; i < 10; i ++)
-                    {
-                        ((Circle) (cellView.getChildren().get(0))).setStrokeWidth(20);
-                        Thread.sleep(500);
-                        ((Circle) (cellView.getChildren().get(0))).setStrokeWidth(defaultStrokeWidth);
-                        Thread.sleep(500);
-                    }
-                }catch(InterruptedException e){}
-            }
-        }).start();*/
     }
 
     public void hideCellSelection()
