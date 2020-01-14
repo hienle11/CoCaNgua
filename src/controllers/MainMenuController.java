@@ -44,14 +44,14 @@ public class MainMenuController
     TextField[] plName;
     Pane[] panes;
     Rectangle[] rectangles;
-    CheckBox[] isCom;
+    CheckBox[] isCom, online;
     boolean isMulti = false;
 
     @FXML
     private TextField hostID;
 
     @FXML
-    private CheckBox isCom0, isCom1, isCom2, isCom3, host;
+    private CheckBox isCom0, isCom1, isCom2, isCom3, host, online0, online1, online2, online3;
 
     @FXML
     private Pane pane1, pane2, pane3, pane4;
@@ -79,6 +79,7 @@ public class MainMenuController
         plName = new TextField[]{plName1,plName2,plName3,plName4};
         panes = new Pane[]{pane1, pane2, pane3, pane4};
         rectangles = new Rectangle[]{color1, color2, color3, color4};
+        online = new CheckBox[]{online0,online1,online2,online3};
     }
 
     @FXML
@@ -130,7 +131,8 @@ public class MainMenuController
         for (int i = 0; i < 4; i++) {
             if (i == num) visible = false;
             panes[i].setVisible(visible);
-            if (isMulti) isCom[i].setText("Online");
+//            if (isMulti) isCom[i].setText("Online");
+            if (isMulti) online[i].setVisible(visible);
         }
     }
 
@@ -152,17 +154,7 @@ public class MainMenuController
             compPlayer[k] = (isCom[i].isSelected());
             choosenPlayer[k] = (i <= num - 1);
         }
-        if (isMulti) System.out.println(hostID.getCharacters());
-//        for (CharSequence i : str) System.out.println(i);
-//        for (boolean i : compPlayer) System.out.println(i);
-//        if () {
-//            for (int i = 0; i < 4; i++) {
-//                panes[i].setVisible(false);
-//            }
-//            choice.setDisable(true);
-//            hostID.setVisible(true);
-//            done.setVisible(false);
-//        }
+//        if (isMulti) System.out.println(hostID.getCharacters());
         GamePlayController.comPlayer = compPlayer;
         GamePlayController.str = str;
         GamePlayController.chosenPlayer = choosenPlayer;
@@ -195,10 +187,5 @@ public class MainMenuController
         isMulti = true;
         host.setVisible(true);
         start();
-    }
-
-    @FXML
-    void openHostID() {
-        hostID.setVisible(host.isSelected());
     }
 }
