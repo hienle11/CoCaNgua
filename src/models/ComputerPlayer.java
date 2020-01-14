@@ -45,9 +45,6 @@ public class ComputerPlayer extends Player
                 itIsABetterMove = true;
             else
             {
-                System.out.println("pickedCell =" + pickedCell.getId());
-                System.out.println("cell = " + cell.getId());
-                System.out.println("------ ' " +this.getColor().toString().toLowerCase() + "Spawn");
                 if (cell.getId().contains(this.getColor().toString().toLowerCase() + "Home") && movePriority <= 4)       // check if the Chess is arriving Home
                 {
                     if (!pickedCell.getId().contains(this.getColor().toString().toLowerCase() + "Home"))       // if the pickedCell is not a HomeArrivalMove

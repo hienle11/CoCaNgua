@@ -5,8 +5,8 @@
   Assessment: Final Assignment
   Created date: 10/01/2020
   By: Le Quang Hien (s3695516)
-  Last modified: dd/mm/yyyy (e.g. 05/04/2019)
-  By: Le Quang Hien (s3695516)
+  Last modified: 14/01/2020
+  By: Le Quang Hien (s3695516) + Doan Luong Hoang (s3749795) + Le Ngoc Duy (s3757327)
   Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.
 */
 
@@ -25,23 +25,25 @@ import java.util.ResourceBundle;
 
 public class TurnController
 {
-    private static Text winnerName, winnerScore;
+    // variable declarations
+    private static Text winnerName, winnerScore;                        // display winner nam and winner score when game is ended
     private static Pane gameOverPane;
-    private static Label turnLabel, history;
+    private static Label turnLabel, history;                            // display turn and description
     private static ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle");
 
-    private static boolean[] chosenPlayer = new boolean[4];
-    public static boolean opponentTurn = false;
-    private static int[] diceValue = new int[3];
-    private static Player.Color playerTurn = Player.Color.BLUE;
-    private static int diceWasUsed = -1, currentTurn = 0;
-    private static Chess chessHasMoved = null;
-    private static Player currentPlayer = null;
-    private static boolean currentPlayerIsComputer, diceIsRolled = false;
+    private static boolean[] chosenPlayer = new boolean[4];             // check if the player number is exist
+    public static boolean opponentTurn = false;                         // check if it is opponent Turn
+    private static int[] diceValue = new int[3];                        // get the dice value, dice[2] is the total of two dices
+    private static Player.Color playerTurn = Player.Color.BLUE;         // the color of the player in turn
+    private static int diceWasUsed = -1, currentTurn = 0;               // the dice index was used
+    private static Chess chessHasMoved = null;                          // get the chess has moved
+    private static Player currentPlayer = null;                          // get the current player
+    private static boolean currentPlayerIsComputer, diceIsRolled = false;   // check if the dice is rolled, the current play is computer or not
     private static boolean[] comPlayer;
-    static boolean initialRollDice = true;
-    static int[] initialDiceValue = new int[4];
+    static boolean initialRollDice = true;                              // check if it is initial roll dice to set the order
+    static int[] initialDiceValue = new int[4];                         // initial dice value to find who plays first
 
+    //accessors and mutators
     public static void setDiceIsRolled(boolean diceIsRolled)
     {
         TurnController.diceIsRolled = diceIsRolled;
@@ -87,6 +89,7 @@ public class TurnController
         return diceIsRolled;
     }
 
+    //this method is to help the PlayerController to initialize the right number of players and which one is computer player
     public static void setComOrHuman(boolean[] comPlayer)
     {
         TurnController.chosenPlayer = PlayerController.getChosenPlayer();
@@ -118,6 +121,7 @@ public class TurnController
         initialRollDice();
     }
 
+    //this method is for initial roll dice to set up order of play
     private static void initialRollDice()
     {
         while(initialDiceValue[currentTurn] == -1)
@@ -128,6 +132,7 @@ public class TurnController
             ButtonController.enableRollDiceBt();
     }
 
+    //get the initialDice value when setting up order of play
     public static void getInitialDiceValue ()
     {
         initialDiceValue[currentTurn] = diceValue[2];
@@ -148,6 +153,7 @@ public class TurnController
         }
     }
 
+    //check if the system has determine who plays first
     public static int determineFirstTurn()
     {
         int tempIndex = 0;
@@ -179,6 +185,7 @@ public class TurnController
         return playerHasHighestDiceValue;
     }
 
+    // end turn
     public static void endTurn()
     {
         if (isGameEnded())

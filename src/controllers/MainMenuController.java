@@ -4,9 +4,9 @@
   Semester: 2019C
   Assessment: Final Assignment
   Created date: 1/01/2020
-  By: Doan Luong Hoang (sxxxxxxx)
-  Last modified: dd/mm/yyyy (e.g. 05/04/2019)
-  By: Doan Luong Hoang (sxxxxxxx)
+  By: Doan Luong Hoang (s3749795)
+  Last modified: 14/01/2020
+  By: Doan Luong Hoang (s3749795)
   Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.
 */
 
@@ -46,9 +46,6 @@ public class MainMenuController
     Rectangle[] rectangles;
     CheckBox[] isCom, online;
     boolean isMulti = false;
-
-    @FXML
-    private TextField hostID;
 
     @FXML
     private CheckBox isCom0, isCom1, isCom2, isCom3, host, online0, online1, online2, online3;

@@ -5,8 +5,8 @@
   Assessment: Final Assignment
   Created date: 03/01/2020
   By: Le Quang Hien (s3695516)
-  Last modified: dd/mm/yyyy (e.g. 05/04/2019)
-  By: Le Quang Hien (s3695516)
+  Last modified: 14/01/2020
+  By: Le Quang Hien (s3695516) + Le Ngoc Duy (s3757327)
   Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.
 */
 
@@ -309,16 +309,19 @@ public class PlayerController
                 && !AnimationController.isChessMoving() && !TurnController.opponentTurn);
     }
 
+    //this method is to wait for the opponent to roll dice
     public static void waitForOpponentRollDice()
     {
-        String diceValueInString = SocketController.getMessage();
-
+        String diceValueInString = SocketController.getMessage(); // get the dice value in String
+        // convert dice value in string to integer and store to Turn Controller
         int[] diceValueInInteger = new int[3];
         diceValueInInteger[0] = Integer.parseInt(diceValueInString) / 10;
         diceValueInInteger[1] = Integer.parseInt(diceValueInString) % 10;
         diceValueInInteger[2] = diceValueInInteger[0] + diceValueInInteger[1];
         TurnController.setDiceValue(diceValueInInteger);
     }
+
+    //this method is to wait for opponent move
     public static void waitForOpponentMove()
     {
         String cellId1 = SocketController.getMessage();
@@ -326,6 +329,7 @@ public class PlayerController
         PlayerController.updateMove(cellId1, cellId2, true);
     }
 
+    //this method is to send data to clients
     public static void updateClients(Cell currentCell, Cell destinationCell)
     {
         if (GamePlayController.playOnline)
@@ -335,6 +339,7 @@ public class PlayerController
         }
     }
 
+    // this method is to update the move of the opponent
     public static void updateMove(String cell1Id, String cell2Id, boolean animation)
     {
         Cell cell2 = CellController.getCell(cell2Id);
@@ -346,6 +351,7 @@ public class PlayerController
         selectedChessView = chessView;
         selectedCellView1 = cellView1;
         selectedCellView2 = cellView2;
+        selectedCell1 = cell1;
         selectedCell2 = cell2;
         Chess kickedChess = cell2.getChess();
         if (kickedChess != null)
