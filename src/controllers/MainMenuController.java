@@ -58,7 +58,7 @@ public class MainMenuController
     private ImageView menu;
 
     @FXML
-    private Button start, rules, language, back, done, exit, multiplayer;
+    private Button start, language, back, done, exit, multiplayer;
 
     @FXML
     private ComboBox<String> choice;
@@ -79,9 +79,8 @@ public class MainMenuController
 
     @FXML
     //this function initiates when the start button is clicked and shows the box to select numbers of players
-    void start() {
+    void startGameBtHandler() {
         start.setVisible(false);
-        rules.setVisible(false);
         language.setVisible(false);
         exit.setVisible(false);
         choice.setVisible(true);
@@ -91,35 +90,29 @@ public class MainMenuController
     }
 
     @FXML
-    //this function displays rules when the rule button is clicked
-    void displayRules() {
-
-    }
-
-    @FXML
     //this function changes the languages when the language button is clicked
-    void changeLanguage() {
+    void changeLanguageBtHandler() {
         Locale.setDefault(new Locale(lang[0][current_lang], lang[1][current_lang]));
         ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle");
         start.setText(bundle.getString("start"));
-        rules.setText(bundle.getString("rules"));
         language.setText(bundle.getString("language"));
         exit.setText(bundle.getString("exit"));
         choice.setPromptText(bundle.getString("choose"));
         menu.setImage(new Image(bundle.getString("menu")));
         done.setText(bundle.getString("done"));
         back.setText(bundle.getString("back"));
+        multiplayer.setText(bundle.getString("multiplayer"));
         for (int i = 0; i < 4; i++) plName[i].setText(bundle.getString("player") + (i + 1));
         current_lang = 1 - current_lang;
     }
 
     @FXML
-    void exit() {
+    void exitGameBtHandler() {
         Platform.exit();
     }
 
     @FXML
-    void getPlayerNum() {
+    void doneBtHandler() {
         done.setDisable(false);
         boolean visible = true;
         num = (choice.getValue()).charAt(0) - '0';
@@ -131,13 +124,13 @@ public class MainMenuController
     }
 
     @FXML
-    void back(javafx.scene.input.MouseEvent event) throws IOException {
+    void backBtHandler(javafx.scene.input.MouseEvent event) throws IOException {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../views/MainMenu.fxml"))));
     }
 
     @FXML
-    void getName(MouseEvent event) {
+    void setUpPlayers(MouseEvent event) {
         ArrayList<Color> color = new ArrayList<>(List.of(Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW));
         boolean[] compPlayer = new boolean[4];
         boolean[] chosenPlayer = new boolean[4];
@@ -160,7 +153,7 @@ public class MainMenuController
     }
 
     @FXML
-    void changeColor(javafx.scene.input.MouseEvent event) {
+    void changeColorBoxHandler(javafx.scene.input.MouseEvent event) {
         Rectangle temp = (Rectangle)event.getSource();
         current_color++;
         if (current_color > 3) current_color = 0;
@@ -173,13 +166,13 @@ public class MainMenuController
     }
 
     @FXML
-    void multiplayerStart() {
+    void multiplayerBtHandler() {
         isMulti = true;
         host.setVisible(true);
-        start();
+        startGameBtHandler();
     }
     @FXML
-    void getHost()
+    void getHostBoxHandler()
     {
         GamePlayController.playerIsHost = host.isSelected();
     }
