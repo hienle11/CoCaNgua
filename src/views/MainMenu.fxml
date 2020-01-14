@@ -22,7 +22,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="886.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuController">
     <ImageView fx:id="menu" fitHeight="500.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../resources/images/enmenu.png" />
     </ImageView>
@@ -120,17 +120,32 @@
             </CheckBox>
         </children>
     </Pane>
-    <TextField fx:id="hostID" layoutX="548.0" layoutY="277.0" onKeyPressed="#getHostID" prefHeight="32.0" prefWidth="188.0" promptText="Please enter host ID" visible="false">
-        <font>
-            <Font name="Times New Roman" size="18.0" />
-        </font>
-    </TextField>
    <Button fx:id="start" layoutX="262.0" layoutY="293.0" mnemonicParsing="false" onMouseClicked="#start" prefWidth="125.0" text="Start Game">
       <font>
          <Font name="Times New Roman" size="18.0" />
       </font>
    </Button>
-   <CheckBox fx:id="host" layoutX="584.0" layoutY="250.0" mnemonicParsing="false" onAction="#openHostID" text="Host server" visible="false">
+   <CheckBox fx:id="host" layoutX="586.0" layoutY="281.0" mnemonicParsing="false" text="Host server" visible="false">
+      <font>
+         <Font name="Times New Roman" size="18.0" />
+      </font>
+   </CheckBox>
+   <CheckBox fx:id="online0" layoutX="104.0" layoutY="319.0" mnemonicParsing="false" text="Online" visible="false">
+      <font>
+         <Font name="Times New Roman" size="18.0" />
+      </font>
+   </CheckBox>
+   <CheckBox fx:id="online1" layoutX="104.0" layoutY="351.0" mnemonicParsing="false" text="Online" visible="false">
+      <font>
+         <Font name="Times New Roman" size="18.0" />
+      </font>
+   </CheckBox>
+   <CheckBox fx:id="online2" layoutX="104.0" layoutY="384.0" mnemonicParsing="false" text="Online" visible="false">
+      <font>
+         <Font name="Times New Roman" size="18.0" />
+      </font>
+   </CheckBox>
+   <CheckBox fx:id="online3" layoutX="104.0" layoutY="417.0" mnemonicParsing="false" text="Online" visible="false">
       <font>
          <Font name="Times New Roman" size="18.0" />
       </font>
