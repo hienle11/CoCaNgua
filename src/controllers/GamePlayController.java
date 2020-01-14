@@ -136,13 +136,13 @@ public class GamePlayController implements Initializable
         PlayerController.updateMove("blueNest1", "blueHome6", false);
         PlayerController.updateMove("blueNest2", "blueHome5", false);
         PlayerController.updateMove("blueNest3", "blueHome4", false);
-        PlayerController.updateMove("blueNest4", "blueHome2", false);
+        PlayerController.updateMove("blueNest4", "blueHome0", false);
 
-        rollDiceBt.setOnAction(e->
-        {
-            TurnController.setDiceValue(new int[]{3,3,6});
-            AnimationController.animateDiceRolling();
-        });
+//        rollDiceBt.setOnAction(e->
+//        {
+//            TurnController.setDiceValue(new int[]{3,3,6});
+//            AnimationController.animateDiceRolling();
+//        });
     }
 }
 

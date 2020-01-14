@@ -10,19 +10,14 @@
 <!--By: Doan Luong Hoang (sxxxxxxx)-->
 <!--Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.-->
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuController">
     <ImageView fx:id="menu" fitHeight="500.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../resources/images/enmenu.png" />
     </ImageView>
@@ -65,7 +60,7 @@
                 </font>
             </TextField>
             <Rectangle fx:id="color1" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-            <CheckBox fx:id="isCom0" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" selected="true" text="Computer">
+            <CheckBox fx:id="isCom0" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" text="Computer">
                 <font>
                     <Font name="Times New Roman" size="18.0" />
                 </font>
@@ -83,7 +78,7 @@
                 </font>
             </TextField>
             <Rectangle fx:id="color2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-            <CheckBox fx:id="isCom1" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" selected="true" text="Computer">
+            <CheckBox fx:id="isCom1" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" text="Computer">
                 <font>
                     <Font name="Times New Roman" size="18.0" />
                 </font>
@@ -98,7 +93,7 @@
                 </font>
             </TextField>
             <Rectangle fx:id="color3" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-            <CheckBox fx:id="isCom2" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" selected="true" text="Computer">
+            <CheckBox fx:id="isCom2" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" text="Computer">
                 <font>
                     <Font name="Times New Roman" size="18.0" />
                 </font>
@@ -113,7 +108,7 @@
                 </font>
             </TextField>
             <Rectangle fx:id="color4" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-            <CheckBox fx:id="isCom3" layoutX="295.0" mnemonicParsing="false" selected="true" text="Computer">
+            <CheckBox fx:id="isCom3" layoutX="295.0" mnemonicParsing="false" text="Computer">
                 <font>
                     <Font name="Times New Roman" size="18.0" />
                 </font>
