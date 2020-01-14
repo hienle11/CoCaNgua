@@ -39,19 +39,19 @@ import java.util.ResourceBundle;
 
 public class MainMenuController
 {
-    boolean multi = false;
     int current_lang = 0, current_color = 0, num = 0;
     String[][] lang = new String[][]{{"vi", "en"}, {"VN", "US"}};
     TextField[] plName;
     Pane[] panes;
     Rectangle[] rectangles;
     CheckBox[] isCom;
+    boolean isMulti = false;
 
     @FXML
     private TextField hostID;
 
     @FXML
-    private CheckBox multiplayer, isCom0, isCom1, isCom2, isCom3;
+    private CheckBox isCom0, isCom1, isCom2, isCom3, host;
 
     @FXML
     private Pane pane1, pane2, pane3, pane4;
@@ -63,7 +63,7 @@ public class MainMenuController
     private ImageView menu;
 
     @FXML
-    private Button start, rules, language, back, done, exit;
+    private Button start, rules, language, back, done, exit, multiplayer;
 
     @FXML
     private ComboBox<String> choice;
@@ -72,8 +72,9 @@ public class MainMenuController
     private TextField plName1,plName2,plName3,plName4;
 
     @FXML
+    //this function initializes and stores all the objects in arrays
     void initialize() {
-        choice.getItems().addAll("1","2","3","4");
+        choice.getItems().addAll("2","3","4");
         isCom = new CheckBox[]{isCom0, isCom1, isCom2, isCom3};
         plName = new TextField[]{plName1,plName2,plName3,plName4};
         panes = new Pane[]{pane1, pane2, pane3, pane4};
@@ -81,24 +82,26 @@ public class MainMenuController
     }
 
     @FXML
+    //this function initiates when the start button is clicked and shows the box to select numbers of players
     void start() {
         start.setVisible(false);
         rules.setVisible(false);
         language.setVisible(false);
         exit.setVisible(false);
-        multiplayer.setDisable(true);
-        multiplayer.setLayoutX(100);
         choice.setVisible(true);
         back.setVisible(true);
         done.setVisible(true);
-        multi = multiplayer.isSelected();
+        multiplayer.setVisible(false);
     }
 
     @FXML
+    //this function displays rules when the rule button is clicked
     void displayRules() {
 
     }
+
     @FXML
+    //this function changes the languages when the language button is clicked
     void changeLanguage() {
         Locale.setDefault(new Locale(lang[0][current_lang], lang[1][current_lang]));
         ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle");
@@ -110,7 +113,6 @@ public class MainMenuController
         menu.setImage(new Image(bundle.getString("menu")));
         done.setText(bundle.getString("done"));
         back.setText(bundle.getString("back"));
-        multiplayer.setText(bundle.getString("multi"));
         for (int i = 0; i < 4; i++) plName[i].setText(bundle.getString("player") + (i + 1));
         current_lang = 1 - current_lang;
     }
@@ -128,6 +130,7 @@ public class MainMenuController
         for (int i = 0; i < 4; i++) {
             if (i == num) visible = false;
             panes[i].setVisible(visible);
+            if (isMulti) isCom[i].setText("Online");
         }
     }
 
@@ -138,7 +141,7 @@ public class MainMenuController
     }
 
     @FXML
-    void getName(MouseEvent event) throws IOException {
+    void getName(MouseEvent event) {
         ArrayList<Color> color = new ArrayList<>(List.of(Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW));
         boolean[] compPlayer = new boolean[4];
         boolean[] choosenPlayer = new boolean[4];
@@ -149,9 +152,10 @@ public class MainMenuController
             compPlayer[k] = (isCom[i].isSelected());
             choosenPlayer[k] = (i <= num - 1);
         }
+        if (isMulti) System.out.println(hostID.getCharacters());
 //        for (CharSequence i : str) System.out.println(i);
 //        for (boolean i : compPlayer) System.out.println(i);
-//        if (multi) {
+//        if () {
 //            for (int i = 0; i < 4; i++) {
 //                panes[i].setVisible(false);
 //            }
@@ -184,5 +188,17 @@ public class MainMenuController
         if (event.getCode() == KeyCode.ENTER) {
             System.out.println(((TextField) event.getSource()).getCharacters());
         }
+    }
+
+    @FXML
+    void multiplayerStart() {
+        isMulti = true;
+        host.setVisible(true);
+        start();
+    }
+
+    @FXML
+    void openHostID() {
+        hostID.setVisible(host.isSelected());
     }
 }

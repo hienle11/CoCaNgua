@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 public class GamePlayController implements Initializable
 {
     @FXML
-         public Pane root, gameOverPane;
+    public Pane root, gameOverPane;
     @FXML
     private Button rollDiceBt, playAgBt;
     @FXML
@@ -52,7 +52,7 @@ public class GamePlayController implements Initializable
             yellowNest1, yellowNest2, yellowNest3, yellowNest4,
             greenNest1, greenNest2, greenNest3, greenNest4;
     @FXML
-    Label turn, name0, name1, name2, name3, blueScore, redScore, yellowScore, greenScore;
+    Label turn, name0, name1, name2, name3, blueScore, redScore, yellowScore, greenScore, history;
     @FXML
     Text winnerScore, winnerName;
 
@@ -73,7 +73,7 @@ public class GamePlayController implements Initializable
         name1.setText(String.valueOf(str[1]));
         name2.setText(String.valueOf(str[2]));
         name3.setText(String.valueOf(str[3]));
-        PlayerController.initialize(str, comPlayer, chosenPlayer, blueScore, redScore, yellowScore, greenScore);
+        PlayerController.initialize(str, comPlayer, chosenPlayer, blueScore, redScore, yellowScore, greenScore, history);
         PlayerController.getChessViewList().clear();
         PlayerController.getChessViewList().addAll(blueChess0, blueChess1, blueChess2, blueChess3,
                 redChess0, redChess1, redChess2, redChess3,
@@ -99,8 +99,17 @@ public class GamePlayController implements Initializable
         AnimationController.initialize(dice0, dice1);
         ButtonController.initialize(rollDiceBt);
         //SocketController.initialize();
-        TurnController.initialize(turn, gameOverPane, winnerName, winnerScore);
-        manualTestCases();
+//        manualTestCases();
+
+        TurnController.initialize(turn, gameOverPane, winnerName, winnerScore, history);
+
+        Label[] score = new Label[]{blueScore,redScore,yellowScore,greenScore};
+        ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle");
+        rollDiceBt.setText(bundle.getString("rollBt"));
+        for (int i = 0; i< 4; i++) {
+            score[i].setText(bundle.getString("score") + " 0");
+        }
+
     }
 
     public void normalCellOnMouseClicked(MouseEvent event)

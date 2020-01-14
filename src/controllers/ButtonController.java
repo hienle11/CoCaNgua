@@ -55,7 +55,7 @@ public class ButtonController
 
     public static void rollDiceBtHandler()
     {
-        rollDiceBt.setOnAction(null);
+        disableRollDiceBt();
         if (TurnController.opponentTurn)
         {
             PlayerController.waitForOpponentRollDice();

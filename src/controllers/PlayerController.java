@@ -20,6 +20,8 @@ import javafx.scene.input.MouseEvent;
 import models.*;
 import views.CellView;
 
+import java.util.ResourceBundle;
+
 public class PlayerController
 {
     // properties of PlayerController class
@@ -35,7 +37,8 @@ public class PlayerController
     private static Cell selectedCell1 = null;               // the cell containing the chess selected by the player
     private static Cell selectedCell2 = null;               // the cell which the chess will move to
     private static boolean[] choosenPlayer = new boolean[4];
-    private static Label blueScore, redScore, yellowScore, greenScore;
+    private static Label blueScore, redScore, yellowScore, greenScore, history;
+    private static ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle");
 
     //Necessary accessors and mutators for other classes to communicate with PlayerController
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +138,7 @@ public class PlayerController
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //                                      INITIALIZE METHOD                                        //
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    public static void initialize(CharSequence[] str, boolean[] comPlayer, boolean[] choosenPlayer, Label blueScore, Label redScore, Label yellowScore, Label greenScore)
+    public static void initialize(CharSequence[] str, boolean[] comPlayer, boolean[] choosenPlayer, Label blueScore, Label redScore, Label yellowScore, Label greenScore, Label history)
     {
 //        player[0] = new ComputerPlayer(Player.Color.BLUE);
 //        player[0].setName(String.valueOf(str[0]));
@@ -159,6 +162,7 @@ public class PlayerController
         PlayerController.redScore = redScore;
         PlayerController.yellowScore = yellowScore;
         PlayerController.greenScore = greenScore;
+        PlayerController.history = history;
     }
 
     // this method is to perform the move of the computer player
@@ -242,6 +246,14 @@ public class PlayerController
         return false;
     }
 
+    public static void displayScore() {
+        ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle");
+        blueScore.setText(bundle.getString("score") + " " + getPlayer(Player.Color.BLUE).getScore());
+        redScore.setText(bundle.getString("score") + " " + getPlayer(Player.Color.RED).getScore());
+        yellowScore.setText(bundle.getString("score") + " " +  getPlayer(Player.Color.YELLOW).getScore());
+        greenScore.setText(bundle.getString("score") + " " + getPlayer(Player.Color.GREEN).getScore());
+    }
+
     // this method is created to handle the kick
     public static void kickChess(Chess kickedChess)
     {
@@ -252,15 +264,7 @@ public class PlayerController
         kickedChess.getKicked(nestCell);
         TurnController.getCurrentPlayer().updateKickedScore(2);                 //+2 points for kicker
         getPlayer(kickedChess.getColor()).updateKickedScore(-2);                //-2 points to kicked
-        System.out.println(TurnController.getCurrentPlayer().getColor().toString() + " kicked " + kickedChess.getColor().toString());
-
-        //////////////////
-        //Score messages//
-        //////////////////
-        blueScore.setText("Score: " + getPlayer(Player.Color.BLUE).getScore());
-        redScore.setText("Score: " + getPlayer(Player.Color.RED).getScore());
-        yellowScore.setText("Score: " + getPlayer(Player.Color.YELLOW).getScore());
-        greenScore.setText("Score: " + getPlayer(Player.Color.GREEN).getScore());
+        history.setText(bundle.getString(String.valueOf(TurnController.getCurrentPlayer().getColor())) + bundle.getString("kick") + bundle.getString(String.valueOf(kickedChess.getColor())));
     }
 
     // this method is to get the Score when the chess advances home position
@@ -274,10 +278,12 @@ public class PlayerController
             TurnController.getCurrentPlayer().updateKickedScore(cellId2.compareTo(cellId1));
             System.out.println("currentPlayer score = " + TurnController.getCurrentPlayer().getScore());
         }
-        blueScore.setText("Score: " + getPlayer(Player.Color.BLUE).getScore());
-        redScore.setText("Score: " + getPlayer(Player.Color.RED).getScore());
-        yellowScore.setText("Score: " + getPlayer(Player.Color.YELLOW).getScore());
-        greenScore.setText("Score: " + getPlayer(Player.Color.GREEN).getScore());    }
+        displayScore();
+//        blueScore.setText("Score: " + getPlayer(Player.Color.BLUE).getScore());
+//        redScore.setText("Score: " + getPlayer(Player.Color.RED).getScore());
+//        yellowScore.setText("Score: " + getPlayer(Player.Color.YELLOW).getScore());
+//        greenScore.setText("Score: " + getPlayer(Player.Color.GREEN).getScore());
+    }
 
     // this method is to created to handle the move selection by the player
     public static boolean isValidMove()
@@ -313,7 +319,7 @@ public class PlayerController
     //this method is to check if player has chosen a spawn move
     public static boolean isASpawnMove()
     {
-        return selectedCellView2.getId().contains(TurnController.getPlayerTurn().toString().toLowerCase() + "Spawn");
+        return selectedCell2.getId().contains(TurnController.getPlayerTurn().toString().toLowerCase() + "Spawn");
     }
 
     //this method is to check if player has chosen a home arrival move

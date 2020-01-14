@@ -24,20 +24,18 @@ import views.CellView;
 public class AnimationController
 {
     private static ImageView dice0, dice1;
-
     public static boolean isChessMoving()
     {
         return chessIsMoving;
     }
-
     private static boolean chessIsMoving = false;
-
     public static void initialize(ImageView newDice0, ImageView newDice1)
     {
         dice0 = newDice0;
         dice1 = newDice1;
     }
 
+    //this function animates the rolling dices
     public static RotateTransition diceRoll() {
         dice0.setImage(new Image("File:src/resources/images/6.jpg"));
         dice1.setImage(new Image("File:src/resources/images/6.jpg"));
@@ -54,8 +52,7 @@ public class AnimationController
         return rt1;
     }
 
-
-
+    //this function sets the images of the dices and check for computer or opponent's moves after the animation of the dices is finished
     public static void animateDiceRolling()
     {
         MediaController.playRollSound();
@@ -92,6 +89,7 @@ public class AnimationController
         rt1.play();
     }
 
+    //this function animates the moving chess
     public static void animateChessMoving()
     {
         CellView currentCellView;
@@ -130,6 +128,7 @@ public class AnimationController
         }
     }
 
+    //this function animates the chess when kicked
     private static void animateChessGettingKicked()
     {
         CellView emptyNest = PlayerController.getEmptyNestCellView();
@@ -162,6 +161,7 @@ public class AnimationController
         MediaController.playKickSound();
     }
 
+    //this function animates the chess when moving normally
     private static void animateChessNormalMoving(CellView currentCellView)
     {
         CellView nextCellView;
