@@ -232,6 +232,7 @@ public class TurnController
         playerTurn = PlayerController.color[currentTurn];
         opponentTurn = GamePlayController.onlinePlayer[currentTurn];
         currentPlayerIsComputer = comPlayer[currentTurn];
+        currentPlayer = PlayerController.getPlayer(playerTurn);
         turnLabel.setText(bundle.getString("playerturn") + "\n" +  currentPlayer.getName());
     }
 

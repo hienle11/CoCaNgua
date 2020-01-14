@@ -116,7 +116,7 @@ public class GamePlayController implements Initializable
 
     }
 
-    public void normalCellOnMouseClicked(MouseEvent event)
+    public void cellOnMouseClicked(MouseEvent event)
     {
         if (PlayerController.getSelectedCellView1() !=  event.getSource() && PlayerController.isAllowToClick())
         {
@@ -154,6 +154,8 @@ public class GamePlayController implements Initializable
     {
         ButtonController.backToMainMenuBtHandler(event);
     }
+
+    // this method is created to test cases of the game faster
     public void manualTestCases()
     {
         PlayerController.updateMove("blueNest1", "blueHome6", false);

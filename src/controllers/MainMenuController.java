@@ -126,7 +126,6 @@ public class MainMenuController
         for (int i = 0; i < 4; i++) {
             if (i == num) visible = false;
             panes[i].setVisible(visible);
-//            if (isMulti) isCom[i].setText("Online");
             if (isMulti) online[i].setVisible(visible);
         }
     }
