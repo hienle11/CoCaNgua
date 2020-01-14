@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import views.CellView;
 
 import java.net.URL;
@@ -52,6 +53,9 @@ public class GamePlayController implements Initializable
             greenNest1, greenNest2, greenNest3, greenNest4;
     @FXML
     Label turn, name0, name1, name2, name3, blueScore, redScore, yellowScore, greenScore;
+    @FXML
+    Text winnerScore, winnerName;
+
 
     static CharSequence[] str;
     static boolean[] comPlayer;
@@ -95,8 +99,8 @@ public class GamePlayController implements Initializable
         AnimationController.initialize(dice0, dice1);
         ButtonController.initialize(rollDiceBt);
         //SocketController.initialize();
-        TurnController.initialize(turn, gameOverPane, rollDiceBt);
-        //manualTestCases();
+        TurnController.initialize(turn, gameOverPane, winnerName, winnerScore);
+        manualTestCases();
     }
 
     public void normalCellOnMouseClicked(MouseEvent event)
@@ -131,6 +135,10 @@ public class GamePlayController implements Initializable
 
     public void quitBtHandler(){ButtonController.quitGameBtHandler();}
 
+    public void backToMainMenuBtHandler(ActionEvent event)
+    {
+        ButtonController.backToMainMenuBtHandler(event);
+    }
     public void manualTestCases()
     {
         PlayerController.updateMove("blueNest1", "blueHome6", false);

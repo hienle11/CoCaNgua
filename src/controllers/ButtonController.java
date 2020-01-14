@@ -24,14 +24,10 @@ public class ButtonController
 {
     // store the path of fxml files in to Strings
     private static final String gamePlayWindow = "../views/GamePlay.fxml";
+
     private static final String mainMenuWindow = "../views/MainMenu.fxml";
 
     private static Button rollDiceBt = null;
-
-    public static Button getRollDiceBt()
-    {
-        return rollDiceBt;
-    }
 
     public static void initialize(Button newRollDiceButton)
     {
@@ -50,29 +46,8 @@ public class ButtonController
         System.exit(0);
     }
 
-//    // this method is created to handle the Sound Button
-//    public static void soundBtHandler(ActionEvent event)
-//    {
-//        String btImage;
-//        if(MediaController.isPlaying())             //check if the media is playing
-//        {
-//            MediaController.pause();                //if it is, pause it
-//            btImage = "File:src/img/soundOff.png";
-//        }
-//        else
-//        {
-//            MediaController.play();
-//            btImage = "File:src/img/soundOn.png";
-//        }
-//        //set the new ImageView for the Sound Buttonâ
-//        Button button = (Button)event.getSource();
-////        button.setGraphic((imageView));
-//    }
-
-    //this method is created to handle the Start Game Button
     public static void playAgBtHandler(ActionEvent event)
     {
-        // get the current stage and load a new scene;
         WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
         window.loadWindow(gamePlayWindow);
     }
@@ -95,6 +70,12 @@ public class ButtonController
         }
         TurnController.setDiceIsRolled(true);
         AnimationController.animateDiceRolling();
+    }
+
+    public static void backToMainMenuBtHandler(ActionEvent event)
+    {
+        WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
+        window.loadWindow(mainMenuWindow);
     }
 
     public static void enableRollDiceBt()

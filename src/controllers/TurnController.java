@@ -15,13 +15,17 @@ package controllers;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import models.Cell;
 import models.Chess;
 import models.Player;
 
 public class TurnController
 {
+    private static Text winnerName, winnerScore;
+    private static Pane gameOverPane;
     private static Label turnLabel;
+
     private static boolean[] chosenPlayer = new boolean[4];
     public static boolean opponentTurn = false;
     private static int[] diceValue = new int[3];
@@ -31,8 +35,6 @@ public class TurnController
     private static Player currentPlayer = null;
     private static boolean currentPlayerIsComputer, diceIsRolled = false;
     private static boolean[] comPlayer;
-    private static Pane gameOverPane;
-    private static Button rollDiceBt;
     static boolean initialRollDice = true;
     static int[] initialDiceValue = new int[4];
 
@@ -90,7 +92,7 @@ public class TurnController
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //                                      INITIALIZE METHOD                                        //
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    public static void initialize(Label turn, Pane gameOverPane, Button rollDiceBt)
+    public static void initialize(Label turn, Pane gameOverPane, Text winnerName, Text winnerScore)
     {
         int i = 0;
         for (i = 0; i < 4; i++)
@@ -105,6 +107,8 @@ public class TurnController
         turnLabel = turn;
         turnLabel.setText("Player Turn: " + playerTurn.toString());
         TurnController.gameOverPane = gameOverPane;
+        TurnController.winnerName = winnerName;
+        TurnController.winnerScore = winnerScore;
         initialRollDice();
     }
 
@@ -175,9 +179,7 @@ public class TurnController
     {
         if (isGameEnded())
         {
-            ButtonController.disableRollDiceBt();
-            MediaController.playWinSound();
-            gameOverPane.setVisible(true);
+            endGame();
         } else
         {
             if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
@@ -196,6 +198,16 @@ public class TurnController
                 ButtonController.enableRollDiceBt();
             }
         }
+    }
+
+    private static void endGame()
+    {
+        ButtonController.disableRollDiceBt();
+        MediaController.playWinSound();
+        gameOverPane.setVisible(true);
+        winnerName.setText(currentPlayer.getName() + " wins");
+        System.out.println("current score  + " + currentPlayer.getScore());
+        winnerScore.setText("with " + currentPlayer.getScore() + " points");
     }
 
     public static void switchTurn()

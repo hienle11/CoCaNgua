@@ -268,9 +268,11 @@ public class PlayerController
     {
         String cellId1 = selectedCell1.getId();
         String cellId2 = selectedCell2.getId();
-        if (cellId2.contains("Home") && cellId2.length() == cellId1.length())
+        System.out.println("currentPlayer score before= " + TurnController.getCurrentPlayer().getScore());
+        if (cellId2.contains("Home") && (cellId2.length() == cellId1.length()))
         {
             TurnController.getCurrentPlayer().updateKickedScore(cellId2.compareTo(cellId1));
+            System.out.println("currentPlayer score = " + TurnController.getCurrentPlayer().getScore());
         }
         blueScore.setText("Score: " + getPlayer(Player.Color.BLUE).getScore());
         redScore.setText("Score: " + getPlayer(Player.Color.RED).getScore());

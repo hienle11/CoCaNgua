@@ -545,8 +545,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="playAgBt" layoutX="744.0" layoutY="591.0" mnemonicParsing="false" onAction="#playAgBtHandler" text="Play again" />
-      <Button fx:id="quitBt" layoutX="757.0" layoutY="633.0" mnemonicParsing="false" onAction="#quitBtHandler" text="Quit" />
+      <Button fx:id="playAgBt" layoutX="717.0" layoutY="598.0" mnemonicParsing="false" onAction="#playAgBtHandler" prefHeight="27.0" prefWidth="121.0" text="Restart Game" />
+      <Button fx:id="quitBt" layoutX="717.0" layoutY="633.0" mnemonicParsing="false" onAction="#quitBtHandler" prefHeight="27.0" prefWidth="121.0" text="Exit the Game" />
       <StackPane layoutX="708.0" layoutY="266.0" prefHeight="102.0" prefWidth="121.0">
          <children>
             <GridPane prefHeight="82.0" prefWidth="121.0">
@@ -590,7 +590,7 @@
          <font>
             <Font name="Arial" size="14.0" />
          </font></Label>
-      <Label fx:id="turn" layoutX="715.0" layoutY="359.0" prefHeight="41.0" prefWidth="104.0" />
+      <Label fx:id="turn" layoutX="704.0" layoutY="359.0" prefHeight="47.0" prefWidth="132.0" />
         <CellView fx:id="greenNest4" layoutX="574.0" layoutY="594.0" onMouseClicked="#normalCellOnMouseClicked" prefHeight="30.0" prefWidth="25.0">
             <children>
                 <Circle blendMode="MULTIPLY" fill="WHITE" radius="20.0" stroke="GREEN" strokeType="INSIDE" strokeWidth="2.0" />
@@ -759,16 +759,17 @@
                   <Font size="80.0" />
                </font>
             </Text>
-            <Text layoutX="-16.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Player Name&gt; wins!" textAlignment="CENTER" wrappingWidth="600.22900390625">
+            <Text fx:id="winnerName" layoutX="-16.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Player Name&gt; wins!" textAlignment="CENTER" wrappingWidth="600.22900390625">
                <font>
                   <Font size="40.0" />
                </font>
             </Text>
-            <Text layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="with &lt;score&gt; points" textAlignment="CENTER" wrappingWidth="568.9999924302101">
+            <Text fx:id="winnerScore" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="with &lt;score&gt; points" textAlignment="CENTER" wrappingWidth="568.9999924302101">
                <font>
                   <Font size="40.0" />
                </font>
             </Text>
          </children></Pane>
+      <Button layoutX="716.0" layoutY="565.0" mnemonicParsing="false" onAction="#backToMainMenuBtHandler" text="Back to Main Menu" />
     </children>
 </Pane>

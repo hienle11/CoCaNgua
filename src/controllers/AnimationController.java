@@ -113,6 +113,7 @@ public class AnimationController
             PlayerController.getSelectedChessView().setTranslateY(0);
             PlayerController.setSelectedChess(null);
             chessIsMoving = false;
+            PlayerController.getHomeScore();
             if (TurnController.opponentTurn)
             {
                 if (SocketController.getMessage().equals("movable"))
@@ -126,7 +127,6 @@ public class AnimationController
                 else if (TurnController.isCurrentPlayerIsComputer())
                     PlayerController.computerMove();
             }
-            PlayerController.getHomeScore();
         }
     }
 
