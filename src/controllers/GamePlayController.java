@@ -96,7 +96,7 @@ public class GamePlayController implements Initializable
         ButtonController.initialize(rollDiceBt);
         //SocketController.initialize();
         TurnController.initialize(turn, gameOverPane, rollDiceBt);
-        manualTestCases();
+        //manualTestCases();
     }
 
     public void normalCellOnMouseClicked(MouseEvent event)
