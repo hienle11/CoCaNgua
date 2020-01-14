@@ -11,10 +11,16 @@ public class Server
     public static final int PORT = 3191;
     private ServerSocket serverSocket;
     private Socket socket;
+
     public Server() throws IOException
     {
         serverSocket = new ServerSocket(PORT);
         socket = serverSocket.accept();
+    }
+
+    public Socket getSocket()
+    {
+        return socket;
     }
 
     public String receiveMessage() throws Exception

@@ -146,18 +146,21 @@ public class MainMenuController
     void getName(MouseEvent event) {
         ArrayList<Color> color = new ArrayList<>(List.of(Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW));
         boolean[] compPlayer = new boolean[4];
-        boolean[] choosenPlayer = new boolean[4];
+        boolean[] chosenPlayer = new boolean[4];
+        boolean[] onlinePlayer = new boolean[4];
         CharSequence[] str = new CharSequence[4];
         for (int i = 0; i < 4; i++) {
             int k = color.indexOf(rectangles[i].getFill());
             str[k] = plName[i].getCharacters();
             compPlayer[k] = (isCom[i].isSelected());
-            choosenPlayer[k] = (i <= num - 1);
+            chosenPlayer[k] = (i <= num - 1);
+            onlinePlayer[k] = (online[i].isSelected());
         }
-//        if (isMulti) System.out.println(hostID.getCharacters());
+        if (isMulti) GamePlayController.playOnline = true;
         GamePlayController.comPlayer = compPlayer;
         GamePlayController.str = str;
-        GamePlayController.chosenPlayer = choosenPlayer;
+        GamePlayController.chosenPlayer = chosenPlayer;
+        GamePlayController.onlinePlayer = onlinePlayer;
         WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
         window.loadWindow("../views/GamePlay.fxml");
     }
@@ -176,16 +179,14 @@ public class MainMenuController
     }
 
     @FXML
-    void getHostID(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            System.out.println(((TextField) event.getSource()).getCharacters());
-        }
-    }
-
-    @FXML
     void multiplayerStart() {
         isMulti = true;
         host.setVisible(true);
         start();
+    }
+    @FXML
+    void getHost()
+    {
+        GamePlayController.playerIsHost = host.isSelected();
     }
 }

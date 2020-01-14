@@ -62,7 +62,6 @@ public class ButtonController
         }
         else
         {
-            System.out.println("I roll");
             TurnController.setDiceValue(Player.rollDice());
             int[] diceValue = TurnController.getDiceValue();
             if (GamePlayController.playOnline)

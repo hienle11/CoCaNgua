@@ -13,7 +13,6 @@
 package controllers;
 
 import javafx.animation.PauseTransition;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -90,7 +89,7 @@ public class TurnController
 
     public static void setComOrHuman(boolean[] comPlayer)
     {
-        TurnController.chosenPlayer = PlayerController.getChoosenPlayer();
+        TurnController.chosenPlayer = PlayerController.getChosenPlayer();
         TurnController.comPlayer = comPlayer;
     }
 
@@ -110,8 +109,9 @@ public class TurnController
         }
         TurnController.history = history;
         currentPlayer = PlayerController.getPlayer(playerTurn);
+        opponentTurn = GamePlayController.onlinePlayer[currentTurn];
         turnLabel = turn;
-        turnLabel.setText(bundle.getString("playerturn") + playerTurn.toString());
+        turnLabel.setText(bundle.getString("playerturn") + "\n" +  currentPlayer.getName());
         TurnController.gameOverPane = gameOverPane;
         TurnController.winnerName = winnerName;
         TurnController.winnerScore = winnerScore;
@@ -122,7 +122,7 @@ public class TurnController
     {
         while(initialDiceValue[currentTurn] == -1)
             switchTurn();
-        if (comPlayer[currentTurn])
+        if (comPlayer[currentTurn] || (GamePlayController.playOnline && opponentTurn))
             ButtonController.rollDiceBtHandler();
         else
             ButtonController.enableRollDiceBt();
@@ -131,17 +131,13 @@ public class TurnController
     public static void getInitialDiceValue ()
     {
         initialDiceValue[currentTurn] = diceValue[2];
-        System.out.println("initialDiceValue[" + currentTurn + "] = " +diceValue[2]);
         int firstTurn = determineFirstTurn();
-//        System.out.println("first turn = " + firstTurn);
         if ((firstTurn != -1))
         {
-            System.out.println("here");
             currentTurn = firstTurn == 0 ? 3 : firstTurn - 1;
             initialRollDice = false;
             endTurn();
             history.setText(currentPlayer.getName() + " " + bundle.getString("gofirst"));
-            //////// rảnh
             PauseTransition pauseTransition = new PauseTransition(Duration.seconds(4));
             pauseTransition.setOnFinished(t -> history.setText(""));
             pauseTransition.play();
@@ -156,11 +152,8 @@ public class TurnController
     {
         int tempIndex = 0;
         int playerHasHighestDiceValue = 0;
-        System.out.println("start Compare");
-        System.out.println("initialDiceValue[" + 0 + "] = " + initialDiceValue[0]);
         for (int i = 1; i < 4; i++)
         {
-            System.out.println("initialDiceValue[" + i + "] = " + initialDiceValue[i]);
             if (!chosenPlayer[i])
                 continue;
             else if (initialDiceValue[i] == 0)
@@ -213,12 +206,10 @@ public class TurnController
 
     private static void endGame()
     {
-//        ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle");
         ButtonController.disableRollDiceBt();
         MediaController.playWinSound();
         gameOverPane.setVisible(true);
         winnerName.setText(currentPlayer.getName() + " " + bundle.getString("win"));
-//        System.out.println("current score  + " + currentPlayer.getScore());
         winnerScore.setText(bundle.getString("winnerscore") + currentPlayer.getScore());
     }
 
@@ -232,8 +223,9 @@ public class TurnController
             if (currentTurn > 3) currentTurn = 0;
         }
         playerTurn = PlayerController.color[currentTurn];
+        opponentTurn = GamePlayController.onlinePlayer[currentTurn];
         currentPlayerIsComputer = comPlayer[currentTurn];
-        turnLabel.setText(bundle.getString("playerturn") + playerTurn.toString());
+        turnLabel.setText(bundle.getString("playerturn") + "\n" +  currentPlayer.getName());
     }
 
     private static boolean isGameEnded()
@@ -260,9 +252,7 @@ public class TurnController
     {
         chessHasMoved = PlayerController.getSelectedChess();
         diceWasUsed = MoveController.getPossibleMoves().get(selectedCell2)[1];
-//        System.out.println("dice was used = " + diceWasUsed);
         diceValue[diceWasUsed] = (-diceValue[diceWasUsed]);
-//        System.out.println("dice was used value  = " + diceValue[diceWasUsed]); //@@
         String horseColor = bundle.getString(String.valueOf(currentPlayer.getColor()));
         if (checkHome(selectedCell2)) history.setText(horseColor + bundle.getString("gohome") + selectedCell2.getId().charAt(selectedCell2.getId().length() - 1));
         else if (!PlayerController.isASpawnMove()) history.setText(horseColor + bundle.getString("move") + (-diceValue[diceWasUsed]) + " " + bundle.getString("space"));

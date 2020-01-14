@@ -78,12 +78,10 @@ public class ComputerPlayer extends Player
                         continue;
                     else if (isMovingNearerChess(pickedChessNumber, chessNumber) && pickedChessNumber != chessNumber)
                     {
-                        System.out.println("here 1");
                         itIsABetterMove = true;
                     }
                     else if (pickedStep < diceValue[diceIndex])
                     {
-                        System.out.println("here 2");
                         itIsABetterMove = true;
                     }
                 }
@@ -97,7 +95,6 @@ public class ComputerPlayer extends Player
                 movePriority = getMovePriority(pickedCell);
             }
         }
-        System.out.println("finalPickedCell = " + pickedCell.getId());
         return pickedCell;
     }
 

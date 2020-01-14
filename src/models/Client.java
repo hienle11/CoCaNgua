@@ -14,11 +14,15 @@ public class Client
         socket = new Socket("localhost", Server.PORT);
     }
 
+    public Socket getSocket()
+    {
+        return socket;
+    }
+
     public String receiveMessage() throws Exception
     {
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
         String message = (String) inputStream.readObject();
-        inputStream.close();
         return message;
     }
 
@@ -26,7 +30,6 @@ public class Client
     {
         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         outputStream.writeObject(message);
-        outputStream.close();
     }
 
 }

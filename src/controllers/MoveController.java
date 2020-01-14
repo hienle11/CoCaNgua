@@ -50,7 +50,6 @@ public class MoveController
             else
                 SocketController.sendMessage("unmovable");
         }
-        System.out.println("this time");
         return result;
     }
 

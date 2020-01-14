@@ -60,7 +60,10 @@ public class GamePlayController implements Initializable
     static CharSequence[] str;
     static boolean[] comPlayer;
     static boolean[] chosenPlayer;
+    static boolean[] onlinePlayer;
     static boolean playOnline = false;
+    static boolean playerIsHost;
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //                                      INITIALIZE METHOD                                        //
@@ -98,8 +101,9 @@ public class GamePlayController implements Initializable
 
         AnimationController.initialize(dice0, dice1);
         ButtonController.initialize(rollDiceBt);
-        //SocketController.initialize();
-//        manualTestCases();
+        if (playOnline)
+            SocketController.initialize();
+        //manualTestCases();
 
         TurnController.initialize(turn, gameOverPane, winnerName, winnerScore, history);
 
@@ -140,9 +144,11 @@ public class GamePlayController implements Initializable
         ButtonController.rollDiceBtHandler();
     }
 
-    public void playAgBtHandler(ActionEvent event){ButtonController.playAgBtHandler(event);}
+    public void playAgBtHandler(ActionEvent event){
+        ButtonController.playAgBtHandler(event);}
 
-    public void quitBtHandler(){ButtonController.quitGameBtHandler();}
+    public void quitBtHandler(){
+        ButtonController.quitGameBtHandler();}
 
     public void backToMainMenuBtHandler(ActionEvent event)
     {

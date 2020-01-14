@@ -1,6 +1,7 @@
 package controllers;
 
-import models.*;
+import models.Client;
+import models.Server;
 
 public class SocketController
 {
@@ -12,12 +13,18 @@ public class SocketController
     {
         try
         {
-            server = new Server();
-            System.out.println("server is ready");
+            if (GamePlayController.playerIsHost)
+            {
+                server = new Server();
+                server.sendMessage("hello client");
+            }else
+            {
+                client = new Client();
+                client.sendMessage("hello server");
+            }
         } catch (Exception e)
         {
             e.printStackTrace();
-            System.out.println("server is not ready");
         }
     }
 
@@ -25,7 +32,13 @@ public class SocketController
     {
         try
         {
-            return server.receiveMessage();
+            if (GamePlayController.playerIsHost)
+            {
+                return server.receiveMessage();
+            }else
+            {
+                return client.receiveMessage();
+            }
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -37,7 +50,13 @@ public class SocketController
     {
         try
         {
-            server.sendMessage(message);
+            if (GamePlayController.playerIsHost)
+            {
+                server.sendMessage(message);
+            }else
+            {
+                client.sendMessage(message);
+            }
         } catch (Exception e)
         {
             e.printStackTrace();
