@@ -36,6 +36,15 @@ public abstract class Player
         }
     }
 
+    public void updateKickedScore(int score)
+    {
+        this.score += score;
+    }
+
+    public void updateScore(int homeScore){
+        this.score += homeScore;
+    }
+
     public Color getColor()
     {
         return color;

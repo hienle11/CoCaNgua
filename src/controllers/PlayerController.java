@@ -14,6 +14,7 @@ package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import models.*;
@@ -34,6 +35,7 @@ public class PlayerController
     private static Cell selectedCell1 = null;               // the cell containing the chess selected by the player
     private static Cell selectedCell2 = null;               // the cell which the chess will move to
     private static boolean[] choosenPlayer = new boolean[4];
+    private static Label blueScore, redScore, yellowScore, greenScore;
 
     //Necessary accessors and mutators for other classes to communicate with PlayerController
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,8 +132,10 @@ public class PlayerController
         return choosenPlayer;
     }
 
-    // this method is to initialize players when the game is started
-    public static void initialize(CharSequence[] str, boolean[] comPlayer, boolean[] choosenPlayer)
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                      INITIALIZE METHOD                                        //
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    public static void initialize(CharSequence[] str, boolean[] comPlayer, boolean[] choosenPlayer, Label blueScore, Label redScore, Label yellowScore, Label greenScore)
     {
 //        player[0] = new ComputerPlayer(Player.Color.BLUE);
 //        player[0].setName(String.valueOf(str[0]));
@@ -151,6 +155,10 @@ public class PlayerController
 //            System.out.println(comPlayer[i]);
         }
         TurnController.setComOrHuman(comPlayer);
+        PlayerController.blueScore = blueScore;
+        PlayerController.redScore = redScore;
+        PlayerController.yellowScore = yellowScore;
+        PlayerController.greenScore = greenScore;
     }
 
     // this method is to perform the move of the computer player
@@ -241,8 +249,18 @@ public class PlayerController
         Cell nestCell = CellController.findEmptyNest(kickedChess);              //find an empty nest for it
         emptyNestCellView = CellController.getCellView(nestCell);               //get the view of the empty nest
         nestCell.setChess(kickedChess);                                         //set the kickedChess to the nest
-        kickedChess.getKicked(nestCell);                                        //update position of the chess got kicked
-        MediaController.playKickSound();                                        //play a kick sound clip
+        kickedChess.getKicked(nestCell);
+        TurnController.getCurrentPlayer().updateKickedScore(2);                 //+2 points for kicker
+        getPlayer(kickedChess.getColor()).updateKickedScore(-2);                //-2 points to kicked
+        System.out.println(TurnController.getCurrentPlayer().getColor().toString() + " kicked " + kickedChess.getColor().toString());
+
+        //////////////////
+        //Score messages//
+        //////////////////
+        blueScore.setText("Score: " + getPlayer(Player.Color.BLUE).getScore());
+        redScore.setText("Score: " + getPlayer(Player.Color.RED).getScore());
+        yellowScore.setText("Score: " + getPlayer(Player.Color.YELLOW).getScore());
+        greenScore.setText("Score: " + getPlayer(Player.Color.GREEN).getScore());
     }
 
     // this method is to created to handle the move selection by the player

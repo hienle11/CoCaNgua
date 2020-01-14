@@ -12,7 +12,9 @@
 
 package controllers;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import models.Cell;
 import models.Chess;
 import models.Player;
@@ -29,6 +31,8 @@ public class TurnController
     private static Player currentPlayer = null;
     private static boolean currentPlayerIsComputer, diceIsRolled = false;
     private static boolean[] comPlayer;
+    private static Pane gameOverPane;
+    private static Button rollDiceBt;
 
     public static void setComOrHuman(boolean[] comPlayer) {
         TurnController.choosenPlayer = PlayerController.getChoosenPlayer();
@@ -86,7 +90,10 @@ public class TurnController
         return diceIsRolled;
     }
 
-    public static void initialize(Label turn)
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                      INITIALIZE METHOD                                        //
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    public static void initialize(Label turn, Pane gameOverPane, Button rollDiceBt)
     {
         int i = 0;
         //        InitialThrowController.determineFirstThrow();
@@ -103,6 +110,8 @@ public class TurnController
         currentPlayer =  PlayerController.getPlayer(playerTurn);
         turn.setText("Player Turn: " + playerTurn.toString());
         if (comPlayer[i]) endTurn();
+        TurnController.gameOverPane = gameOverPane;
+        TurnController.rollDiceBt = rollDiceBt;
     }
 
     public static void endTurn()
@@ -110,20 +119,23 @@ public class TurnController
         if (isGameEnded())
         {
             System.out.println("game is ended");
-            System.exit(0);
-        }
-        switchTurn();
-        chessHasMoved = null;
-        diceWasUsed = -1;
-        diceIsRolled = false;
-        currentPlayer = PlayerController.getPlayer(playerTurn);
-        if (currentPlayerIsComputer || (GamePlayController.playOnline && opponentTurn))
-        {
-            ButtonController.rollDiceBtHandler();
-        }else
-        {
-            System.out.println("here = button active");
-            ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
+            gameOverPane.setVisible(true);
+            rollDiceBt.setDisable(true);
+            MediaController.playWinSound();
+            //System.exit(0);
+            System.out.println("game is ended");
+        }   else {
+            switchTurn();
+            chessHasMoved = null;
+            diceWasUsed = -1;
+            diceIsRolled = false;
+            currentPlayer = PlayerController.getPlayer(playerTurn);
+            if (currentPlayerIsComputer || (GamePlayController.playOnline && opponentTurn)) {
+                ButtonController.rollDiceBtHandler();
+            } else {
+                System.out.println("here = button active");
+                ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
+            }
         }
     }
 

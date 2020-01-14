@@ -10,14 +10,19 @@
 <!--By: Doan Luong Hoang (sxxxxxxx)-->
 <!--Acknowledgement: If you use any resources, acknowledge here. Failure to do so will be considered as plagiarism.-->
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuController">
     <ImageView fx:id="menu" fitHeight="500.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../resources/images/enmenu.png" />
     </ImageView>
@@ -52,57 +57,77 @@
         </font>
     </Button>
     <ComboBox fx:id="choice" layoutX="325.0" layoutY="280.0" onAction="#getPlayerNum" prefHeight="26.0" prefWidth="198.0" promptText="&lt;Choose number of players&gt;" visible="false" AnchorPane.leftAnchor="325.0" />
-   <Pane fx:id="pane1" layoutX="267.0" layoutY="317.0" prefHeight="26.0" prefWidth="280.0" visible="false">
-      <children>
-         <TextField fx:id="plName1" layoutY="-3.0" text="Player 1">
-            <font>
-               <Font name="Times New Roman" size="18.0" />
-            </font>
-         </TextField>
-         <Rectangle fx:id="color1" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-      </children>
-      <opaqueInsets>
-         <Insets />
-      </opaqueInsets>
-   </Pane>
-   <Pane fx:id="pane2" layoutX="267.0" layoutY="350.0" prefHeight="26.0" prefWidth="280.0" visible="false">
-      <children>
-         <TextField fx:id="plName2" layoutY="-3.0" text="Player 2">
-            <font>
-               <Font name="Times New Roman" size="18.0" />
-            </font>
-         </TextField>
-         <Rectangle fx:id="color2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-      </children>
-   </Pane>
-   <Pane fx:id="pane3" layoutX="267.0" layoutY="383.0" prefHeight="26.0" prefWidth="280.0" visible="false">
-      <children>
-         <TextField fx:id="plName3" layoutY="-3.0" text="Player 3">
-            <font>
-               <Font name="Times New Roman" size="18.0" />
-            </font>
-         </TextField>
-         <Rectangle fx:id="color3" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-      </children>
-   </Pane>
-   <Pane fx:id="pane4" layoutX="267.0" layoutY="416.0" prefHeight="26.0" prefWidth="280.0" visible="false">
-      <children>
-          <TextField fx:id="plName4" layoutY="-3.0" text="Player 4">
-              <font>
-                  <Font name="Times New Roman" size="18.0" />
-              </font>
-         </TextField>
-         <Rectangle fx:id="color4" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-      </children>
-   </Pane>
-   <CheckBox fx:id="multiplayer" layoutX="415.0" layoutY="337.0" mnemonicParsing="false" text="Multiplayer" AnchorPane.bottomAnchor="138.2">
-      <font>
-         <Font name="Times New Roman" size="18.0" />
-      </font>
-   </CheckBox>
-   <TextField fx:id="hostID" layoutX="233.0" layoutY="334.0" onKeyPressed="#getHostID" prefHeight="32.0" prefWidth="362.0" promptText="Please enter host ID. Press Enter to continue..." visible="false">
-      <font>
-         <Font name="Times New Roman" size="18.0" />
-      </font>
-   </TextField>
+    <Pane fx:id="pane1" layoutX="210.0" layoutY="317.0" prefHeight="26.0" prefWidth="400.0" visible="false">
+        <children>
+            <TextField fx:id="plName1" layoutY="-3.0" text="Player 1">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </TextField>
+            <Rectangle fx:id="color1" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+            <CheckBox fx:id="isCom0" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" selected="true" text="Computer">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </CheckBox>
+        </children>
+        <opaqueInsets>
+            <Insets />
+        </opaqueInsets>
+    </Pane>
+    <Pane fx:id="pane2" layoutX="210.0" layoutY="350.0" prefHeight="26.0" prefWidth="400.0" visible="false">
+        <children>
+            <TextField fx:id="plName2" layoutY="-3.0" text="Player 2">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </TextField>
+            <Rectangle fx:id="color2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+            <CheckBox fx:id="isCom1" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" selected="true" text="Computer">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </CheckBox>
+        </children>
+    </Pane>
+    <Pane fx:id="pane3" layoutX="210.0" layoutY="383.0" prefHeight="26.0" prefWidth="400.0" visible="false">
+        <children>
+            <TextField fx:id="plName3" layoutY="-3.0" text="Player 3">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </TextField>
+            <Rectangle fx:id="color3" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+            <CheckBox fx:id="isCom2" layoutX="295.0" layoutY="1.0" mnemonicParsing="false" selected="true" text="Computer">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </CheckBox>
+        </children>
+    </Pane>
+    <Pane fx:id="pane4" layoutX="210.0" layoutY="416.0" prefHeight="26.0" prefWidth="400.0" visible="false">
+        <children>
+            <TextField fx:id="plName4" layoutY="-3.0" text="Player 4">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </TextField>
+            <Rectangle fx:id="color4" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="32.0" layoutX="247.0" layoutY="-3.0" onMouseClicked="#changeColor" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+            <CheckBox fx:id="isCom3" layoutX="295.0" mnemonicParsing="false" selected="true" text="Computer">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </CheckBox>
+        </children>
+    </Pane>
+    <CheckBox fx:id="multiplayer" layoutX="415.0" layoutY="337.0" mnemonicParsing="false" text="Multiplayer" AnchorPane.bottomAnchor="138.2">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </CheckBox>
+    <TextField fx:id="hostID" layoutX="233.0" layoutY="334.0" onKeyPressed="#getHostID" prefHeight="32.0" prefWidth="362.0" promptText="Please enter host ID. Press Enter to continue..." visible="false">
+        <font>
+            <Font name="Times New Roman" size="18.0" />
+        </font>
+    </TextField>
 </AnchorPane>

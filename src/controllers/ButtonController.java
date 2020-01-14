@@ -12,6 +12,7 @@
 
 package controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -38,12 +39,9 @@ public class ButtonController
     }
 
     // this method is created to handle the Quit Game Button
-    public static void quitGameBtHandler(ActionEvent event)
+    public static void quitGameBtHandler()
     {
-        //MediaController.stop();
-        // get the current stage and load a new scene to it
-        WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
-        window.loadWindow(mainMenuWindow);
+        Platform.exit();
     }
 
     //this method is created to handle the Exit Game Button

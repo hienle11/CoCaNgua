@@ -179,6 +179,7 @@ public class AnimationController
             animateChessMoving();
         });
         transition.play();
+        MediaController.playKickSound();
     }
 
     private static void animateChessNormalMoving(CellView currentCellView)
@@ -203,7 +204,11 @@ public class AnimationController
         transition.setCycleCount(1);
 
         MoveController.hidePossibleCells();
-        MediaController.playMoveSound();
+        if (PlayerController.isASpawnMove())
+        {
+            MediaController.playWhinnySound();
+        }
+        else MediaController.playMoveSound();
 
         transition.setOnFinished(e ->
         {

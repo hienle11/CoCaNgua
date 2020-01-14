@@ -29,11 +29,13 @@ import java.util.ResourceBundle;
 public class GamePlayController implements Initializable
 {
     @FXML
-         public Pane root;
+         public Pane root, gameOverPane;
     @FXML
         public StackPane transportingPane;
     @FXML
     private Button rollDiceBt, playAgBt;
+    @FXML
+    private Label blueScore, redScore, yellowScore, greenScore;
     @FXML
     private ImageView dice0, dice1,
             blueChess0, blueChess1, blueChess2, blueChess3,
@@ -61,15 +63,18 @@ public class GamePlayController implements Initializable
     static boolean[] choosenPlayer;
     static boolean playOnline = false;
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                      INITIALIZE METHOD                                        //
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public void initialize(URL location, ResourceBundle resources)
+    public void initialize(URL location, ResourceBundle resource)
     {
         root.toFront();
         name0.setText(String.valueOf(str[0]));
         name1.setText(String.valueOf(str[1]));
         name2.setText(String.valueOf(str[2]));
         name3.setText(String.valueOf(str[3]));
-        PlayerController.initialize(str, comPlayer, choosenPlayer);
+        PlayerController.initialize(str, comPlayer, choosenPlayer, blueScore, redScore, yellowScore, greenScore);
         PlayerController.getChessViewList().clear();
         PlayerController.getChessViewList().addAll(blueChess0, blueChess1, blueChess2, blueChess3,
                 redChess0, redChess1, redChess2, redChess3,
@@ -95,7 +100,7 @@ public class GamePlayController implements Initializable
         AnimationController.initialize(dice0, dice1);
         ButtonController.initialize(rollDiceBt);
         //SocketController.initialize();
-        TurnController.initialize(turn);
+        TurnController.initialize(turn, gameOverPane, rollDiceBt);
         //manualTestCases();
     }
 
@@ -129,6 +134,8 @@ public class GamePlayController implements Initializable
     }
 
     public void playAgBtHandler(ActionEvent event){ButtonController.playAgBtHandler(event);}
+
+    public void quitBtHandler(){ButtonController.quitGameBtHandler();}
 
     public void manualTestCases()
     {
