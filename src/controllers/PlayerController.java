@@ -263,6 +263,20 @@ public class PlayerController
         greenScore.setText("Score: " + getPlayer(Player.Color.GREEN).getScore());
     }
 
+    // this method is to get the Score when the chess advances home position
+    public static void getHomeScore()
+    {
+        String cellId1 = selectedCell1.getId();
+        String cellId2 = selectedCell2.getId();
+        if (cellId2.contains("Home") && cellId2.length() == cellId1.length())
+        {
+            TurnController.getCurrentPlayer().updateKickedScore(cellId2.compareTo(cellId1));
+        }
+        blueScore.setText("Score: " + getPlayer(Player.Color.BLUE).getScore());
+        redScore.setText("Score: " + getPlayer(Player.Color.RED).getScore());
+        yellowScore.setText("Score: " + getPlayer(Player.Color.YELLOW).getScore());
+        greenScore.setText("Score: " + getPlayer(Player.Color.GREEN).getScore());    }
+
     // this method is to created to handle the move selection by the player
     public static boolean isValidMove()
     {

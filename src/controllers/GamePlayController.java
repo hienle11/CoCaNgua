@@ -96,7 +96,7 @@ public class GamePlayController implements Initializable
         ButtonController.initialize(rollDiceBt);
         //SocketController.initialize();
         TurnController.initialize(turn, gameOverPane, rollDiceBt);
-        manualTestCases();
+        //manualTestCases();
     }
 
     public void normalCellOnMouseClicked(MouseEvent event)
@@ -138,11 +138,11 @@ public class GamePlayController implements Initializable
         PlayerController.updateMove("blueNest3", "blueHome4", false);
         PlayerController.updateMove("blueNest4", "blueHome2", false);
 
-        rollDiceBt.setOnAction(e->
-        {
-            TurnController.setDiceValue(new int[]{3,3,6});
-            AnimationController.animateDiceRolling();
-        });
+//        rollDiceBt.setOnAction(e->
+//        {
+//            TurnController.setDiceValue(new int[]{3,3,6});
+//            AnimationController.animateDiceRolling();
+//        });
     }
 }
 

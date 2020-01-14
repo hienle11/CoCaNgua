@@ -126,6 +126,7 @@ public class AnimationController
                 else if (TurnController.isCurrentPlayerIsComputer())
                     PlayerController.computerMove();
             }
+            PlayerController.getHomeScore();
         }
     }
 
