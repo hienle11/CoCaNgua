@@ -99,11 +99,11 @@ public class ButtonController
 
     public static void enableRollDiceBt()
     {
-        rollDiceBt.setOnAction(e-> rollDiceBtHandler());
+        rollDiceBt.setDisable(false);
     }
 
     public static void disableRollDiceBt()
     {
-        rollDiceBt.setOnAction(null);
+        rollDiceBt.setDisable(true);
     }
 }

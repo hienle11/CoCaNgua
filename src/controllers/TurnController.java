@@ -175,7 +175,9 @@ public class TurnController
     {
         if (isGameEnded())
         {
-            System.exit(0);
+            ButtonController.disableRollDiceBt();
+            MediaController.playWinSound();
+            gameOverPane.setVisible(true);
         } else
         {
             if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
