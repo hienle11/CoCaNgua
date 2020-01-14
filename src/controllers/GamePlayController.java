@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import views.CellView;
 
 import java.net.URL;
@@ -31,11 +30,7 @@ public class GamePlayController implements Initializable
     @FXML
          public Pane root, gameOverPane;
     @FXML
-        public StackPane transportingPane;
-    @FXML
     private Button rollDiceBt, playAgBt;
-    @FXML
-    private Label blueScore, redScore, yellowScore, greenScore;
     @FXML
     private ImageView dice0, dice1,
             blueChess0, blueChess1, blueChess2, blueChess3,
@@ -56,11 +51,11 @@ public class GamePlayController implements Initializable
             yellowNest1, yellowNest2, yellowNest3, yellowNest4,
             greenNest1, greenNest2, greenNest3, greenNest4;
     @FXML
-    Label turn, name0, name1, name2, name3;
+    Label turn, name0, name1, name2, name3, blueScore, redScore, yellowScore, greenScore;
 
     static CharSequence[] str;
     static boolean[] comPlayer;
-    static boolean[] choosenPlayer;
+    static boolean[] chosenPlayer;
     static boolean playOnline = false;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +69,7 @@ public class GamePlayController implements Initializable
         name1.setText(String.valueOf(str[1]));
         name2.setText(String.valueOf(str[2]));
         name3.setText(String.valueOf(str[3]));
-        PlayerController.initialize(str, comPlayer, choosenPlayer, blueScore, redScore, yellowScore, greenScore);
+        PlayerController.initialize(str, comPlayer, chosenPlayer, blueScore, redScore, yellowScore, greenScore);
         PlayerController.getChessViewList().clear();
         PlayerController.getChessViewList().addAll(blueChess0, blueChess1, blueChess2, blueChess3,
                 redChess0, redChess1, redChess2, redChess3,
@@ -108,7 +103,6 @@ public class GamePlayController implements Initializable
     {
         if (PlayerController.getSelectedCellView1() !=  event.getSource() && PlayerController.isAllowToClick())
         {
-            System.out.println("click");
             if (PlayerController.getSelectedCellView1() != null
                     && !MoveController.getPossibleMoves().containsKey(PlayerController.getSelectedCell1()))
             {

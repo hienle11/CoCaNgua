@@ -96,4 +96,14 @@ public class ButtonController
         TurnController.setDiceIsRolled(true);
         AnimationController.animateDiceRolling();
     }
+
+    public static void enableRollDiceBt()
+    {
+        rollDiceBt.setOnAction(e-> rollDiceBtHandler());
+    }
+
+    public static void disableRollDiceBt()
+    {
+        rollDiceBt.setOnAction(null);
+    }
 }

@@ -23,7 +23,6 @@ import views.CellView;
 
 public class AnimationController
 {
-    private static int diceThrow = 0;
     private static ImageView dice0, dice1;
 
     public static boolean isChessMoving()
@@ -32,6 +31,12 @@ public class AnimationController
     }
 
     private static boolean chessIsMoving = false;
+
+    public static void initialize(ImageView newDice0, ImageView newDice1)
+    {
+        dice0 = newDice0;
+        dice1 = newDice1;
+    }
 
     public static RotateTransition diceRoll() {
         dice0.setImage(new Image("File:src/resources/images/6.jpg"));
@@ -49,37 +54,7 @@ public class AnimationController
         return rt1;
     }
 
-//    public static void findMax(int[] maxThrow) {
-//        int max = 0;
-//        for (int k : maxThrow) {
-//            if (max < k)
-//        }
-//    }
 
-//    public static void determineFirstTurn() {
-//        int[] maxThrow = new int[4];
-//        RotateTransition rt1 = diceRoll();
-//        if (TurnController.isCurrentPlayerIsComputer())
-//        {
-//            rt1.setOnFinished(e ->
-//            {
-//                maxThrow[diceThrow] = TurnController.getDiceValue()[2];
-//                TurnController.endTurn();
-//                diceThrow++;
-//
-//            });
-//        }else
-//            rt1.setOnFinished(e -> PlayerController.HumanMove());
-//        rt1.play();
-//
-//    }
-
-    public static void initialize(ImageView newDice0, ImageView newDice1)
-    {
-        dice0 = newDice0;
-        dice1 = newDice1;
-//        determineFirstTurn();
-    }
 
     public static void animateDiceRolling()
     {
@@ -91,7 +66,11 @@ public class AnimationController
         {
             dice0.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[0] + ".jpg"));
             dice1.setImage(new Image("File:src/resources/images/" + TurnController.getDiceValue()[1] + ".jpg"));
-            if (TurnController.opponentTurn)
+            if (TurnController.initialRollDice)
+            {
+                TurnController.getInitialDiceValue();
+            }
+            else if (TurnController.opponentTurn)
             {
                 if (SocketController.getMessage().equals("movable"))
                     PlayerController.waitForOpponentMove();

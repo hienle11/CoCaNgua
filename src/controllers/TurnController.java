@@ -21,8 +21,8 @@ import models.Player;
 
 public class TurnController
 {
-    private static Label turn;
-    private static boolean[] choosenPlayer = new boolean[4];
+    private static Label turnLabel;
+    private static boolean[] chosenPlayer = new boolean[4];
     public static boolean opponentTurn = false;
     private static int[] diceValue = new int[3];
     private static Player.Color playerTurn = Player.Color.BLUE;
@@ -33,17 +33,8 @@ public class TurnController
     private static boolean[] comPlayer;
     private static Pane gameOverPane;
     private static Button rollDiceBt;
-
-    public static void setComOrHuman(boolean[] comPlayer) {
-        TurnController.choosenPlayer = PlayerController.getChoosenPlayer();
-        TurnController.comPlayer = comPlayer;
-        for (int i = 0; i < 4; i++) {
-//            if (choosenPlayer[i]) {
-            currentPlayerIsComputer = comPlayer[i];
-//            }
-        }
-    }
-
+    static boolean initialRollDice = true;
+    static int[] initialDiceValue = new int[4];
 
     public static void setDiceIsRolled(boolean diceIsRolled)
     {
@@ -90,102 +81,134 @@ public class TurnController
         return diceIsRolled;
     }
 
+    public static void setComOrHuman(boolean[] comPlayer)
+    {
+        TurnController.chosenPlayer = PlayerController.getChoosenPlayer();
+        TurnController.comPlayer = comPlayer;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //                                      INITIALIZE METHOD                                        //
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     public static void initialize(Label turn, Pane gameOverPane, Button rollDiceBt)
     {
         int i = 0;
-        //        InitialThrowController.determineFirstThrow();
-        for (i = 0; i < 4; i++) {
-            if(choosenPlayer[i]) {
+        for (i = 0; i < 4; i++)
+        {
+            if(chosenPlayer[i])
+            {
                 playerTurn = PlayerController.color[i];
                 break;
             }
         }
-//        playerTurn = PlayerController.color[InitialThrowController.determineFirstThrow()];
-        diceWasUsed = -1;
-        chessHasMoved = null;
-        diceIsRolled = false;
-        currentPlayer =  PlayerController.getPlayer(playerTurn);
-        turn.setText("Player Turn: " + playerTurn.toString());
-        if (comPlayer[i]) endTurn();
+        currentPlayer = PlayerController.getPlayer(playerTurn);
+        turnLabel = turn;
+        turnLabel.setText("Player Turn: " + playerTurn.toString());
         TurnController.gameOverPane = gameOverPane;
-        TurnController.rollDiceBt = rollDiceBt;
+        initialRollDice();
+    }
+
+    private static void initialRollDice()
+    {
+        while(initialDiceValue[currentTurn] == -1)
+            switchTurn();
+        if (comPlayer[currentTurn])
+            ButtonController.rollDiceBtHandler();
+        else
+            ButtonController.enableRollDiceBt();
+    }
+
+    public static void getInitialDiceValue ()
+    {
+        initialDiceValue[currentTurn] = diceValue[2];
+        System.out.println("initialDiceValue[" + currentTurn + "] = " +diceValue[2]);
+        int firstTurn = determineFirstTurn();
+        System.out.println("first turn = " + firstTurn);
+        if ((firstTurn != -1))
+        {
+            System.out.println("here");
+            currentTurn = firstTurn == 0 ? 3 : firstTurn - 1;
+            initialRollDice = false;
+            endTurn();
+        } else
+        {
+            switchTurn();
+            initialRollDice();
+        }
+    }
+
+    public static int determineFirstTurn()
+    {
+        int tempIndex = 0;
+        int playerHasHighestDiceValue = 0;
+        System.out.println("start Compare");
+        System.out.println("initialDiceValue[" + 0 + "] = " + initialDiceValue[0]);
+        for (int i = 1; i < 4; i++)
+        {
+            System.out.println("initialDiceValue[" + i + "] = " + initialDiceValue[i]);
+            if (!chosenPlayer[i])
+                continue;
+            else if (initialDiceValue[i] == 0)
+            {
+                playerHasHighestDiceValue = -1;
+                break;
+            }
+            else if (initialDiceValue[tempIndex]  == initialDiceValue[i])
+            {
+                initialDiceValue[i] = 0;
+                playerHasHighestDiceValue = -1;
+            }
+            else if (initialDiceValue[tempIndex] < initialDiceValue[i])
+            {
+                initialDiceValue[tempIndex] = -1;
+                tempIndex = i;
+                playerHasHighestDiceValue = i;
+            } else if (initialDiceValue[tempIndex] > initialDiceValue[i])
+            {
+                initialDiceValue[i] = -1;
+            }
+        }
+        return playerHasHighestDiceValue;
     }
 
     public static void endTurn()
     {
         if (isGameEnded())
         {
-            System.out.println("game is ended");
-            gameOverPane.setVisible(true);
-            rollDiceBt.setDisable(true);
-            MediaController.playWinSound();
-            //System.exit(0);
-            System.out.println("game is ended");
-        }   else {
-            switchTurn();
+            System.exit(0);
+        } else
+        {
+            if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
+            {
+                switchTurn();
+            }
             chessHasMoved = null;
             diceWasUsed = -1;
             diceIsRolled = false;
             currentPlayer = PlayerController.getPlayer(playerTurn);
-            if (currentPlayerIsComputer || (GamePlayController.playOnline && opponentTurn)) {
+            if (currentPlayerIsComputer || (GamePlayController.playOnline && opponentTurn))
+            {
                 ButtonController.rollDiceBtHandler();
-            } else {
-                System.out.println("here = button active");
-                ButtonController.getRollDiceBt().setOnAction(event -> ButtonController.rollDiceBtHandler());
+            } else
+            {
+                ButtonController.enableRollDiceBt();
             }
         }
     }
 
     public static void switchTurn()
     {
-        if (Math.abs(diceValue[0]) != Math.abs(diceValue[1]))
+        currentTurn++;
+        if (currentTurn > 3) currentTurn = 0;
+        while(!chosenPlayer[currentTurn])
         {
-//            switch (playerTurn)
-//            {
-//                case BLUE:
-//                    playerTurn = Player.Color.RED;
-//                    currentPlayerIsComputer = comPlayer[1];
-//                    break;
-//                case RED:
-//                    playerTurn = Player.Color.GREEN;
-//                    currentPlayerIsComputer = comPlayer[2];
-//                    break;
-//                case GREEN:
-//                    playerTurn = Player.Color.YELLOW;
-//                    currentPlayerIsComputer = comPlayer[3];
-//                    break;
-//                case YELLOW:
-//                    playerTurn = Player.Color.BLUE;
-//                    currentPlayerIsComputer = comPlayer[0];
-//                    break;
-//            }
-//            for (boolean i : choosenPlayer) System.out.println(i);
-//            while (true) {
-//                if (playerTurn == PlayerController.color[currentTurn]) {
-//                    if (currentTurn >= 3) currentTurn = 0;
-//                    currentTurn++;
-//                    if (choosenPlayer[currentTurn]) {
-//                        playerTurn = PlayerController.color[currentTurn];
-//                        currentPlayerIsComputer = comPlayer[currentTurn];
-//                        break;
-//                    }
-//                }
-//            }
             currentTurn++;
             if (currentTurn > 3) currentTurn = 0;
-            while(!choosenPlayer[currentTurn]) {
-                currentTurn++;
-                if (currentTurn > 3) currentTurn = 0;
-            }
-            playerTurn = PlayerController.color[currentTurn];
-            currentPlayerIsComputer = comPlayer[currentTurn];
-            System.out.println("Turn = " + playerTurn.toString());
         }
+        playerTurn = PlayerController.color[currentTurn];
+        currentPlayerIsComputer = comPlayer[currentTurn];
+        turnLabel.setText("Player Turn: " + playerTurn.toString());
     }
-
 
     private static boolean isGameEnded()
     {

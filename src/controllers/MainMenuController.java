@@ -161,7 +161,7 @@ public class MainMenuController
 //        }
         GamePlayController.comPlayer = compPlayer;
         GamePlayController.str = str;
-        GamePlayController.choosenPlayer = choosenPlayer;
+        GamePlayController.chosenPlayer = choosenPlayer;
         WindowController window = new WindowController((Stage) ((Node)event.getSource()).getScene().getWindow());
         window.loadWindow("../views/GamePlay.fxml");
     }
